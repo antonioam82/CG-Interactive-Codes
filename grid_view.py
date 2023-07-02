@@ -3,7 +3,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
-grid_size = 30#10
+grid_size = 120#10
 grid_spacing = 1
 
 def draw_grid():
@@ -29,6 +29,7 @@ def main():
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
     glTranslatef(0.0, 0.0, -7.0)
     glRotatef(7, 1, 0, 0)
+    #glRotatef(4, 1, 0, 0)
     
     '''while True:
         for event in pygame.event.get():
@@ -50,6 +51,7 @@ def main():
                 running = False
         
         #glRotatef(1, 1, 0, 0)
+        glTranslatef(0.0, 0.0, 0.018)     
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
         pygame.display.flip()
