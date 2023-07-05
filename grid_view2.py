@@ -52,6 +52,18 @@ def main():
         if key[pygame.K_DOWN]:
             z = -0.030
             x = 0.0
+        if key[pygame.K_o]:
+            x = 0.030
+            z = 0.030
+        if key[pygame.K_p]:
+            x = -0.030
+            z = 0.030
+        if key[pygame.K_k]:
+            x = -0.030
+            z = -0.030
+        if key[pygame.K_l]:
+            x = 0.030
+            z = -0.030
         if key[pygame.K_s]:
             x = 0.0
             z = 0.0
