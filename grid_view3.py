@@ -68,10 +68,15 @@ def main():
         if key[pygame.K_s]:
             x = 0.0
             z = 0.0
-
+        # ROTACIONES
+        if key[pygame.K_t]:
+            glRotatef(1, 0, 1, 0)
+        if key[pygame.K_r]:
+            glRotatef(1, 1, 0, 0)
+        if key[pygame.K_y]:
+            glRotatef(1, 0, 0, 1)
+            
         glTranslatef(x, 0.0, z)
-        #glRotatef(1, 1, 2, 1)
-        #glRotatef(1, 0, 1, 0)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
         pygame.display.flip()
