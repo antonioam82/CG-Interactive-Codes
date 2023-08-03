@@ -3,15 +3,21 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
+'''vertices = (
+    (-2, -2, 0),  # Esquina inferior izquierda (-2, -2, 0)
+    (2, -2, 0),   # Esquina inferior derecha (2, -2, 0)
+    (2, 2, 0),    # Esquina superior derecha (2, 2, 0)
+    (-2, 2, 0)    # Esquina superior izquierda (-2, 2, 0)'''
+
 verticies = [
-    [1, -1, -1],#det inf der
-    [1, 1, -1],#det sup der
-    [-1, 1, -1],#det sup iz
-    [-1, -1, -1],#det inf iz
-    [1, -1, 1],#del inf der
-    [1, 1, 1],#del sup der
-    [-1, -1, 1],#del inf der
-    [-1, 1, 1]#del sup iz
+    [1, 0, -1],
+    [1, 1, -1],
+    [-1, 1, -1],
+    [-1, 0, -1],
+    [1, 0, 1],
+    [1, 1, 1],
+    [-1, 0, 1],
+    [-1, 1, 1]
     ]
 
 surfaces = (
@@ -110,6 +116,8 @@ def main():
             glRotatef(0.050, 0, 1, 0)
         if key[pygame.K_r]:
             glRotatef(0.050, 1, 0, 0)
+        if key[pygame.K_e]:
+            glRotatef(0.050, -1, 0, 0)
         if key[pygame.K_y]:
             glRotatef(0.050, 0, 0, 1)
             
