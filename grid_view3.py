@@ -3,6 +3,38 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
+verticies = [
+    [1, -1, -1],#det inf der
+    [1, 1, -1],#det sup der
+    [-1, 1, -1],#det sup iz
+    [-1, -1, -1],#det inf iz
+    [1, -1, 1],#del inf der
+    [1, 1, 1],#del sup der
+    [-1, -1, 1],#del inf der
+    [-1, 1, 1]#del sup iz
+    ]
+
+surfaces = (
+    (0,1,2,3),
+    (3,2,7,6),
+    (6,7,5,4),
+    (4,5,1,0),
+    (1,5,7,2),
+    (4,0,3,6)
+    )
+
+def Cube():
+    glBegin(GL_QUADS)
+    #glBegin(GL_LINES)
+    glColor3f(0.0,0.0,1.0)
+    for surface in surfaces:
+        x=0
+        for vertex in surface:
+            x+=1
+            #glColor3fv(colors[x])
+            glVertex3fv(verticies[vertex])
+    glEnd()
+
 grid_size = 120
 grid_spacing = 1
 
@@ -14,6 +46,7 @@ def draw_grid():
         glVertex3f(x, 0, -grid_size)
         glVertex3f(x, 0, grid_size)
 
+    #glColor3f(1.0,0.0,0.0)
     for z in range(-grid_size, grid_size + 1, grid_spacing):
         glVertex3f(-grid_size, 0, z)
         glVertex3f(grid_size, 0, z)
@@ -65,6 +98,7 @@ def main():
             
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
+        Cube()
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
