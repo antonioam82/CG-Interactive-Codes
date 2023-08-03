@@ -120,6 +120,8 @@ def main():
             glRotatef(0.050, -1, 0, 0)
         if key[pygame.K_y]:
             glRotatef(0.050, 0, 0, 1)
+        if key[pygame.K_u]:
+            glRotatef(0.050, 0, 0, -1)
             
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
