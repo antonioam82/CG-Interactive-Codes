@@ -3,12 +3,6 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
-'''vertices = (
-    (-2, -2, 0),  # Esquina inferior izquierda (-2, -2, 0)
-    (2, -2, 0),   # Esquina inferior derecha (2, -2, 0)
-    (2, 2, 0),    # Esquina superior derecha (2, 2, 0)
-    (-2, 2, 0)    # Esquina superior izquierda (-2, 2, 0)'''
-
 verticies = [
     [1, 0, -1],
     [1, 1, -1],
