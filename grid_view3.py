@@ -3,6 +3,12 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
+'''vertices = (
+    (-2, -2, 0),  # Esquina inferior izquierda (-2, -2, 0)
+    (2, -2, 0),   # Esquina inferior derecha (2, -2, 0)
+    (2, 2, 0),    # Esquina superior derecha (2, 2, 0)
+    (-2, 2, 0)    # Esquina superior izquierda (-2, 2, 0)'''
+
 verticies = [
     [1, 0, -1],
     [1, 1, -1],
@@ -131,8 +137,10 @@ def main():
             glTranslatef(0.050, 0.0, -0.050)
 
         # ROTACIONES
-        if key[pygame.K_t]:
+        if key[pygame.K_q]:
             glRotatef(0.1, 0, 1, 0)
+        if key[pygame.K_w]:
+            glRotatef(0.1, 0, -1, 0)        
         if key[pygame.K_r]:
             glRotatef(0.1, 1, 0, 0)
         if key[pygame.K_g]:
