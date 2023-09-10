@@ -20,14 +20,15 @@ verticies = [
     [-1, 1, 1]
     ]
 
+
 verticies2 = [
     [1, 0, -2],
     [1, 1, -2],
     [-1, 1, -2],
-    [-1, 0, -2],
+    [-1, 0, 12],
     [1, 0, 0],
     [1, 1, 0],
-    [-1, 0, 0],
+    [-1, 0, 0],#
     [-1, 1, 0]
     ]
 
@@ -55,21 +56,7 @@ edges = (
     (5,7)
     )
 
-def Cube2():
-    #glBegin(GL_QUADS)
-    glBegin(GL_LINES)
-    glColor3f(1.0,0.0,0.0)
-    #for surface in surfaces:
-    for edge in edges:  
-        x=0
-        #for vertex in surface:
-        for vertex in edge:
-            x+=1
-            #glColor3fv(colors[x])
-            glVertex3fv(verticies2[vertex])
-    glEnd()
-
-def Cube():
+'''def Cube():
     #glBegin(GL_QUADS)
     glBegin(GL_LINES)
     glColor3f(0.0,0.0,1.0)
@@ -78,6 +65,17 @@ def Cube():
         x=0
         #for vertex in surface:
         for vertex in edge:
+            x+=1
+            #glColor3fv(colors[x])
+            glVertex3fv(verticies[vertex])
+    glEnd()'''
+
+def CubeB():
+    glBegin(GL_QUADS)
+    glColor3f(0.0,0.0,1.0)
+    for surface in surfaces: 
+        x=0
+        for vertex in surface:
             x+=1
             #glColor3fv(colors[x])
             glVertex3fv(verticies[vertex])
@@ -154,8 +152,7 @@ def main():
             
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
-        Cube()
-        Cube2()
+        CubeB()
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
