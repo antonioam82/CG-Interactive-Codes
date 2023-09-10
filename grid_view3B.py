@@ -45,6 +45,7 @@ edges = (
     )
 
 def Cube():
+    glLineWidth(2.0)
     glBegin(GL_LINES)
     glColor3f(1.0,0.0,0.0,)
     for edge in edges:  
