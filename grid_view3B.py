@@ -44,9 +44,23 @@ edges = (
     (5,7)
     )
 
+def Cube():
+    glBegin(GL_LINES)
+    glColor3f(1.0,0.0,0.0,)
+    for edge in edges:  
+        x=0
+        for vertex in edge:
+            x+=1
+            glVertex3fv(verticies[vertex])
+    glEnd()
+
+    
 def CubeB():
+    glEnable(GL_DEPTH_TEST)
+    glEnable(GL_CULL_FACE)
+    glCullFace(GL_FRONT)
     glBegin(GL_QUADS)
-    glColor3f(0.0,0.0,1.0)
+    glColor3f(0.0,0.0,0.1)
     for surface in surfaces: 
         x=0
         for vertex in surface:
@@ -122,7 +136,7 @@ def main():
             z = 0.0
             
         # ROTACIONES
-        '''if key[pygame.K_q]:
+        if key[pygame.K_q]:
             glRotatef(0.1, 0, 1, 0)
         if key[pygame.K_w]:
             glRotatef(0.1, 0, -1, 0)        
@@ -135,12 +149,13 @@ def main():
         if key[pygame.K_y]:
             glRotatef(0.1, 0, 0, 1)
         if key[pygame.K_u]:
-            glRotatef(0.1, 0, 0, -1)'''
+            glRotatef(0.1, 0, 0, -1)
 
         glTranslatef(x, 0.0, z)  
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
         CubeB()
+        Cube()
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
