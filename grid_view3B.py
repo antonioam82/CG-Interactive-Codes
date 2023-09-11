@@ -138,9 +138,9 @@ def main():
             
         # ROTACIONES
         if key[pygame.K_q]:
-            glRotatef(0.1, 0, 1, 0)
+            glRotatef(1, 0, 1, 0)
         if key[pygame.K_w]:
-            glRotatef(0.1, 0, -1, 0)        
+            glRotatef(1, 0, -1, 0)        
         if key[pygame.K_r]:
             glRotatef(0.1, 1, 0, 0)
         if key[pygame.K_g]:
