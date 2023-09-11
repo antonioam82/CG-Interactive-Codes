@@ -44,6 +44,7 @@ edges = (
     (5,7)
     )
 
+# DIBUJA CONTORNOS DEL CUBO
 def Cube():
     glLineWidth(2.0)
     glBegin(GL_LINES)
@@ -55,7 +56,7 @@ def Cube():
             glVertex3fv(verticies[vertex])
     glEnd()
 
-    
+# DIBUJA CUBO SOBRE EL GRID    
 def CubeB():
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_CULL_FACE)
@@ -73,6 +74,7 @@ def CubeB():
 grid_size = 120
 grid_spacing = 1
 
+# DIBUJA GRID
 def draw_grid():
     glBegin(GL_LINES)
     glColor3f(0.0,1.0,0.0)#(0.5, 0.5, 0.5)  # Color gris
@@ -88,6 +90,7 @@ def draw_grid():
 
     glEnd()
 
+# FUNCIÓN PRINCIPAL
 def main():
     pygame.init()
     display = (800, 600)
