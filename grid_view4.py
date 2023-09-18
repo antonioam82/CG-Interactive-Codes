@@ -4,6 +4,12 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 import random
 
+'''vertices = (
+    (-2, -2, 0),  # Esquina inferior izquierda (-2, -2, 0)
+    (2, -2, 0),   # Esquina inferior derecha (2, -2, 0)
+    (2, 2, 0),    # Esquina superior derecha (2, 2, 0)
+    (-2, 2, 0)    # Esquina superior izquierda (-2, 2, 0)'''
+
 verticies = [
     [1, 0, -1],
     [1, 1, -1],
@@ -14,6 +20,17 @@ verticies = [
     [-1, 0, 1],
     [-1, 1, 1]
     ]
+
+'''verticies2 = [
+    [1, 0, -2],
+    [1, 1, -2],
+    [-1, 1, -2],
+    [-1, 0, -2],
+    [1, 0, 0],
+    [1, 1, 0],
+    [-1, 0, 0],
+    [-1, 1, 0]
+    ]'''
 
 surfaces = (
     (0,1,2,3),
@@ -150,15 +167,14 @@ def main():
             glRotatef(0.1, 0, 0, -1)
             
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        draw_grid()
-        Cube(-1,0)
-        Cube(-2,-1)
-        Cube(-3,-2)
-        Cube(-4,-3)
-        Cube(-5,-4)
-        Cube(-6,-5)
-        Cube(-7,-6)
-        Cube(-8,-7)
+        #draw_grid()
+        v1 = -1
+        v2 = 0
+        for i in range(30):
+            Cube(v1,v2)
+            v1 -= 1
+            v2 -= 1
+
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
