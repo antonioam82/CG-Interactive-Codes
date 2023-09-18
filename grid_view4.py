@@ -98,7 +98,7 @@ def Cube(v1,v2):
 grid_size = 120
 grid_spacing = 1
 
-def draw_grid():
+'''def draw_grid():
     glBegin(GL_LINES)
     glColor3f(0.0,1.0,0.0)#(0.5, 0.5, 0.5)  # Color gris
 
@@ -111,7 +111,7 @@ def draw_grid():
         glVertex3f(-grid_size, 0, z)
         glVertex3f(grid_size, 0, z)
 
-    glEnd()
+    glEnd()'''
 
 def main():
     pygame.init()
@@ -122,6 +122,7 @@ def main():
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
     glTranslatef(0.0, 0.0, -7.0)
     glRotatef(7, 1, 0, 0)
+    speed = 0.050 # VELOCIAD HACIA ADELANTE
     
     running = True
     while (running):
@@ -136,7 +137,8 @@ def main():
         if key[pygame.K_RIGHT]:
             glTranslatef(-0.050, 0.0, 0.0)
         if key[pygame.K_UP]:
-            glTranslatef(0.0, 0.0, 0.100)
+            glTranslatef(0.0, 0.0, speed)
+            speed += 0.0008 # AUMENTO VELOCIDAD
         if key[pygame.K_DOWN]:
             glTranslatef(0.0, 0.0, -0.050)
         if key[pygame.K_o]:
@@ -168,11 +170,11 @@ def main():
         #draw_grid()
         v1 = -1
         v2 = 0
-        for i in range(30):
+        for i in range(50):
             Cube(v1,v2)
             v1 -= 1
             v2 -= 1
-
+            
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
