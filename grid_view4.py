@@ -122,8 +122,6 @@ def main():
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
     glTranslatef(0.0, 0.0, -7.0)
     glRotatef(7, 1, 0, 0)
-    val1 = -1
-    val2 = 0
     
     running = True
     while (running):
@@ -138,7 +136,7 @@ def main():
         if key[pygame.K_RIGHT]:
             glTranslatef(-0.050, 0.0, 0.0)
         if key[pygame.K_UP]:
-            glTranslatef(0.0, 0.0, 0.050)
+            glTranslatef(0.0, 0.0, 0.100)
         if key[pygame.K_DOWN]:
             glTranslatef(0.0, 0.0, -0.050)
         if key[pygame.K_o]:
