@@ -71,6 +71,7 @@ edges = (
     glEnd()'''
 
 def Cube(v1,v2):
+    glLineWidth(1.5)#
     glBegin(GL_LINES)
     '''r = round(random.uniform(0.4,1),2)
     g = round(random.uniform(0.4,1),2)
