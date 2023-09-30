@@ -40,9 +40,9 @@ edges = (
 
 # DIBUJA CONTORNOS DEL CUBO
 def Cube():
-    glLineWidth(2.0)
+    glLineWidth(3.0)
     glBegin(GL_LINES)
-    glColor3f(1.0,0.0,0.0,)
+    glColor3f(1.0,0.0,0.0)
     for edge in edges:  
         x=0
         for vertex in edge:
@@ -55,8 +55,10 @@ def CubeB():
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_CULL_FACE)
     glCullFace(GL_FRONT)
+    #glCullFace(GL_BACK)
     glBegin(GL_QUADS)
-    glColor3f(0.0,0.0,0.1)
+    glColor3f(0.0, 0.0, 0.1)
+    #glColor4f(0.0, 0.0, 0.1, 0.8)
     for surface in surfaces: 
         x=0
         for vertex in surface:
@@ -100,9 +102,12 @@ def main():
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         CubeB()
         Cube()
+
+        #Cube()
+        #CubeB()
+
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
          
 main()
-
