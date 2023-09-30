@@ -50,7 +50,7 @@ def Cube():
             glVertex3fv(verticies[vertex])
     glEnd()
 
-# DIBUJA CUBO SOBRE EL GRID    
+# DIBUJA CUBO 
 def CubeB():
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_CULL_FACE)
@@ -103,3 +103,4 @@ def main():
     pygame.quit()
          
 main()
+
