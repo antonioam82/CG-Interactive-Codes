@@ -85,6 +85,8 @@ def main():
 
         if key[pygame.K_p]:
             rot = True
+        elif key[pygame.K_s]:
+            rot = False
             
         # ROTACIONES
         if key[pygame.K_UP]:
