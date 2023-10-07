@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import pygame
 from pygame.locals import *
 from OpenGL.GL import *
@@ -5,6 +7,53 @@ from OpenGL.GLU import *
 
 grid_size = 120
 grid_spacing = 1
+
+'''verticies = [
+    [1, 0, -1],
+    [1, 0.5, -1],
+    [-1, 0.5, -1],
+    [-1, 0, -1],
+    [1, 0, 1],
+    [1, 0.5, 1],
+    [-1, 0, 1],
+    [-1, 0.5, 1]
+    ]
+
+surfaces = (
+    (0,1,2,3),
+    (3,2,7,6),
+    (6,7,5,4),
+    (4,5,1,0),
+    (1,5,7,2),
+    (4,0,3,6)
+    )
+
+edges = (
+    (0,1),
+    (0,3),
+    (0,4),
+    (2,1),
+    (2,3),
+    (2,7),
+    (6,3),
+    (6,4),
+    (6,7),
+    (5,1),
+    (5,4),
+    (5,7)
+    )
+
+def Cube():
+    glLineWidth(2.0)
+    glBegin(GL_LINES)
+    glColor3f(1.0,0.0,0.0,)
+    for edge in edges:  
+        x=0
+        for vertex in edge:
+            x+=1
+            glVertex3fv(verticies[vertex])
+    glEnd()'''
+
 
 def draw_double_grid():
     glBegin(GL_LINES)
@@ -78,6 +127,10 @@ def main():
             z = 0.0
             
         # ROTACIONES
+        if key[pygame.K_r]:
+            glRotatef(0.1, 1, 0, 0)
+        if key[pygame.K_e]:
+            glRotatef(-0.1, 1, 0, 0)
         if key[pygame.K_q]:
             glRotatef(0.5, 0, 1, 0)
         if key[pygame.K_w]:
@@ -92,6 +145,7 @@ def main():
         glTranslatef(x, 0.0, z)  
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_double_grid()
+        #Cube()
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
