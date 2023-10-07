@@ -68,26 +68,26 @@ def draw_double_grid():
         glVertex3f(grid_size, 0.5, z)
 
     for a in range(-grid_size, grid_size + 1, grid_spacing):
-        glVertex3f(a, 0, -grid_size)
-        glVertex3f(a, 0, grid_size)
+        glVertex3f(a, -0.5, -grid_size)
+        glVertex3f(a, -0.5, grid_size)
 
     for b in range(-grid_size, grid_size + 1, grid_spacing):
-        glVertex3f(-grid_size, 0, b)
-        glVertex3f(grid_size, 0, b)        
+        glVertex3f(-grid_size, -0.5, b)
+        glVertex3f(grid_size, -0.5, b)        
 
     glEnd()
 
 # FUNCIÓN PRINCIPAL
 def main():
     pygame.init()
-    display = (900, 600)
+    display =(900, 600)#(1600,870)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     x = 0.0
     z = 0.0
     
     glClearColor(0.0, 0.0, 0.0, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
-    glTranslatef(0.0, 0.0, -7.0)
+    glTranslatef(0.5, 0.0, 0.0)
     glRotatef(2, 1, 0, 0)
     
     running = True
