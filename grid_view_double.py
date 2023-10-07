@@ -6,6 +6,7 @@ from OpenGL.GLU import *
 grid_size = 120
 grid_spacing = 1
 
+# DIBUJA GRID
 def draw_grid1():
     glBegin(GL_LINES)
     glColor3f(0.0,1.0,0.0)#(0.5, 0.5, 0.5)  # Color gris
@@ -38,7 +39,7 @@ def draw_grid2():
 # FUNCIÓN PRINCIPAL
 def main():
     pygame.init()
-    display = (800, 600)
+    display = (900, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     x = 0.0
     z = 0.0
