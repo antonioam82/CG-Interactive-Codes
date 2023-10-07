@@ -60,20 +60,20 @@ def draw_double_grid():
     glColor3f(0.0,1.0,0.0)
     
     for x in range(-grid_size, grid_size + 1, grid_spacing):
-        glVertex3f(x, 0.5, -grid_size)
-        glVertex3f(x, 0.5, grid_size)
+        glVertex3f(x, 0.3, -grid_size)
+        glVertex3f(x, 0.3, grid_size)
 
     for z in range(-grid_size, grid_size + 1, grid_spacing):
-        glVertex3f(-grid_size, 0.5, z)
-        glVertex3f(grid_size, 0.5, z)
+        glVertex3f(-grid_size, 0.3, z)
+        glVertex3f(grid_size, 0.3, z)
 
     for a in range(-grid_size, grid_size + 1, grid_spacing):
-        glVertex3f(a, -0.5, -grid_size)
-        glVertex3f(a, -0.5, grid_size)
+        glVertex3f(a, -0.3, -grid_size)
+        glVertex3f(a, -0.3, grid_size)
 
     for b in range(-grid_size, grid_size + 1, grid_spacing):
-        glVertex3f(-grid_size, -0.5, b)
-        glVertex3f(grid_size, -0.5, b)        
+        glVertex3f(-grid_size, -0.3, b)
+        glVertex3f(grid_size, -0.3, b)        
 
     glEnd()
 
