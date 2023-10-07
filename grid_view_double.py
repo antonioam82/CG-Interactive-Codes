@@ -6,25 +6,17 @@ from OpenGL.GLU import *
 grid_size = 120
 grid_spacing = 1
 
-# DIBUJA GRID
-def draw_grid1():
+def draw_double_grid():
     glBegin(GL_LINES)
-    glColor3f(0.0,1.0,0.0)#(0.5, 0.5, 0.5)  # Color gris
+    glColor3f(0.0,1.0,0.0)
     
     for x in range(-grid_size, grid_size + 1, grid_spacing):
         glVertex3f(x, 0.5, -grid_size)
         glVertex3f(x, 0.5, grid_size)
 
-    #glColor3f(1.0,0.0,0.0)
     for z in range(-grid_size, grid_size + 1, grid_spacing):
         glVertex3f(-grid_size, 0.5, z)
         glVertex3f(grid_size, 0.5, z)
-
-    glEnd()
-
-def draw_grid2():
-    glBegin(GL_LINES)
-    glColor3f(0.0, 1.0, 0.0)  # Color verde
 
     for x in range(-grid_size, grid_size + 1, grid_spacing):
         glVertex3f(x, 0, -grid_size)
@@ -32,7 +24,7 @@ def draw_grid2():
 
     for z in range(-grid_size, grid_size + 1, grid_spacing):
         glVertex3f(-grid_size, 0, z)
-        glVertex3f(grid_size, 0, z)
+        glVertex3f(grid_size, 0, z)        
 
     glEnd()
 
@@ -99,8 +91,7 @@ def main():
 
         glTranslatef(x, 0.0, z)  
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        draw_grid1()
-        draw_grid2()
+        draw_double_grid()
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
