@@ -18,13 +18,13 @@ def draw_double_grid():
         glVertex3f(-grid_size, 0.5, z)
         glVertex3f(grid_size, 0.5, z)
 
-    for x in range(-grid_size, grid_size + 1, grid_spacing):
-        glVertex3f(x, 0, -grid_size)
-        glVertex3f(x, 0, grid_size)
+    for a in range(-grid_size, grid_size + 1, grid_spacing):
+        glVertex3f(a, 0, -grid_size)
+        glVertex3f(a, 0, grid_size)
 
-    for z in range(-grid_size, grid_size + 1, grid_spacing):
-        glVertex3f(-grid_size, 0, z)
-        glVertex3f(grid_size, 0, z)        
+    for b in range(-grid_size, grid_size + 1, grid_spacing):
+        glVertex3f(-grid_size, 0, b)
+        glVertex3f(grid_size, 0, b)        
 
     glEnd()
 
@@ -97,3 +97,4 @@ def main():
     pygame.quit()
          
 main()
+
