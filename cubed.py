@@ -4,14 +4,14 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 
 verticies = [
-    [1, 0, -1],
-    [1, 1, -1],
-    [-1, 1, -1],
-    [-1, 0, -1],
-    [1, 0, 1],
-    [1, 1, 1],
-    [-1, 0, 1],
-    [-1, 1, 1]
+    [1, -0.5, -1],    #Vértice inferior-izquierdo cerca.
+    [1, 0.5, -1],    #Vértice inferior-derecho cerca.
+    [-1, 0.5, -1],      #Vértice superior-derecho cerca.
+    [-1, -0.5, -1],   #Vértice superior-izquierdo cerca.
+    [1, -0.5, 1],     #Vértice inferior-izquierdo lejos.
+    [1, 0.5, 1],     #Vértice inferior-derecho lejos.
+    [-1, -0.5, 1],    #Vértice superior-derecho lejos.
+    [-1, 0.5, 1]     #Vértice superior-izquierdo lejos.
     ]
 
 surfaces = (
@@ -102,9 +102,6 @@ def main():
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         CubeB()
         Cube()
-
-        #Cube()
-        #CubeB()
 
         pygame.display.flip()
         pygame.time.wait(10)
