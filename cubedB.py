@@ -91,7 +91,7 @@ def main():
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     rot = False
-    glClearColor(1.0, 1.0, 1.0, 1.0)
+    glClearColor(0.62, 0.62, 0.62, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
     glTranslatef(0.0, 0.0, -7.0)
     
