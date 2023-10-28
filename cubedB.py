@@ -21,6 +21,17 @@ def draw_grid():
 
     glEnd()
 
+verticies = [
+    [1, 0, -1],    
+    [1, 0.5, -1],    
+    [-1, 0.5, -1],      
+    [-1, 0, -1],   
+    [1, 0, 1],     
+    [1, 0.5, 1],     
+    [-1, 0, 1],    
+    [-1, 0.5, 1]     
+    ]
+
 verticies2 = [
     [1, 0, -5],    # inf, der, tras
     [1, 0.5, -5],  # sup, der, tras
@@ -43,16 +54,28 @@ verticies3 = [
     [3, 0.5, 1]     
     ]
 
-verticies = [
-    [1, 0, -1],    #Vértice inferior-izquierdo cerca.
-    [1, 0.5, -1],    #Vértice inferior-derecho cerca.
-    [-1, 0.5, -1],      #Vértice superior-derecho cerca.
-    [-1, 0, -1],   #Vértice superior-izquierdo cerca.
-    [1, 0, 1],     #Vértice inferior-izquierdo lejos.
-    [1, 0.5, 1],     #Vértice inferior-derecho lejos.
-    [-1, 0, 1],    #Vértice superior-derecho lejos.
-    [-1, 0.5, 1]     #Vértice superior-izquierdo lejos.
+verticies4 = [
+    [-3, 0, -1],    
+    [-3, 0.5, -1],    
+    [-5, 0.5, -1],      
+    [-5, 0, -1],   
+    [-3, 0, 1],     
+    [-3, 0.5, 1],     
+    [-5, 0, 1],    
+    [-5, 0.5, 1]     
     ]
+
+verticies5 = [
+    [1, 0, 3],    
+    [1, 0.5, 3],    
+    [-1, 0.5, 3],      
+    [-1, 0, 3],   
+    [1, 0, 5],     
+    [1, 0.5, 5],     
+    [-1, 0, 5],    
+    [-1, 0.5, 5]     
+    ]
+
 
 surfaces = (
     (0,1,2,3),
@@ -127,6 +150,32 @@ def Cube3():
             glVertex3fv(verticies3[vertex])
     glEnd()
 
+def Cube4():
+    glEnable(GL_DEPTH_TEST)
+    glEnable(GL_CULL_FACE)
+    glCullFace(GL_FRONT)
+    glBegin(GL_QUADS)
+    glColor3f(0.0, 0.0, 0.1)
+    for surface in surfaces: 
+        x=0
+        for vertex in surface:
+            x+=1
+            glVertex3fv(verticies4[vertex])
+    glEnd()
+
+def Cube5():
+    glEnable(GL_DEPTH_TEST)
+    glEnable(GL_CULL_FACE)
+    glCullFace(GL_FRONT)
+    glBegin(GL_QUADS)
+    glColor3f(0.0, 0.0, 0.1)
+    for surface in surfaces: 
+        x=0
+        for vertex in surface:
+            x+=1
+            glVertex3fv(verticies5[vertex])
+    glEnd()
+
 
 
 # DIBUJA CUBO 
@@ -179,9 +228,11 @@ def main():
         glTranslatef(0.0, 0.0, 0.0)  
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
-        #Cube()
+        Cube()
         Cube2()
         Cube3()
+        Cube4()
+        Cube5()
         Cube_contours()
         
     
@@ -190,4 +241,3 @@ def main():
     pygame.quit()
          
 main()
-
