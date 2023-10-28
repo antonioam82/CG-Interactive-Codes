@@ -21,6 +21,28 @@ def draw_grid():
 
     glEnd()
 
+verticies2 = [
+    [1, 0, -5],    # inf, der, tras
+    [1, 0.5, -5],  # sup, der, tras
+    [-1, 0.5, -5], # sup, izq, tras
+    [-1, 0, -5],   # inf, izq, tras
+    [1, 0, -3],    # inf, der, del
+    [1, 0.5, -3],  # sup, der, del
+    [-1, 0, -3],   # inf, izq, del
+    [-1, 0.5, -3]  # sup, izq, del
+    ]
+
+verticies3 = [
+    [5, 0, -1],    
+    [5, 0.5, -1],    
+    [3, 0.5, -1],      
+    [3, 0, -1],   
+    [5, 0, 1],     
+    [5, 0.5, 1],     
+    [3, 0, 1],    
+    [3, 0.5, 1]     
+    ]
+
 verticies = [
     [1, 0, -1],    #Vértice inferior-izquierdo cerca.
     [1, 0.5, -1],    #Vértice inferior-derecho cerca.
@@ -57,7 +79,7 @@ edges = (
     )
 
 # DIBUJA CONTORNOS DEL CUBO
-def Cube():
+def Cube_contours():
     glLineWidth(3.0)
     glBegin(GL_LINES)
     glColor3f(1.0,0.0,0.0)
@@ -68,8 +90,47 @@ def Cube():
             glVertex3fv(verticies[vertex])
     glEnd()
 
+'''def Cube_contours2():
+    glLineWidth(3.0)
+    glBegin(GL_LINES)
+    glColor3f(1.0,0.0,0.0)
+    for edge in edges:  
+        x=0
+        for vertex in edge:
+            x+=1
+            glVertex3fv(verticies2[vertex])
+    glEnd()'''
+
+def Cube2():
+    glEnable(GL_DEPTH_TEST)
+    glEnable(GL_CULL_FACE)
+    glCullFace(GL_FRONT)
+    glBegin(GL_QUADS)
+    glColor3f(0.0, 0.0, 0.1)
+    for surface in surfaces: 
+        x=0
+        for vertex in surface:
+            x+=1
+            glVertex3fv(verticies2[vertex])
+    glEnd()
+
+def Cube3():
+    glEnable(GL_DEPTH_TEST)
+    glEnable(GL_CULL_FACE)
+    glCullFace(GL_FRONT)
+    glBegin(GL_QUADS)
+    glColor3f(0.0, 0.0, 0.1)
+    for surface in surfaces: 
+        x=0
+        for vertex in surface:
+            x+=1
+            glVertex3fv(verticies3[vertex])
+    glEnd()
+
+
+
 # DIBUJA CUBO 
-def CubeB():
+def Cube():
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_CULL_FACE)
     glCullFace(GL_FRONT)
@@ -88,7 +149,7 @@ def CubeB():
 # FUNCIÓN PRINCIPAL
 def main():
     pygame.init()
-    display = (800, 600)
+    display = (800, 600)#(800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     rot = False
     glClearColor(0.62, 0.62, 0.62, 1.0)
@@ -117,12 +178,16 @@ def main():
             glRotatef(1, 0, 1, 0)
         glTranslatef(0.0, 0.0, 0.0)  
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        CubeB()
-        Cube()
         draw_grid()
+        #Cube()
+        Cube2()
+        Cube3()
+        Cube_contours()
+        
     
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
          
 main()
+
