@@ -113,23 +113,57 @@ def Cube_contours():
             glVertex3fv(verticies[vertex])
     glEnd()
 
-'''def Cube_contours2():
-    glLineWidth(3.0)
+def Cube_contours2():
+    glLineWidth(2.0)
     glBegin(GL_LINES)
-    glColor3f(1.0,0.0,0.0)
+    glColor3f(0.0,0.0,0.0)
     for edge in edges:  
         x=0
         for vertex in edge:
             x+=1
             glVertex3fv(verticies2[vertex])
-    glEnd()'''
+    glEnd()
+
+def Cube_contours3():
+    glLineWidth(2.0)
+    glBegin(GL_LINES)
+    glColor3f(0.0,0.0,0.0)
+    for edge in edges:  
+        x=0
+        for vertex in edge:
+            x+=1
+            glVertex3fv(verticies3[vertex])
+
+    glEnd()
+
+def Cube_contours4():
+    glLineWidth(2.0)
+    glBegin(GL_LINES)
+    glColor3f(0.0,0.0,0.0)
+    for edge in edges:  
+        x=0
+        for vertex in edge:
+            x+=1
+            glVertex3fv(verticies4[vertex])
+    glEnd()
+
+def Cube_contours5():
+    glLineWidth(2.0)
+    glBegin(GL_LINES)
+    glColor3f(0.0,0.0,0.0)
+    for edge in edges:  
+        x=0
+        for vertex in edge:
+            x+=1
+            glVertex3fv(verticies5[vertex])
+    glEnd()
 
 def Cube2():
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_CULL_FACE)
     glCullFace(GL_FRONT)
     glBegin(GL_QUADS)
-    glColor3f(0.0, 0.0, 0.1)
+    glColor3f(0.7, 1.0, 1.0)
     for surface in surfaces: 
         x=0
         for vertex in surface:
@@ -142,7 +176,7 @@ def Cube3():
     glEnable(GL_CULL_FACE)
     glCullFace(GL_FRONT)
     glBegin(GL_QUADS)
-    glColor3f(0.0, 0.0, 0.1)
+    glColor3f(0.7, 1.0, 1.0)
     for surface in surfaces: 
         x=0
         for vertex in surface:
@@ -155,7 +189,7 @@ def Cube4():
     glEnable(GL_CULL_FACE)
     glCullFace(GL_FRONT)
     glBegin(GL_QUADS)
-    glColor3f(0.0, 0.0, 0.1)
+    glColor3f(0.7, 1.0, 1.0)
     for surface in surfaces: 
         x=0
         for vertex in surface:
@@ -168,7 +202,7 @@ def Cube5():
     glEnable(GL_CULL_FACE)
     glCullFace(GL_FRONT)
     glBegin(GL_QUADS)
-    glColor3f(0.0, 0.0, 0.1)
+    glColor3f(0.7, 1.0, 1.0)
     for surface in surfaces: 
         x=0
         for vertex in surface:
@@ -234,7 +268,10 @@ def main():
         Cube4()
         Cube5()
         Cube_contours()
-        
+        Cube_contours2()
+        Cube_contours3()
+        Cube_contours4()
+        Cube_contours5()
     
         pygame.display.flip()
         pygame.time.wait(10)
