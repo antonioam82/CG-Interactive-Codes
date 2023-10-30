@@ -2,8 +2,9 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+import random
 
-grid_size = 120
+grid_size = 90#120
 grid_spacing = 1
 
 def draw_grid():
@@ -114,7 +115,7 @@ def Cube_contours():
     glEnd()
 
 def Cube_contours2():
-    glLineWidth(2.0)
+    glLineWidth(0.5)
     glBegin(GL_LINES)
     glColor3f(0.0,0.0,0.0)
     for edge in edges:  
@@ -125,7 +126,7 @@ def Cube_contours2():
     glEnd()
 
 def Cube_contours3():
-    glLineWidth(2.0)
+    glLineWidth(0.5)
     glBegin(GL_LINES)
     glColor3f(0.0,0.0,0.0)
     for edge in edges:  
@@ -137,7 +138,7 @@ def Cube_contours3():
     glEnd()
 
 def Cube_contours4():
-    glLineWidth(2.0)
+    glLineWidth(0.5)
     glBegin(GL_LINES)
     glColor3f(0.0,0.0,0.0)
     for edge in edges:  
@@ -148,7 +149,7 @@ def Cube_contours4():
     glEnd()
 
 def Cube_contours5():
-    glLineWidth(2.0)
+    glLineWidth(0.5)
     glBegin(GL_LINES)
     glColor3f(0.0,0.0,0.0)
     for edge in edges:  
@@ -158,12 +159,19 @@ def Cube_contours5():
             glVertex3fv(verticies5[vertex])
     glEnd()
 
+def random_color():
+    r = random.randint(0,1)
+    g = random.randint(0,1)
+    b = random.randint(0,1)
+    return r, g, b
+
 def Cube2():
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_CULL_FACE)
     glCullFace(GL_FRONT)
     glBegin(GL_QUADS)
-    glColor3f(0.7, 1.0, 1.0)
+    r,g,b = random_color()
+    glColor3f(r, g, b)
     for surface in surfaces: 
         x=0
         for vertex in surface:
@@ -176,7 +184,8 @@ def Cube3():
     glEnable(GL_CULL_FACE)
     glCullFace(GL_FRONT)
     glBegin(GL_QUADS)
-    glColor3f(0.7, 1.0, 1.0)
+    r,g,b = random_color()
+    glColor3f(r, g, b)
     for surface in surfaces: 
         x=0
         for vertex in surface:
@@ -189,7 +198,8 @@ def Cube4():
     glEnable(GL_CULL_FACE)
     glCullFace(GL_FRONT)
     glBegin(GL_QUADS)
-    glColor3f(0.7, 1.0, 1.0)
+    r,g,b = random_color()
+    glColor3f(r, g, b)
     for surface in surfaces: 
         x=0
         for vertex in surface:
@@ -202,15 +212,14 @@ def Cube5():
     glEnable(GL_CULL_FACE)
     glCullFace(GL_FRONT)
     glBegin(GL_QUADS)
-    glColor3f(0.7, 1.0, 1.0)
+    r,g,b = random_color()
+    glColor3f(r, g, b)
     for surface in surfaces: 
         x=0
         for vertex in surface:
             x+=1
             glVertex3fv(verticies5[vertex])
     glEnd()
-
-
 
 # DIBUJA CUBO 
 def Cube():
