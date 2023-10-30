@@ -247,6 +247,7 @@ def main():
     glClearColor(0.62, 0.62, 0.62, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
     glTranslatef(0.0, 0.0, -7.0)
+    glRotatef(27.1, 1, 0, 0)
     
     running = True
     while (running):
@@ -268,7 +269,7 @@ def main():
             
         if rot == True:
             glRotatef(1, 0, 1, 0)
-        glTranslatef(0.0, 0.0, 0.0)  
+        
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
         Cube()
