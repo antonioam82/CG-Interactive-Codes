@@ -241,7 +241,7 @@ def Cube():
 # FUNCIÓN PRINCIPAL
 def main():
     pygame.init()
-    display = (800, 600)#(800, 600)
+    display = (800, 600)#(1600,870) #(800, 600)#(800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     rot = False
     glClearColor(0.62, 0.62, 0.62, 1.0)
@@ -340,7 +340,43 @@ def main():
             verticies4[5][0] += 0.07
             verticies4[6][0] += 0.07
             verticies4[7][0] += 0.07
-            
+
+        if key[pygame.K_m]:
+            verticies2[0][2] -= 0.07
+            verticies2[1][2] -= 0.07
+            verticies2[2][2] -= 0.07
+            verticies2[3][2] -= 0.07
+            verticies2[4][2] -= 0.07
+            verticies2[5][2] -= 0.07
+            verticies2[6][2] -= 0.07
+            verticies2[7][2] -= 0.07
+
+            verticies5[0][2] += 0.07
+            verticies5[1][2] += 0.07
+            verticies5[2][2] += 0.07
+            verticies5[3][2] += 0.07
+            verticies5[4][2] += 0.07
+            verticies5[5][2] += 0.07
+            verticies5[6][2] += 0.07
+            verticies5[7][2] += 0.07            
+
+            verticies3[0][0] += 0.07
+            verticies3[1][0] += 0.07
+            verticies3[2][0] += 0.07
+            verticies3[3][0] += 0.07
+            verticies3[4][0] += 0.07
+            verticies3[5][0] += 0.07
+            verticies3[6][0] += 0.07
+            verticies3[7][0] += 0.07
+
+            verticies4[0][0] -= 0.07
+            verticies4[1][0] -= 0.07
+            verticies4[2][0] -= 0.07
+            verticies4[3][0] -= 0.07
+            verticies4[4][0] -= 0.07
+            verticies4[5][0] -= 0.07
+            verticies4[6][0] -= 0.07
+            verticies4[7][0] -= 0.07
             
         if rot == True:
             glRotatef(1, 0, 1, 0)
