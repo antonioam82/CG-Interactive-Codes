@@ -14,6 +14,18 @@ verticies = [
     [-1, 4, 1]    # sup, izq, del
     ]
 
+verticies2 = [
+    [-2, 0, -1],   # inf, der, tras
+    [-2, 2, -1],   # sup, der, tras
+    [-4, 2, -1],  # sup, izq, tras
+    [-4, 0, -1],  # inf, izq, tras
+    [-2, 0, 1],    # inf, der, del
+    [-2, 2, 1],    # sup, der, del
+    [-4, 0, 1],   # inf, izq, del
+    [-4, 2, 1]    # sup, izq, del
+    ]
+    
+
 surfaces = (
     (0,1,2,3),
     (3,2,7,6),
@@ -39,7 +51,7 @@ edges = (
     )
 
 # DIBUJA CONTORNOS DEL CUBO
-def Cube():
+def Cube(v):
     glLineWidth(2.0)
     glBegin(GL_LINES)
     glColor3f(1.0,0.0,0.0,)
@@ -47,11 +59,11 @@ def Cube():
         x=0
         for vertex in edge:
             x+=1
-            glVertex3fv(verticies[vertex])
+            glVertex3fv(v[vertex])
     glEnd()
 
 # DIBUJA CUBO SOBRE EL GRID    
-def CubeB():
+def CubeB(v):
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_CULL_FACE)
     glCullFace(GL_FRONT)
@@ -62,7 +74,7 @@ def CubeB():
         for vertex in surface:
             x+=1
             #glColor3fv(colors[x])
-            glVertex3fv(verticies[vertex])
+            glVertex3fv(v[vertex])
     glEnd()
 
 grid_size = 120
@@ -140,8 +152,9 @@ def main():
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
-        #CubeB()
-        Cube()
+        CubeB(verticies)
+        Cube(verticies)
+        Cube(verticies2)
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
