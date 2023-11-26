@@ -193,7 +193,7 @@ def main():
         draw_grid()
         #CubeB()
         Cube()
-        drawText(font, 20, 570, f"cube speed:{cube_speed}")#######################
+        drawText(font, 20, 570, f'cube speed:{cube_speed:.3f}')#######################
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
