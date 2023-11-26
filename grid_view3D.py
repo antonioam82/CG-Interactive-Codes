@@ -87,7 +87,6 @@ def draw_grid():
 
 # MOSTRAR TEXTO ESQUINA SUP. IZQUIERDA
 def drawText(f, x, y, text):
-    #font = pygame.font.SysFont('arial', 15)
     textSurface = f.render(text, True, (0, 0, 255, 255), (0, 0, 0))
     textData = pygame.image.tostring(textSurface, "RGBA", True)
     glWindowPos2d(x, y)
