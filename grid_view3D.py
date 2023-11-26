@@ -85,12 +85,22 @@ def draw_grid():
 
     glEnd()
 
+# MOSTRAR TEXTO ESQUINA SUP. IZQUIERDA
+def drawText(f, x, y, text):
+    #font = pygame.font.SysFont('arial', 15)
+    textSurface = f.render(text, True, (0, 0, 255, 255), (0, 0, 0))
+    textData = pygame.image.tostring(textSurface, "RGBA", True)
+    glWindowPos2d(x, y)
+    glDrawPixels(textSurface.get_width(), textSurface.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, textData)
+
 # FUNCIÓN PRINCIPAL
 def main():
     global cube_speed
     pygame.init()
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+    font = pygame.font.SysFont('arial', 15)
+    
     x = 0.0
     z = 0.0
     
@@ -183,6 +193,7 @@ def main():
         draw_grid()
         #CubeB()
         Cube()
+        drawText(font, 20, 570, f"cube speed:{cube_speed}")#######################
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
