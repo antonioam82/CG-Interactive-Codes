@@ -101,8 +101,8 @@ def main():
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     font = pygame.font.SysFont('arial', 15)
     
-    x = 0.0
-    z = 0.0
+    #x = 0.0
+    #z = 0.0
     
     glClearColor(0.0, 0.0, 0.0, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
@@ -171,6 +171,8 @@ def main():
             cube_speed += 0.002
         if key[pygame.K_x]:
             cube_speed -= 0.002
+        if key[pygame.K_c]:
+            cube_speed = 0.050
                        
         # ROTACIONES
         '''if key[pygame.K_q]:
@@ -193,7 +195,8 @@ def main():
         draw_grid()
         #CubeB()
         Cube()
-        drawText(font, 20, 570, f'cube speed:{cube_speed:.3f}')#######################
+        drawText(font, 20, 570, f'cube speed: {cube_speed:.3f}')#######################
+        drawText(font, 20, 554, 'camera speed: 0.050')
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
