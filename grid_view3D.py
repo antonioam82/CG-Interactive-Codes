@@ -44,8 +44,6 @@ edges = (
     (5,7)
     )
 
-cube_speed = 0.050
-
 # DIBUJA CONTORNOS DEL CUBO
 def Cube():
     glLineWidth(2.0)
@@ -73,6 +71,7 @@ def Cube():
             glVertex3fv(verticies[vertex])
     glEnd()'''
 
+cube_speed = 0.050
 grid_size = 120
 grid_spacing = 1
 
@@ -94,6 +93,7 @@ def draw_grid():
 
 # FUNCIÓN PRINCIPAL
 def main():
+    global cube_speed
     pygame.init()
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
@@ -162,24 +162,11 @@ def main():
             verticies[5][2] += cube_speed
             verticies[6][2] += cube_speed
             verticies[7][2] += cube_speed
-            
-        '''if key[pygame.K_o]:
-            x = 0.050
-            z = 0.050
-            glTranslatef(x, 0.0, z)
-        if key[pygame.K_p]:
-            x = -0.050
-            z = 0.050
-            glTranslatef(x, 0.0, z)
-        if key[pygame.K_k]:
-            x = -0.050
-            z = -0.050
-        if key[pygame.K_l]:
-            x = 0.050
-            z = -0.050
-            glTranslatef(x, 0.0, z)
 
-        #if key[pygame.K_h]:'''
+        if key[pygame.K_z]:
+            cube_speed += 0.002
+        if key[pygame.K_x]:
+            cube_speed -= 0.002
                   
             
         # ROTACIONES
