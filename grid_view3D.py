@@ -51,7 +51,7 @@ def Cube():
     glEnd()
 
 # DIBUJA CUBO SOBRE EL GRID    
-'''def CubeB():
+def CubeB():
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_CULL_FACE)
     glCullFace(GL_FRONT)
@@ -63,7 +63,7 @@ def Cube():
             x+=1
             #glColor3fv(colors[x])
             glVertex3fv(verticies[vertex])
-    glEnd()'''
+    glEnd()
 
 cube_speed = 0.050
 grid_size = 120
@@ -174,7 +174,7 @@ def main():
             cube_speed = 0.050
                        
         # ROTACIONES
-        '''if key[pygame.K_q]:
+        if key[pygame.K_q]:
             glRotatef(1, 0, 1, 0)
         if key[pygame.K_w]:
             glRotatef(1, 0, -1, 0)        
@@ -186,13 +186,13 @@ def main():
         if key[pygame.K_y]:
             glRotatef(0.1, 0, 0, 1)
         if key[pygame.K_u]:
-            glRotatef(0.1, 0, 0, -1)'''
+            glRotatef(0.1, 0, 0, -1)
 
         #glTranslatef(x, 0.0, z)
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
-        #CubeB()
+        CubeB()
         Cube()
         drawText(font, 20, 570, f'cube speed: {cube_speed:.3f}')#######################
         drawText(font, 20, 554, 'camera speed: 0.050')
