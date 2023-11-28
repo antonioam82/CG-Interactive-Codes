@@ -99,6 +99,7 @@ def main():
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     font = pygame.font.SysFont('arial', 15)
+    direction = None
     
     #x = 0.0
     #z = 0.0
@@ -119,6 +120,7 @@ def main():
         if key[pygame.K_LEFT]:
             x = 0.050
             z = 0.0
+            direction = "W"
             glTranslatef(x, 0.0, z)
             verticies[0][0] -= cube_speed
             verticies[1][0] -= cube_speed
@@ -131,6 +133,7 @@ def main():
         if key[pygame.K_RIGHT]:
             x = -0.050
             z = 0.0
+            direction = "E"
             glTranslatef(x, 0.0, z)
             verticies[0][0] += cube_speed
             verticies[1][0] += cube_speed
@@ -143,6 +146,7 @@ def main():
         if key[pygame.K_UP]:
             z = 0.050
             x = 0.0
+            direction = "N"
             glTranslatef(x, 0.0, z)
             verticies[0][2] -= cube_speed
             verticies[1][2] -= cube_speed
@@ -156,6 +160,7 @@ def main():
         if key[pygame.K_DOWN]:
             z = -0.050
             x = 0.0
+            direction = "S"
             glTranslatef(x, 0.0, z)
             verticies[0][2] += cube_speed
             verticies[1][2] += cube_speed
@@ -196,8 +201,10 @@ def main():
         Cube()
         drawText(font, 20, 570, f'cube speed: {cube_speed:.3f}')#######################
         drawText(font, 20, 554, 'camera speed: 0.050')
+        #drawText(font, 20, 538, f'direction: {direction}')
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
          
 main()
+
