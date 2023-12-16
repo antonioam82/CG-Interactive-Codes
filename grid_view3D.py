@@ -121,6 +121,7 @@ def main():
             x = 0.050
             z = 0.0
             direction = "W"
+            #glPushMatrix()
             glTranslatef(x, 0.0, z)
             verticies[0][0] -= cube_speed
             verticies[1][0] -= cube_speed
@@ -130,6 +131,8 @@ def main():
             verticies[5][0] -= cube_speed
             verticies[6][0] -= cube_speed
             verticies[7][0] -= cube_speed
+            #glPopMatrix()
+            
         if key[pygame.K_RIGHT]:
             x = -0.050
             z = 0.0
@@ -181,6 +184,7 @@ def main():
         # ROTACIONES
         if key[pygame.K_q]:
             glRotatef(1, 0, 1, 0)
+            
         if key[pygame.K_w]:
             glRotatef(1, 0, -1, 0)        
         if key[pygame.K_r]:
@@ -192,8 +196,6 @@ def main():
             glRotatef(0.1, 0, 0, 1)
         if key[pygame.K_u]:
             glRotatef(0.1, 0, 0, -1)
-
-        #glTranslatef(x, 0.0, z)
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
@@ -201,7 +203,8 @@ def main():
         Cube()
         drawText(font, 20, 570, f'cube speed: {cube_speed:.3f}')#######################
         drawText(font, 20, 554, 'camera speed: 0.050')
-        #drawText(font, 20, 538, f'direction: {direction}')
+        drawText(font, 20, 538, f'direction: {direction}')
+        direction = "None"
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
