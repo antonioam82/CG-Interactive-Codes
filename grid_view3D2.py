@@ -14,51 +14,6 @@ verticies = [
     [-1, 1, 1]
     ]
 
-verticies_N = [
-    [1, 0, -1],
-    [1, 0.5, -1],
-    [-1, 0.5, -1],
-    [-1, 0, -1],
-    [1, 0, 1],
-    [1, 1, 1],
-    [-1, 0, 1],
-    [-1, 1, 1]
-    ]
-
-verticies_S = [
-    [1, 0, -1],
-    [1, 1, -1],
-    [-1, 1, -1],
-    [-1, 0, -1],
-    [1, 0, 1],
-    [1, 0.5, 1],
-    [-1, 0, 1],
-    [-1, 0.5, 1]
-    ]
-
-verticies_W = [
-    [1, 0, -1],
-    [1, 0.5, -1],
-    [-1, 1, -1],
-    [-1, 0, -1],
-    [1, 0, 1],
-    [1, 0.5, 1],
-    [-1, 0, 1],
-    [-1, 1, 1]
-    ]
-
-verticies_E = [
-    [1, 0, -1],
-    [1, 1, -1],
-    [-1, 0.5, -1],
-    [-1, 0, -1],
-    [1, 0, 1],
-    [1, 1, 1],
-    [-1, 0, 1],
-    [-1, 0.5, 1]
-    ]
-
-
 surfaces = (
     (0,1,2,3),
     (3,2,7,6),
@@ -167,7 +122,7 @@ def main():
             z = 0.0
             direction = "W"
             #glPushMatrix()
-            glTranslatef(x, 0.0, z)
+            #glTranslatef(x, 0.0, z)
             verticies[0][0] -= cube_speed
             verticies[1][0] -= cube_speed
             verticies[2][0] -= cube_speed
@@ -191,7 +146,7 @@ def main():
             x = -0.050
             z = 0.0
             direction = "E"
-            glTranslatef(x, 0.0, z)
+            #glTranslatef(x, 0.0, z)
             verticies[0][0] += cube_speed
             verticies[1][0] += cube_speed
             verticies[2][0] += cube_speed
@@ -214,7 +169,7 @@ def main():
             z = 0.050
             x = 0.0
             direction = "N"
-            glTranslatef(x, 0.0, z)
+            #glTranslatef(x, 0.0, z)
             verticies[0][2] -= cube_speed
             verticies[1][2] -= cube_speed
             verticies[2][2] -= cube_speed
@@ -237,7 +192,7 @@ def main():
             z = -0.050
             x = 0.0
             direction = "S"
-            glTranslatef(x, 0.0, z)
+            #glTranslatef(x, 0.0, z)
             verticies[0][2] += cube_speed
             verticies[1][2] += cube_speed
             verticies[2][2] += cube_speed
@@ -284,7 +239,7 @@ def main():
         CubeB()
         Cube()
         drawText(font, 20, 570, f'cube speed: {cube_speed:.3f}')#######################
-        drawText(font, 20, 554, 'camera speed: 0.050')
+        drawText(font, 20, 554, 'camera speed: 0.000')##########
         drawText(font, 20, 538, f'direction: {direction}')
         direction = "None"
         pygame.display.flip()
