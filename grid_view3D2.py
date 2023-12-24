@@ -207,8 +207,7 @@ def main():
             cube_speed -= 0.002
             
         if key[pygame.K_c]:
-            cube_speed = 0.050
-            camera_speed = 0.050
+            cube_speed = camera_speed
 
         if key[pygame.K_b]:
             camera_speed += 0.002     
