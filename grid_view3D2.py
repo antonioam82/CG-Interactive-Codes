@@ -205,15 +205,15 @@ def main():
             cube_speed += 0.002
         if key[pygame.K_x]:
             cube_speed -= 0.002
+            
         if key[pygame.K_c]:
             cube_speed = 0.050
+            camera_speed = 0.050
 
         if key[pygame.K_b]:
-            camera_speed += 0.002
+            camera_speed += 0.002     
         if key[pygame.K_n]:
             camera_speed -= 0.002
-        if key[pygame.K_m]:
-            camera_speed = 0.050
                        
         # ROTACIONES
         if key[pygame.K_q]:
