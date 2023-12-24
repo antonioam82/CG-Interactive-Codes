@@ -66,6 +66,7 @@ def Cube():
     glEnd()
 
 cube_speed = 0.050
+camera_speed = 0.050
 grid_size = 120
 grid_spacing = 1
 
@@ -94,16 +95,13 @@ def drawText(f, x, y, text):
 
 # FUNCIÓN PRINCIPAL
 def main():
-    global cube_speed
+    global cube_speed, camera_speed
     pygame.init()
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     font = pygame.font.SysFont('arial', 15)
     direction = None
-    
-    #x = 0.0
-    #z = 0.0
-    
+
     glClearColor(0.0, 0.0, 0.0, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
     glTranslatef(0.0, 0.0, -7.0)
@@ -118,11 +116,9 @@ def main():
 
         # CONTROL DE DIRECCIÓN
         if key[pygame.K_LEFT]:
-            x = 0.050
-            z = 0.0
             direction = "W"
             #glPushMatrix()
-            #glTranslatef(x, 0.0, z)
+            glTranslatef(camera_speed, 0.0, 0.0)
             verticies[0][0] -= cube_speed
             verticies[1][0] -= cube_speed
             verticies[2][0] -= cube_speed
@@ -143,10 +139,8 @@ def main():
             verticies[7][1] = 0.5
             
         if key[pygame.K_RIGHT]:
-            x = -0.050
-            z = 0.0
             direction = "E"
-            #glTranslatef(x, 0.0, z)
+            glTranslatef(-camera_speed, 0.0, 0.0)
             verticies[0][0] += cube_speed
             verticies[1][0] += cube_speed
             verticies[2][0] += cube_speed
@@ -166,10 +160,8 @@ def main():
             verticies[7][1] = 1.0
             
         if key[pygame.K_UP]:
-            z = 0.050
-            x = 0.0
             direction = "N"
-            #glTranslatef(x, 0.0, z)
+            glTranslatef(0.0, 0.0, camera_speed)
             verticies[0][2] -= cube_speed
             verticies[1][2] -= cube_speed
             verticies[2][2] -= cube_speed
@@ -189,10 +181,8 @@ def main():
             verticies[7][1] = 1.0
             
         if key[pygame.K_DOWN]:
-            z = -0.050
-            x = 0.0
             direction = "S"
-            #glTranslatef(x, 0.0, z)
+            glTranslatef(0.0, 0.0, -camera_speed)
             verticies[0][2] += cube_speed
             verticies[1][2] += cube_speed
             verticies[2][2] += cube_speed
@@ -217,6 +207,13 @@ def main():
             cube_speed -= 0.002
         if key[pygame.K_c]:
             cube_speed = 0.050
+
+        if key[pygame.K_b]:
+            camera_speed += 0.002
+        if key[pygame.K_n]:
+            camera_speed -= 0.002
+        if key[pygame.K_m]:
+            camera_speed = 0.050
                        
         # ROTACIONES
         if key[pygame.K_q]:
@@ -239,7 +236,7 @@ def main():
         CubeB()
         Cube()
         drawText(font, 20, 570, f'cube speed: {cube_speed:.3f}')#######################
-        drawText(font, 20, 554, 'camera speed: 0.000')##########
+        drawText(font, 20, 554, f'camera speed: {camera_speed:.3f}')##########
         drawText(font, 20, 538, f'direction: {direction}')
         direction = "None"
         pygame.display.flip()
