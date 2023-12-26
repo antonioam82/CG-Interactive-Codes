@@ -71,6 +71,7 @@ cube_speed = 0.050
 camera_speed = 0.050
 grid_size = 120
 grid_spacing = 1
+hide_data = False
 
 # DIBUJA GRID
 def draw_grid():
@@ -97,7 +98,7 @@ def drawText(f, x, y, text):
 
 # FUNCIÓN PRINCIPAL
 def main():
-    global cube_speed, camera_speed
+    global cube_speed, camera_speed, hide_data
     pygame.init()
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
@@ -114,6 +115,13 @@ def main():
         for event in pygame.event.get():
             if (event.type == pygame.QUIT):
                 running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_h:
+                    if hide_data == False:
+                        hide_data = True
+                    else:
+                        hide_data = False
+                    
         key = pygame.key.get_pressed()
 
         # CONTROL DE DIRECCIÓN
@@ -236,9 +244,10 @@ def main():
         draw_grid()
         CubeB()
         Cube()
-        drawText(font, 20, 570, f'cube speed: {cube_speed:.3f}')#######################
-        drawText(font, 20, 554, f'camera speed: {camera_speed:.3f}')##########
-        drawText(font, 20, 538, f'direction: {direction}')
+        if not hide_data:
+            drawText(font, 20, 570, f'cube speed: {cube_speed:.3f}')#######################
+            drawText(font, 20, 554, f'camera speed: {camera_speed:.3f}')##########
+            drawText(font, 20, 538, f'direction: {direction}')
         direction = "None"
         pygame.display.flip()
         pygame.time.wait(10)
