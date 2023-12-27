@@ -121,6 +121,50 @@ def main():
                         hide_data = True
                     else:
                         hide_data = False
+                        
+                elif event.key == pygame.K_RIGHT:
+                    print("definiendo derecha")
+                    verticies[0][1] = 0.0
+                    verticies[1][1] = 0.5
+                    verticies[2][1] = 1.0
+                    verticies[3][1] = 0.0
+                    verticies[4][1] = 0.0
+                    verticies[5][1] = 0.5
+                    verticies[6][1] = 0.0
+                    verticies[7][1] = 1.0
+                    
+                elif event.key == pygame.K_LEFT:
+                    print("definiendo izquierda")
+                    verticies[0][1] = 0.0
+                    verticies[1][1] = 1.0
+                    verticies[2][1] = 0.5
+                    verticies[3][1] = 0.0
+                    verticies[4][1] = 0.0
+                    verticies[5][1] = 1.0
+                    verticies[6][1] = 0.0
+                    verticies[7][1] = 0.5
+                    
+                elif event.key == pygame.K_UP:
+                    print("definiendo adelante")
+                    verticies[0][1] = 0.0
+                    verticies[1][1] = 0.5
+                    verticies[2][1] = 0.5
+                    verticies[3][1] = 0.0
+                    verticies[4][1] = 0.0
+                    verticies[5][1] = 1.0
+                    verticies[6][1] = 0.0
+                    verticies[7][1] = 1.0
+
+                elif event.key == pygame.K_DOWN:
+                    print("Definiendo atras")
+                    verticies[0][1] = 0.0
+                    verticies[1][1] = 1.0
+                    verticies[2][1] = 1.0
+                    verticies[3][1] = 0.0
+                    verticies[4][1] = 0.0
+                    verticies[5][1] = 0.5
+                    verticies[6][1] = 0.0
+                    verticies[7][1] = 0.5    
                     
         key = pygame.key.get_pressed()
 
@@ -138,15 +182,6 @@ def main():
             verticies[6][0] -= cube_speed
             verticies[7][0] -= cube_speed
             #glPopMatrix()
-
-            verticies[0][1] = 0.0
-            verticies[1][1] = 1.0
-            verticies[2][1] = 0.5
-            verticies[3][1] = 0.0
-            verticies[4][1] = 0.0
-            verticies[5][1] = 1.0
-            verticies[6][1] = 0.0
-            verticies[7][1] = 0.5
             
         if key[pygame.K_RIGHT]:
             direction = "E"
@@ -159,15 +194,6 @@ def main():
             verticies[5][0] += cube_speed
             verticies[6][0] += cube_speed
             verticies[7][0] += cube_speed
-
-            verticies[0][1] = 0.0
-            verticies[1][1] = 0.5
-            verticies[2][1] = 1.0
-            verticies[3][1] = 0.0
-            verticies[4][1] = 0.0
-            verticies[5][1] = 0.5
-            verticies[6][1] = 0.0
-            verticies[7][1] = 1.0
             
         if key[pygame.K_UP]:
             direction = "N"
@@ -180,15 +206,6 @@ def main():
             verticies[5][2] -= cube_speed
             verticies[6][2] -= cube_speed
             verticies[7][2] -= cube_speed
-
-            verticies[0][1] = 0.0
-            verticies[1][1] = 0.5
-            verticies[2][1] = 0.5
-            verticies[3][1] = 0.0
-            verticies[4][1] = 0.0
-            verticies[5][1] = 1.0
-            verticies[6][1] = 0.0
-            verticies[7][1] = 1.0
             
         if key[pygame.K_DOWN]:
             direction = "S"
@@ -200,16 +217,7 @@ def main():
             verticies[4][2] += cube_speed
             verticies[5][2] += cube_speed
             verticies[6][2] += cube_speed
-            verticies[7][2] += cube_speed
-
-            verticies[0][1] = 0.0
-            verticies[1][1] = 1.0
-            verticies[2][1] = 1.0
-            verticies[3][1] = 0.0
-            verticies[4][1] = 0.0
-            verticies[5][1] = 0.5
-            verticies[6][1] = 0.0
-            verticies[7][1] = 0.5            
+            verticies[7][2] += cube_speed        
 
         if key[pygame.K_z]:
             cube_speed += 0.002
