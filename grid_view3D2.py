@@ -116,7 +116,7 @@ def main():
             if (event.type == pygame.QUIT):
                 running = False
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_h:
+                if event.key == pygame.K_d:
                     if hide_data == False:
                         hide_data = True
                     else:
@@ -170,7 +170,7 @@ def main():
 
         # CONTROL DE DIRECCIÓN
         if key[pygame.K_LEFT]:
-            direction = "W"
+            direction = "Left"
             #glPushMatrix()
             glTranslatef(camera_speed, 0.0, 0.0)
             verticies[0][0] -= cube_speed
@@ -184,7 +184,7 @@ def main():
             #glPopMatrix()
             
         if key[pygame.K_RIGHT]:
-            direction = "E"
+            direction = "Right"
             glTranslatef(-camera_speed, 0.0, 0.0)
             verticies[0][0] += cube_speed
             verticies[1][0] += cube_speed
@@ -196,7 +196,7 @@ def main():
             verticies[7][0] += cube_speed
             
         if key[pygame.K_UP]:
-            direction = "N"
+            direction = "Forward"
             glTranslatef(0.0, 0.0, camera_speed)
             verticies[0][2] -= cube_speed
             verticies[1][2] -= cube_speed
@@ -208,7 +208,7 @@ def main():
             verticies[7][2] -= cube_speed
             
         if key[pygame.K_DOWN]:
-            direction = "S"
+            direction = "Backward"
             glTranslatef(0.0, 0.0, -camera_speed)
             verticies[0][2] += cube_speed
             verticies[1][2] += cube_speed
