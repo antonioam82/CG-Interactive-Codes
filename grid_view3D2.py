@@ -106,12 +106,13 @@ def main():
     direction = None
 
     glClearColor(0.0, 0.0, 0.0, 1.0)
-    gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
+    gluPerspective(45, (display[0] / display[1]), 0.1, 100.0)
     glTranslatef(0.0, 0.0, -7.0)
     glRotatef(7, 1, 0, 0)
     
     running = True
     while (running):
+        
         for event in pygame.event.get():
             if (event.type == pygame.QUIT):
                 running = False
@@ -247,6 +248,9 @@ def main():
             glRotatef(0.1, 0, 0, 1)
         if key[pygame.K_u]:
             glRotatef(0.1, 0, 0, -1)
+
+        if key[pygame.K_i]:
+            glTranslatef(0.0, 0.0, 0.1)################################
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
@@ -262,3 +266,4 @@ def main():
     pygame.quit()
          
 main()
+
