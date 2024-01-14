@@ -271,16 +271,17 @@ def main():
             drawText(font, 20, 538, f'direction: {direction}',(0, 0, 255, 255),(0,0,0))
             
         if display_help:
-            drawText(font2, 210, 520, 'Toggle Help                          H', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 500, 'Move Forward                     (UP)', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 480, 'Move Backward                (DOWN)', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 460, 'Move Left                 (LEFT)', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 440, 'Move Right                                    (RIGHT)', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 420, 'Increase Cube Speed                             Z', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 400, 'Decrease Cube Speed                           X', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 380, 'Adjust Cube Speed to Camera Speed     C', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 360, 'Increase Camera Speed               B', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 340, 'Decrease Camera Speed               N', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 500, '--------------------BUTTONS--------------------', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 480, 'Toggle help                                           H', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 460, 'Move foward                                    (UP)', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 440, 'Move backward                          (DOWN)', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 420, 'Move left                                      (LEFT)', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 400, 'Move right                                  (RIGHT)', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 380, 'Increase cube speed                             Z', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 360, 'Decrease cube speed                           X', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 340, 'Adjust cube speed to camera speed      C', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 320, 'Increase camera speed                         B', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 300, 'Decrease camera speed                        N', (255, 255, 255, 255),(0,0,255))
             
         direction = "None"
         pygame.display.flip()
