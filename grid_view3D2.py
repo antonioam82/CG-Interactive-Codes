@@ -91,9 +91,9 @@ def draw_grid():
     glEnd()
 
 # MOSTRAR TEXTO ESQUINA SUP. IZQUIERDA
-def drawText(f, x, y, text, c):
+def drawText(f, x, y, text, c, bgc):
     #textSurface = f.render(text, True, (0, 0, 255, 255), (0, 0, 0))
-    textSurface = f.render(text, True, c, (0, 0, 0))
+    textSurface = f.render(text, True, c, bgc)
     textData = pygame.image.tostring(textSurface, "RGBA", True)
     glWindowPos2d(x, y)
     glDrawPixels(textSurface.get_width(), textSurface.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, textData)
@@ -266,21 +266,21 @@ def main():
         CubeB()
         Cube()
         if not hide_data:
-            drawText(font, 20, 570, f'cube speed: {cube_speed:.3f}',(0, 0, 255, 255))#######################
-            drawText(font, 20, 554, f'camera speed: {camera_speed:.3f}',(0, 0, 255, 255))##########
-            drawText(font, 20, 538, f'direction: {direction}',(0, 0, 255, 255))
+            drawText(font, 20, 570, f'cube speed: {cube_speed:.3f}',(0, 0, 255, 255),(0,0,0))#######################
+            drawText(font, 20, 554, f'camera speed: {camera_speed:.3f}',(0, 0, 255, 255),(0,0,0))##########
+            drawText(font, 20, 538, f'direction: {direction}',(0, 0, 255, 255),(0,0,0))
             
         if display_help:
-            drawText(font2, 210, 520, 'Toggle Help H', (255, 255, 255, 255))
-            drawText(font2, 210, 500, 'Move Forward                         (UP)', (255, 255, 255, 255))
-            drawText(font2, 210, 480, 'Move Backward                       (DOWN)', (255, 255, 255, 255))
-            drawText(font2, 210, 460, 'Move Left                           (LEFT)', (255, 255, 255, 255))
-            drawText(font2, 210, 440, 'Move Right                          (RIGHT)', (255, 255, 255, 255))
-            drawText(font2, 210, 420, 'Increase Cube Speed                             Z', (255, 255, 255, 255))
-            drawText(font2, 210, 400, 'Decrease Cube Speed                           X', (255, 255, 255, 255))
-            drawText(font2, 210, 380, 'Adjust Cube Speed to Camera Speed     C', (255, 255, 255, 255))
-            drawText(font2, 210, 360, 'Increase Camera Speed               B', (255, 255, 255, 255))
-            drawText(font2, 210, 340, 'Decrease Camera Speed               N', (255, 255, 255, 255))
+            drawText(font2, 210, 520, 'Toggle Help                          H', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 500, 'Move Forward                     (UP)', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 480, 'Move Backward                (DOWN)', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 460, 'Move Left                 (LEFT)', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 440, 'Move Right                                    (RIGHT)', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 420, 'Increase Cube Speed                             Z', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 400, 'Decrease Cube Speed                           X', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 380, 'Adjust Cube Speed to Camera Speed     C', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 360, 'Increase Camera Speed               B', (255, 255, 255, 255),(0,0,255))
+            drawText(font2, 210, 340, 'Decrease Camera Speed               N', (255, 255, 255, 255),(0,0,255))
             
         direction = "None"
         pygame.display.flip()
