@@ -72,6 +72,7 @@ camera_speed = 0.050
 grid_size = 120
 grid_spacing = 1
 hide_data = False
+display_help = False
 
 # DIBUJA GRID
 def draw_grid():
@@ -90,19 +91,21 @@ def draw_grid():
     glEnd()
 
 # MOSTRAR TEXTO ESQUINA SUP. IZQUIERDA
-def drawText(f, x, y, text):
-    textSurface = f.render(text, True, (0, 0, 255, 255), (0, 0, 0))
+def drawText(f, x, y, text, c):
+    #textSurface = f.render(text, True, (0, 0, 255, 255), (0, 0, 0))
+    textSurface = f.render(text, True, c, (0, 0, 0))
     textData = pygame.image.tostring(textSurface, "RGBA", True)
     glWindowPos2d(x, y)
     glDrawPixels(textSurface.get_width(), textSurface.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, textData)
 
 # FUNCIÓN PRINCIPAL
 def main():
-    global cube_speed, camera_speed, hide_data
+    global cube_speed, camera_speed, hide_data, display_help
     pygame.init()
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     font = pygame.font.SysFont('arial', 15)
+    font2 = pygame.font.SysFont('arial', 20)
     direction = None
 
     glClearColor(0.0, 0.0, 0.0, 1.0)
@@ -122,6 +125,12 @@ def main():
                         hide_data = True
                     else:
                         hide_data = False
+                        
+                elif event.key == pygame.K_h:
+                    if display_help == False:
+                        display_help = True
+                    else:
+                        display_help = False
                         
                 elif event.key == pygame.K_RIGHT:
                     print("definiendo derecha")
@@ -257,9 +266,22 @@ def main():
         CubeB()
         Cube()
         if not hide_data:
-            drawText(font, 20, 570, f'cube speed: {cube_speed:.3f}')#######################
-            drawText(font, 20, 554, f'camera speed: {camera_speed:.3f}')##########
-            drawText(font, 20, 538, f'direction: {direction}')
+            drawText(font, 20, 570, f'cube speed: {cube_speed:.3f}',(0, 0, 255, 255))#######################
+            drawText(font, 20, 554, f'camera speed: {camera_speed:.3f}',(0, 0, 255, 255))##########
+            drawText(font, 20, 538, f'direction: {direction}',(0, 0, 255, 255))
+            
+        if display_help:
+            drawText(font2, 210, 520, 'Toggle Help H', (255, 255, 255, 255))
+            drawText(font2, 210, 500, 'Move Forward                         (UP)', (255, 255, 255, 255))
+            drawText(font2, 210, 480, 'Move Backward                       (DOWN)', (255, 255, 255, 255))
+            drawText(font2, 210, 460, 'Move Left                           (LEFT)', (255, 255, 255, 255))
+            drawText(font2, 210, 440, 'Move Right                          (RIGHT)', (255, 255, 255, 255))
+            drawText(font2, 210, 420, 'Increase Cube Speed                             Z', (255, 255, 255, 255))
+            drawText(font2, 210, 400, 'Decrease Cube Speed                           X', (255, 255, 255, 255))
+            drawText(font2, 210, 380, 'Adjust Cube Speed to Camera Speed     C', (255, 255, 255, 255))
+            drawText(font2, 210, 360, 'Increase Camera Speed               B', (255, 255, 255, 255))
+            drawText(font2, 210, 340, 'Decrease Camera Speed               N', (255, 255, 255, 255))
+            
         direction = "None"
         pygame.display.flip()
         pygame.time.wait(10)
