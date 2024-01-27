@@ -259,7 +259,15 @@ def main():
             glRotatef(0.1, 0, 0, -1)
 
         if key[pygame.K_i]:
-            glTranslatef(0.0, 0.0, 0.1)################################
+            '''verticies[0][2] -= 0.1
+            verticies[1][2] -= 0.1
+            verticies[2][2] -= 0.1
+            verticies[3][2] -= 0.1
+            verticies[4][2] -= 0.1
+            verticies[5][2] -= 0.1
+            verticies[6][2] -= 0.1
+            verticies[7][2] -= 0.1'''
+            glTranslatef(0.0, 0.0, -0.1)################################
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
