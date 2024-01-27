@@ -67,7 +67,7 @@ def Cube():
             glVertex3fv(verticies[vertex])
     glEnd()
 
-cube_speed = 0.050
+cube_speed = 0.00#0.050
 camera_speed = 0.050
 grid_size = 120
 grid_spacing = 1
@@ -107,6 +107,7 @@ def main():
     font = pygame.font.SysFont('arial', 15)
     font2 = pygame.font.SysFont('arial', 20)
     direction = None
+    #gluOrtho2D(0, 800, 0, 300)##
 
     glClearColor(0.0, 0.0, 0.0, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 100.0)
@@ -267,6 +268,9 @@ def main():
             verticies[5][2] -= 0.1
             verticies[6][2] -= 0.1
             verticies[7][2] -= 0.1'''
+            glTranslatef(0.0, 0.0, 0.1)#################################
+
+        if key[pygame.K_o]:
             glTranslatef(0.0, 0.0, -0.1)################################
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
