@@ -4,9 +4,24 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+from math import *
+import numpy as np
 
 grid_size = 120
 grid_spacing = 1
+
+projection_matrix = np.matrix([
+    [1, 0, 0],
+    [0, 1, 0],
+    [0, 0, 0]
+    ])
+
+angle = 90
+rotation_y = np.matrix([
+    [cos(angle), 0, sin(angle)],
+    [0,1,0],
+    [-sin(angle), 0, cos(angle)]
+    ]) 
 
 verticies = [
     [1, 0, -1],
