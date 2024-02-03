@@ -118,7 +118,20 @@ def main():
         
         for event in pygame.event.get():
             if (event.type == pygame.QUIT):
-                running = False   
+                running = False
+
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                    print("PRESSED RIGHT")
+
+                elif event.key == pygame.K_LEFT:
+                    print("PESSED LEFT")
+                    
+                elif event.key == pygame.K_UP:
+                    print("PRESSED UP")
+
+                elif event.key == pygame.K_DOWN:
+                    print("PRESSED DOWN")
                     
         key = pygame.key.get_pressed()
         
