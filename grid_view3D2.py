@@ -176,10 +176,6 @@ def main():
                     verticies[5][1] = 0.5
                     verticies[6][1] = 0.0
                     verticies[7][1] = 0.5
-                elif event.key == pygame.K_i:
-                    gluPerspective(45, (display[0] / display[1]), 0.1, 100.0)
-                    glTranslatef(0.0, 0.0, -7.0)
-                    #glRotatef(7, 1, 0, 0) 
                     
         key = pygame.key.get_pressed()
 
@@ -249,6 +245,7 @@ def main():
             camera_speed -= 0.002
                        
         # ROTACIONES
+
         if key[pygame.K_q]:
             glRotatef(1, 0, 1, 0)
             
@@ -263,20 +260,6 @@ def main():
             glRotatef(0.1, 0, 0, 1)
         if key[pygame.K_u]:
             glRotatef(0.1, 0, 0, -1)
-
-        
-            '''verticies[0][2] -= cube_speed
-            verticies[1][2] -= cube_speed
-            verticies[2][2] -= cube_speed
-            verticies[3][2] -= cube_speed
-            verticies[4][2] -= cube_speed
-            verticies[5][2] -= cube_speed
-            verticies[6][2] -= cube_speed
-            verticies[7][2] -= cube_speed
-            glTranslatef(0.0, 0.0, camera_speed)#################################'''
-
-        if key[pygame.K_o]:
-            glTranslatef(0.0, 0.0, -camera_speed)################################
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
