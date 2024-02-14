@@ -89,11 +89,11 @@ def Cube():
             glVertex3fv(verticies[vertex])
     glEnd()
 
-cube_speed = 0.10 #0.00
-camera_speed = 0.10
+cube_speed = 0.20 #0.00
+camera_speed = 0.0
 grid_size = 120
 grid_spacing = 1
-hide_data = False
+hide_data = True
 display_help = False
 
 # DIBUJA GRID
