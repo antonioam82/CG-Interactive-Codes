@@ -175,7 +175,11 @@ def main():
                     verticies[4][1] = 0.0
                     verticies[5][1] = 0.5
                     verticies[6][1] = 0.0
-                    verticies[7][1] = 0.5    
+                    verticies[7][1] = 0.5
+                elif event.key == pygame.K_i:
+                    gluPerspective(45, (display[0] / display[1]), 0.1, 100.0)
+                    glTranslatef(0.0, 0.0, -7.0)
+                    #glRotatef(7, 1, 0, 0) 
                     
         key = pygame.key.get_pressed()
 
@@ -228,7 +232,8 @@ def main():
             verticies[4][2] += cube_speed
             verticies[5][2] += cube_speed
             verticies[6][2] += cube_speed
-            verticies[7][2] += cube_speed        
+            verticies[7][2] += cube_speed
+            
 
         if key[pygame.K_z]:
             cube_speed += 0.002
@@ -259,19 +264,19 @@ def main():
         if key[pygame.K_u]:
             glRotatef(0.1, 0, 0, -1)
 
-        if key[pygame.K_i]:
-            '''verticies[0][2] -= 0.1
-            verticies[1][2] -= 0.1
-            verticies[2][2] -= 0.1
-            verticies[3][2] -= 0.1
-            verticies[4][2] -= 0.1
-            verticies[5][2] -= 0.1
-            verticies[6][2] -= 0.1
-            verticies[7][2] -= 0.1'''
-            glTranslatef(0.0, 0.0, 0.1)#################################
+        
+            '''verticies[0][2] -= cube_speed
+            verticies[1][2] -= cube_speed
+            verticies[2][2] -= cube_speed
+            verticies[3][2] -= cube_speed
+            verticies[4][2] -= cube_speed
+            verticies[5][2] -= cube_speed
+            verticies[6][2] -= cube_speed
+            verticies[7][2] -= cube_speed
+            glTranslatef(0.0, 0.0, camera_speed)#################################'''
 
         if key[pygame.K_o]:
-            glTranslatef(0.0, 0.0, -0.1)################################
+            glTranslatef(0.0, 0.0, -camera_speed)################################
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
