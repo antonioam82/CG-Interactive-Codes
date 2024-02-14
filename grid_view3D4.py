@@ -67,8 +67,8 @@ def Cube():
             glVertex3fv(verticies[vertex])
     glEnd()
 
-cube_speed = 0.050 #0.00
-camera_speed = 0.050
+cube_speed = 0.10 #0.00
+camera_speed = 0.10
 grid_size = 120
 grid_spacing = 1
 hide_data = False
