@@ -111,7 +111,7 @@ def main():
 
     glClearColor(0.0, 0.0, 0.0, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 100.0)
-    glTranslatef(0.0, 0.0, -7.0)
+    glTranslatef(0.0, 0.0, -20.0)
     #glRotatef(7, 1, 0, 0)
     glRotatef(30, 1, 0, 0)
     
