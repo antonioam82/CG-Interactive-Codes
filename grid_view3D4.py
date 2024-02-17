@@ -17,8 +17,8 @@ verticies = [
     ]
 
 verticies2 = [
-    [1, 0, -1],  # Ajusta la posición del cubo en el eje Z
-    [1, 0.5, -1],  # Ajusta la posición del cubo en el eje Z
+    [1, 0, -1],  
+    [1, 0.5, -1],  
     [-1, 0.5, -1],
     [-1, 0, -1],
     [1, 0, 1],
@@ -52,7 +52,7 @@ edges = (
     )
 
 def CubeN():
-    glLineWidth(2.0)
+    glLineWidth(3.0)
     glBegin(GL_LINES)
     glColor3f(1.0,1.0,0.0,)
     for edge in edges:  
@@ -79,7 +79,7 @@ def CubeB():
 
 # DIBUJA CUBO SOBRE EL GRID    
 def Cube():
-    glLineWidth(2.0)
+    glLineWidth(3.0)
     glBegin(GL_LINES)
     glColor3f(1.0,0.0,0.0,)
     for edge in edges:  
@@ -98,6 +98,7 @@ display_help = False
 
 # DIBUJA GRID
 def draw_grid():
+    glLineWidth(1.0)
     glBegin(GL_LINES)
     glColor3f(0.0,1.0,0.0)#(0.5, 0.5, 0.5)  # Color gris
     
@@ -360,7 +361,7 @@ def main():
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         CubeN()
         draw_grid()
-        CubeB()
+        #CubeB()
         Cube()
         
         if not hide_data:
