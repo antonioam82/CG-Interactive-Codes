@@ -51,7 +51,6 @@ def Cube():
         x=0
         for vertex in surface:
             x+=1
-            #glColor3fv(colors[x])
             glVertex3fv(verticies[vertex])
     glEnd()
     
@@ -71,6 +70,11 @@ grid_size = 120
 grid_spacing = 1
 hide_data = False
 
+def cube_form(val_list):
+    val_list = val_list
+    for i in range(0,8):
+        verticies[i][1] = val_list[i]
+
 # DIBUJA GRID
 def draw_grid():
     glBegin(GL_LINES)
@@ -89,7 +93,6 @@ def draw_grid():
 
 # MOSTRAR TEXTO ESQUINA SUP. IZQUIERDA
 def drawText(f, x, y, text, c, bgc):
-    #textSurface = f.render(text, True, (0, 0, 255, 255), (0, 0, 0))
     textSurface = f.render(text, True, c, bgc)
     textData = pygame.image.tostring(textSurface, "RGBA", True)
     glWindowPos2d(x, y)
@@ -104,7 +107,6 @@ def main():
     font = pygame.font.SysFont('arial', 15)
     font2 = pygame.font.SysFont('arial', 20)
     direction = None
-    #gluOrtho2D(0, 800, 0, 300)##
 
     glClearColor(0.0, 0.0, 0.0, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 100.0)
@@ -126,47 +128,19 @@ def main():
                         
                 elif event.key == pygame.K_RIGHT:
                     print("definiendo derecha")
-                    verticies[0][1] = 0.0
-                    verticies[1][1] = 0.5
-                    verticies[2][1] = 1.0
-                    verticies[3][1] = 0.0
-                    verticies[4][1] = 0.0
-                    verticies[5][1] = 0.5
-                    verticies[6][1] = 0.0
-                    verticies[7][1] = 1.0
+                    cube_form([0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
                     
                 elif event.key == pygame.K_LEFT:
                     print("definiendo izquierda")
-                    verticies[0][1] = 0.0
-                    verticies[1][1] = 1.0
-                    verticies[2][1] = 0.5
-                    verticies[3][1] = 0.0
-                    verticies[4][1] = 0.0
-                    verticies[5][1] = 1.0
-                    verticies[6][1] = 0.0
-                    verticies[7][1] = 0.5
+                    cube_form([0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
                     
                 elif event.key == pygame.K_UP:
                     print("definiendo adelante")
-                    verticies[0][1] = 0.0
-                    verticies[1][1] = 0.5
-                    verticies[2][1] = 0.5
-                    verticies[3][1] = 0.0
-                    verticies[4][1] = 0.0
-                    verticies[5][1] = 1.0
-                    verticies[6][1] = 0.0
-                    verticies[7][1] = 1.0
+                    cube_form([0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
 
                 elif event.key == pygame.K_DOWN:
                     print("Definiendo atras")
-                    verticies[0][1] = 0.0
-                    verticies[1][1] = 1.0
-                    verticies[2][1] = 1.0
-                    verticies[3][1] = 0.0
-                    verticies[4][1] = 0.0
-                    verticies[5][1] = 0.5
-                    verticies[6][1] = 0.0
-                    verticies[7][1] = 0.5
+                    cube_form([0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
                     
         key = pygame.key.get_pressed()
 
