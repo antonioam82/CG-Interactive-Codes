@@ -40,8 +40,8 @@ edges = (
     (5,7)
     )
 
-# DIBUJA CONTORNOS DEL CUBO
-def CubeB():
+# DIBUJA FIGURA
+def Cube():
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_CULL_FACE)
     glCullFace(GL_FRONT)
@@ -54,9 +54,7 @@ def CubeB():
             #glColor3fv(colors[x])
             glVertex3fv(verticies[vertex])
     glEnd()
-
-# DIBUJA CUBO SOBRE EL GRID    
-def Cube():
+    
     glLineWidth(2.0)
     glBegin(GL_LINES)
     glColor3f(1.0,0.0,0.0,)
@@ -72,7 +70,6 @@ camera_speed = 0.050
 grid_size = 120
 grid_spacing = 1
 hide_data = False
-display_help = False
 
 # DIBUJA GRID
 def draw_grid():
@@ -127,12 +124,6 @@ def main():
                     else:
                         hide_data = False
                         
-                elif event.key == pygame.K_h:
-                    if display_help == False:
-                        display_help = True
-                    else:
-                        display_help = False
-                        
                 elif event.key == pygame.K_RIGHT:
                     print("definiendo derecha")
                     verticies[0][1] = 0.0
@@ -182,7 +173,6 @@ def main():
         # CONTROL DE DIRECCIÓN
         if key[pygame.K_LEFT]:
             direction = "Left"
-            #glPushMatrix()
             glTranslatef(camera_speed, 0.0, 0.0)
             verticies[0][0] -= cube_speed
             verticies[1][0] -= cube_speed
@@ -192,7 +182,6 @@ def main():
             verticies[5][0] -= cube_speed
             verticies[6][0] -= cube_speed
             verticies[7][0] -= cube_speed
-            #glPopMatrix()
             
         if key[pygame.K_RIGHT]:
             direction = "Right"
@@ -245,7 +234,6 @@ def main():
             camera_speed -= 0.002
                        
         # ROTACIONES
-
         if key[pygame.K_q]:
             glRotatef(1, 0, 1, 0)
             
@@ -263,25 +251,11 @@ def main():
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
-        CubeB()
         Cube()
         if not hide_data:
             drawText(font, 20, 570, f'cube speed: {cube_speed:.3f}',(0, 0, 255, 255),(0,0,0))#######################
             drawText(font, 20, 554, f'camera speed: {camera_speed:.3f}',(0, 0, 255, 255),(0,0,0))##########
             drawText(font, 20, 538, f'direction: {direction}',(0, 0, 255, 255),(0,0,0))
-            
-        if display_help:
-            drawText(font2, 210, 500, '--------------------BUTTONS--------------------', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 480, 'Toggle help                                           H', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 460, 'Move foward                                    (UP)', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 440, 'Move backward                          (DOWN)', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 420, 'Move left                                      (LEFT)', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 400, 'Move right                                  (RIGHT)', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 380, 'Increase cube speed                             Z', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 360, 'Decrease cube speed                           X', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 340, 'Adjust cube speed to camera speed      C', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 320, 'Increase camera speed                         B', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 300, 'Decrease camera speed                        N', (255, 255, 255, 255),(0,0,255))
             
         direction = "None"
         pygame.display.flip()
