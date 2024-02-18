@@ -64,12 +64,7 @@ def Cube():
             glVertex3fv(verticies[vertex])
     glEnd()
 
-cube_speed = 0.050 #0.00
-camera_speed = 0.050
-grid_size = 120
-grid_spacing = 1
-hide_data = False
-
+# DEFINE FORMA DE LA FIGURA SOBRE EL GRID
 def cube_form(val_list):
     val_list = val_list
     for i in range(0,8):
@@ -97,6 +92,12 @@ def drawText(f, x, y, text, c, bgc):
     textData = pygame.image.tostring(textSurface, "RGBA", True)
     glWindowPos2d(x, y)
     glDrawPixels(textSurface.get_width(), textSurface.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, textData)
+
+cube_speed = 0.050 #0.00
+camera_speed = 0.050
+grid_size = 120
+grid_spacing = 1
+hide_data = False
 
 # FUNCIÓN PRINCIPAL
 def main():
