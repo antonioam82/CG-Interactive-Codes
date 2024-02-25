@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import pygame
 from pygame.locals import *
@@ -68,15 +68,6 @@ def Cube():
 
 # DIBUJA FIGURA CON EFECTO DE TRANSPARENCIA
 def CubeT():
-    glLineWidth(3.0)
-    glBegin(GL_LINES)
-    glColor3f(1.0,0.0,0.0)
-    for edge in edges:
-        x=0
-        for vertex in edge:
-            x+=1
-            glVertex3fv(verticies[vertex])
-    glEnd()
 
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -88,6 +79,16 @@ def CubeT():
     for surface in surfaces: 
         x=0
         for vertex in surface:
+            x+=1
+            glVertex3fv(verticies[vertex])
+    glEnd()
+
+    glLineWidth(3.0)
+    glBegin(GL_LINES)
+    glColor3f(1.0,0.0,0.0)
+    for edge in edges:
+        x=0
+        for vertex in edge:
             x+=1
             glVertex3fv(verticies[vertex])
     glEnd()
