@@ -69,8 +69,8 @@ def Cube():
 # DIBUJA FIGURA CON EFECTO DE TRANSPARENCIA
 def CubeT():
 
-    glEnable(GL_BLEND)
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    #glEnable(GL_BLEND)
+    #glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     #glEnable(GL_DEPTH_TEST)
     #glEnable(GL_CULL_FACE)
     #glCullFace(GL_FRONT)
@@ -137,6 +137,8 @@ def main():
     font = pygame.font.SysFont('arial', 15)
     font2 = pygame.font.SysFont('arial', 20)
     direction = None
+    glEnable(GL_BLEND)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
     glClearColor(0.0, 0.0, 0.0, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 100.0)
