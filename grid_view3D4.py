@@ -27,6 +27,28 @@ verticies2 = [
     [-1, 1, 1]
 ]
 
+verticies3 = [
+    [1, 0, -1],  
+    [1, 0.5, -1],  
+    [-1, 0.5, -1],
+    [-1, 0, -1],
+    [1, 0, 1],
+    [1, 1, 1],
+    [-1, 0, 1],
+    [-1, 1, 1]
+]
+
+verticies4 = [
+    [1, 0, -1],  
+    [1, 0.5, -1],  
+    [-1, 0.5, -1],
+    [-1, 0, -1],
+    [1, 0, 1],
+    [1, 1, 1],
+    [-1, 0, 1],
+    [-1, 1, 1]
+]
+
 surfaces = (
     (0,1,2,3),
     (3,2,7,6),
@@ -69,7 +91,7 @@ def CubeN():
     glEnd()
 
 # DIBUJA CONTORNOS DEL CUBO
-def CubeB():
+'''def CubeB():
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_CULL_FACE)
     glCullFace(GL_FRONT)
@@ -81,6 +103,17 @@ def CubeB():
             x+=1
             #glColor3fv(colors[x])
             glVertex3fv(verticies[vertex])
+    glEnd()'''
+
+def CubeB():
+    glLineWidth(3.0)
+    glBegin(GL_LINES)
+    glColor3f(0.0,0.0,1.0)
+    for edge in edges:  
+        x=0
+        for vertex in edge:
+            x+=1
+            glVertex3fv(verticies3[vertex])
     glEnd()
 
 # DIBUJA CUBO SOBRE EL GRID    
@@ -104,7 +137,7 @@ def CubeC():
         x=0
         for vertex in edge:
             x+=1
-            glVertex3fv(verticies[vertex])
+            glVertex3fv(verticies4[vertex])
     glEnd()
 
 cube_speed = 0.20 #0.00
@@ -180,24 +213,33 @@ def main():
                     print(verticies)
                     cube_form(verticies,[0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
                     cube_form(verticies2,[0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
+                    cube_form(verticies4,[0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
+                    cube_form(verticies3,[0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
                     
                 elif event.key == pygame.K_LEFT:
                     print("definiendo izquierda")
                     print(verticies)
                     cube_form(verticies,[0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
                     cube_form(verticies2,[0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
+                    cube_form(verticies3,[0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
+                    cube_form(verticies4,[0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
                     
                 elif event.key == pygame.K_UP:
                     print("definiendo adelante")
                     print(verticies)
                     cube_form(verticies,[0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
                     cube_form(verticies2,[0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
+                    cube_form(verticies3,[0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
+                    cube_form(verticies4,[0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
 
                 elif event.key == pygame.K_DOWN:
                     print("Definiendo atras")
                     print(verticies)
                     cube_form(verticies,[0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
                     cube_form(verticies2,[0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
+                    cube_form(verticies3,[0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
+                    cube_form(verticies4,[0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
+                    
                     
         key = pygame.key.get_pressed()
 
@@ -223,6 +265,24 @@ def main():
             verticies2[5][0] += cube_speed
             verticies2[6][0] += cube_speed
             verticies2[7][0] += cube_speed
+
+            verticies3[0][2] += cube_speed
+            verticies3[1][2] += cube_speed
+            verticies3[2][2] += cube_speed
+            verticies3[3][2] += cube_speed
+            verticies3[4][2] += cube_speed
+            verticies3[5][2] += cube_speed
+            verticies3[6][2] += cube_speed
+            verticies3[7][2] += cube_speed
+
+            verticies4[0][2] -= cube_speed
+            verticies4[1][2] -= cube_speed
+            verticies4[2][2] -= cube_speed
+            verticies4[3][2] -= cube_speed
+            verticies4[4][2] -= cube_speed
+            verticies4[5][2] -= cube_speed
+            verticies4[6][2] -= cube_speed
+            verticies4[7][2] -= cube_speed
             #glPopMatrix()
             
         if key[pygame.K_RIGHT]:
@@ -245,6 +305,24 @@ def main():
             verticies2[5][0] -= cube_speed
             verticies2[6][0] -= cube_speed
             verticies2[7][0] -= cube_speed
+
+            verticies3[0][2] -= cube_speed
+            verticies3[1][2] -= cube_speed
+            verticies3[2][2] -= cube_speed
+            verticies3[3][2] -= cube_speed
+            verticies3[4][2] -= cube_speed
+            verticies3[5][2] -= cube_speed
+            verticies3[6][2] -= cube_speed
+            verticies3[7][2] -= cube_speed
+
+            verticies4[0][2] += cube_speed
+            verticies4[1][2] += cube_speed
+            verticies4[2][2] += cube_speed
+            verticies4[3][2] += cube_speed
+            verticies4[4][2] += cube_speed
+            verticies4[5][2] += cube_speed
+            verticies4[6][2] += cube_speed
+            verticies4[7][2] += cube_speed
             
         if key[pygame.K_UP]:
             direction = "Forward"
@@ -266,6 +344,26 @@ def main():
             verticies2[5][2] += cube_speed
             verticies2[6][2] += cube_speed
             verticies2[7][2] += cube_speed
+
+            verticies3[0][0] -= cube_speed
+            verticies3[1][0] -= cube_speed
+            verticies3[2][0] -= cube_speed
+            verticies3[3][0] -= cube_speed
+            verticies3[4][0] -= cube_speed
+            verticies3[5][0] -= cube_speed
+            verticies3[6][0] -= cube_speed
+            verticies3[7][0] -= cube_speed
+
+            verticies4[0][0] += cube_speed
+            verticies4[1][0] += cube_speed
+            verticies4[2][0] += cube_speed
+            verticies4[3][0] += cube_speed
+            verticies4[4][0] += cube_speed
+            verticies4[5][0] += cube_speed
+            verticies4[6][0] += cube_speed
+            verticies4[7][0] += cube_speed
+
+            
             
         if key[pygame.K_DOWN]:
             direction = "Backward"
@@ -287,6 +385,24 @@ def main():
             verticies2[5][2] -= cube_speed
             verticies2[6][2] -= cube_speed
             verticies2[7][2] -= cube_speed
+
+            verticies3[0][0] += cube_speed
+            verticies3[1][0] += cube_speed
+            verticies3[2][0] += cube_speed
+            verticies3[3][0] += cube_speed
+            verticies3[4][0] += cube_speed
+            verticies3[5][0] += cube_speed
+            verticies3[6][0] += cube_speed
+            verticies3[7][0] += cube_speed
+
+            verticies4[0][0] -= cube_speed
+            verticies4[1][0] -= cube_speed
+            verticies4[2][0] -= cube_speed
+            verticies4[3][0] -= cube_speed
+            verticies4[4][0] -= cube_speed
+            verticies4[5][0] -= cube_speed
+            verticies4[6][0] -= cube_speed
+            verticies4[7][0] -= cube_speed
             
 
         if key[pygame.K_z]:
@@ -320,10 +436,13 @@ def main():
             glRotatef(0.1, 0, 0, -1)
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        CubeN()
+        #CubeN()
         draw_grid()
         #CubeB()
         Cube()
+        CubeN()
+        CubeC()
+        CubeB()
         
         if not hide_data:
             drawText(font, 20, 570, f'cube speed: {cube_speed:.3f}',(0, 0, 255, 255),(0,0,0))#######################
