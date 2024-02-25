@@ -145,7 +145,6 @@ camera_speed = 0.0
 grid_size = 120
 grid_spacing = 1
 hide_data = True
-display_help = False
 
 # DIBUJA GRID
 def draw_grid():
@@ -202,15 +201,9 @@ def main():
                     else:
                         hide_data = False
                         
-                elif event.key == pygame.K_h:
-                    if display_help == False:
-                        display_help = True
-                    else:
-                        display_help = False
-                        
                 elif event.key == pygame.K_RIGHT:
                     print("definiendo derecha")
-                    print(verticies)
+                    #print(verticies)
                     cube_form(verticies,[0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
                     cube_form(verticies2,[0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
                     cube_form(verticies4,[0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
@@ -218,7 +211,7 @@ def main():
                     
                 elif event.key == pygame.K_LEFT:
                     print("definiendo izquierda")
-                    print(verticies)
+                    #print(verticies)
                     cube_form(verticies,[0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
                     cube_form(verticies2,[0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
                     cube_form(verticies3,[0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
@@ -226,7 +219,7 @@ def main():
                     
                 elif event.key == pygame.K_UP:
                     print("definiendo adelante")
-                    print(verticies)
+                    #print(verticies)
                     cube_form(verticies,[0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
                     cube_form(verticies2,[0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
                     cube_form(verticies3,[0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
@@ -234,7 +227,7 @@ def main():
 
                 elif event.key == pygame.K_DOWN:
                     print("Definiendo atras")
-                    print(verticies)
+                    #print(verticies)
                     cube_form(verticies,[0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
                     cube_form(verticies2,[0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
                     cube_form(verticies3,[0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
@@ -445,22 +438,9 @@ def main():
         CubeB()
         
         if not hide_data:
-            drawText(font, 20, 570, f'cube speed: {cube_speed:.3f}',(0, 0, 255, 255),(0,0,0))#######################
-            drawText(font, 20, 554, f'camera speed: {camera_speed:.3f}',(0, 0, 255, 255),(0,0,0))##########
-            drawText(font, 20, 538, f'direction: {direction}',(0, 0, 255, 255),(0,0,0))
-            
-        if display_help:
-            drawText(font2, 210, 500, '--------------------BUTTONS--------------------', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 480, 'Toggle help                                           H', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 460, 'Move foward                                    (UP)', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 440, 'Move backward                          (DOWN)', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 420, 'Move left                                      (LEFT)', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 400, 'Move right                                  (RIGHT)', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 380, 'Increase cube speed                             Z', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 360, 'Decrease cube speed                           X', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 340, 'Adjust cube speed to camera speed      C', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 320, 'Increase camera speed                         B', (255, 255, 255, 255),(0,0,255))
-            drawText(font2, 210, 300, 'Decrease camera speed                        N', (255, 255, 255, 255),(0,0,255))
+            drawText(font, 20, 570, f'Cube speed: {cube_speed:.3f}',(0, 0, 255, 255),(0,0,0))#######################
+            drawText(font, 20, 554, f'Camera speed: {camera_speed:.3f}',(0, 0, 255, 255),(0,0,0))##########
+            drawText(font, 20, 538, f'Direction (red): {direction}',(0, 0, 255, 255),(0,0,0))
             
         direction = "None"
         pygame.display.flip()
