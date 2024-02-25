@@ -68,7 +68,7 @@ def Cube():
 
 # DIBUJA FIGURA CON EFECTO DE TRANSPARENCIA
 def CubeT():
-    glLineWidth(2.0)
+    glLineWidth(3.0)
     glBegin(GL_LINES)
     glColor3f(1.0,0.0,0.0)
     for edge in edges:
