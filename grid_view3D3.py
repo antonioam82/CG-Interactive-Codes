@@ -173,6 +173,16 @@ def main():
                 elif event.key == pygame.K_DOWN:
                     print("Definiendo atras")
                     cube_form([0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
+
+                elif event.key == pygame.K_s:
+                    if camera_speed > 0.00 or cube_speed > 0.00:
+                        print("STOP")
+                        cube_speed = 0.00
+                        camera_speed = 0.00
+                    else:
+                        print("RESTART")
+                        cube_speed = 0.050
+                        camera_speed = 0.050
                     
         key = pygame.key.get_pressed()
 
