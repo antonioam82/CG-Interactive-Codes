@@ -184,6 +184,7 @@ def main():
 
     glClearColor(0.0, 0.0, 0.0, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 100.0)
+    glEnable(GL_DEPTH_TEST) #########################################
     glTranslatef(0.0, 0.0, -20.0)
     #glRotatef(7, 1, 0, 0)
     glRotatef(30, 1, 0, 0)
@@ -240,7 +241,7 @@ def main():
         if key[pygame.K_LEFT]:
             direction = "Left"
             #glPushMatrix()
-            glTranslatef(camera_speed, 0.0, 0.0)
+            #glTranslatef(camera_speed, 0.0, 0.0)
             verticies[0][0] -= cube_speed
             verticies[1][0] -= cube_speed
             verticies[2][0] -= cube_speed
@@ -280,7 +281,7 @@ def main():
             
         if key[pygame.K_RIGHT]:
             direction = "Right"
-            glTranslatef(-camera_speed, 0.0, 0.0)
+            #glTranslatef(-camera_speed, 0.0, 0.0)
             verticies[0][0] += cube_speed
             verticies[1][0] += cube_speed
             verticies[2][0] += cube_speed
@@ -319,7 +320,7 @@ def main():
             
         if key[pygame.K_UP]:
             direction = "Forward"
-            glTranslatef(0.0, 0.0, camera_speed)
+            #glTranslatef(0.0, 0.0, camera_speed)
             verticies[0][2] -= cube_speed
             verticies[1][2] -= cube_speed
             verticies[2][2] -= cube_speed
@@ -360,7 +361,7 @@ def main():
             
         if key[pygame.K_DOWN]:
             direction = "Backward"
-            glTranslatef(0.0, 0.0, -camera_speed)
+            #glTranslatef(0.0, 0.0, -camera_speed)
             verticies[0][2] += cube_speed
             verticies[1][2] += cube_speed
             verticies[2][2] += cube_speed
