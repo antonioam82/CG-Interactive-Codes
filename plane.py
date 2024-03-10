@@ -201,13 +201,17 @@ def main():
                 running = False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
-                    rotation_angle += 90.0
+                    print("roytation")
+                    rotation_angle = 90.0
+                    rotate_cube(rotation_angle)
                 elif event.key == pygame.K_LEFT:
-                    rotation_angle -= 90.0
+                    print("Rotation")
+                    rotation_angle = -90.0
+                    rotate_cube(rotation_angle)
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         draw_grid()
-        rotate_cube(rotation_angle)
+        #rotate_cube(rotation_angle)
         Cube()
         pygame.display.flip()
         pygame.time.wait(10)
