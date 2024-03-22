@@ -128,20 +128,24 @@ def main():
                         hide_data = False
                         
                 elif event.key == pygame.K_RIGHT:
-                    print("definiendo derecha")
-                    cube_form([0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
+                    if direction != "Right":
+                        print("definiendo derecha")
+                        cube_form([0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
                     
                 elif event.key == pygame.K_LEFT:
-                    print("definiendo izquierda")
-                    cube_form([0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
+                    if direction != "Left":
+                        print("definiendo izquierda")
+                        cube_form([0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
                     
                 elif event.key == pygame.K_UP:
-                    print("definiendo adelante")
-                    cube_form([0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
+                    if direction != "Forward":
+                        print("definiendo adelante")
+                        cube_form([0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
 
                 elif event.key == pygame.K_DOWN:
-                    print("Definiendo atras")
-                    cube_form([0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
+                    if direction != "Backward":
+                        print("Definiendo atras")
+                        cube_form([0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
                     
         key = pygame.key.get_pressed()
 
@@ -232,7 +236,7 @@ def main():
             drawText(font, 20, 554, f'camera speed: {camera_speed:.3f}',(0, 0, 255, 255),(0,0,0))##########
             drawText(font, 20, 538, f'direction: {direction}',(0, 0, 255, 255),(0,0,0))
             
-        direction = "None"
+        #direction = "None"
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
