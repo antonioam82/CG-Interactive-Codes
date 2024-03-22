@@ -129,21 +129,25 @@ def main():
                         
                 elif event.key == pygame.K_RIGHT:
                     if direction != "Right":
+                        direction = "Right"
                         print("definiendo derecha")
                         cube_form([0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
                     
                 elif event.key == pygame.K_LEFT:
                     if direction != "Left":
+                        direction = "Left"
                         print("definiendo izquierda")
                         cube_form([0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
                     
                 elif event.key == pygame.K_UP:
                     if direction != "Forward":
+                        direction = "Forward"
                         print("definiendo adelante")
                         cube_form([0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
 
                 elif event.key == pygame.K_DOWN:
                     if direction != "Backward":
+                        direction = "Backward"
                         print("Definiendo atras")
                         cube_form([0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
                     
@@ -151,7 +155,7 @@ def main():
 
         # CONTROL DE DIRECCIÓN
         if key[pygame.K_LEFT]:
-            direction = "Left"
+            #direction = "Left"
             glTranslatef(camera_speed, 0.0, 0.0)
             verticies[0][0] -= cube_speed
             verticies[1][0] -= cube_speed
@@ -163,7 +167,7 @@ def main():
             verticies[7][0] -= cube_speed
             
         if key[pygame.K_RIGHT]:
-            direction = "Right"
+            #direction = "Right"
             glTranslatef(-camera_speed, 0.0, 0.0)
             verticies[0][0] += cube_speed
             verticies[1][0] += cube_speed
@@ -175,7 +179,7 @@ def main():
             verticies[7][0] += cube_speed
             
         if key[pygame.K_UP]:
-            direction = "Forward"
+            #direction = "Forward"
             glTranslatef(0.0, 0.0, camera_speed)
             verticies[0][2] -= cube_speed
             verticies[1][2] -= cube_speed
@@ -187,7 +191,7 @@ def main():
             verticies[7][2] -= cube_speed
             
         if key[pygame.K_DOWN]:
-            direction = "Backward"
+            #direction = "Backward"
             glTranslatef(0.0, 0.0, -camera_speed)
             verticies[0][2] += cube_speed
             verticies[1][2] += cube_speed
