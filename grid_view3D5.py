@@ -82,8 +82,6 @@ def cube_form(verts,val_list):
 # DIBUJA CONTORNOS DEL LOS CUBOS
 
 def CubeN():
-    glEnable(GL_BLEND)
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glBegin(GL_QUADS)
     glColor4f(1.0,1.0,0.0,0.4)
     for surface in surfaces:
@@ -104,8 +102,6 @@ def CubeN():
     glEnd()
     
 def CubeB():
-    glEnable(GL_BLEND)
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glBegin(GL_QUADS)
     glColor4f(0.0,0.0,1.0,0.4)
     for surface in surfaces:
@@ -127,8 +123,6 @@ def CubeB():
 
 # DIBUJA CUBO SOBRE EL GRID    
 def Cube():
-    glEnable(GL_BLEND)
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glBegin(GL_QUADS)
     glColor4f(1.0,0.0,0.0,0.4)
     for surface in surfaces:
@@ -150,8 +144,6 @@ def Cube():
 
 # DIBUJA CUBO SOBRE EL GRID    
 def CubeC():
-    glEnable(GL_BLEND)
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glBegin(GL_QUADS)
     glColor4f(0.0,1.0,0.0,0.4)
     for surface in surfaces:
@@ -214,7 +206,13 @@ def main():
 
     glClearColor(0.0, 0.0, 0.0, 1.0)
     gluPerspective(100, (display[0] / display[1]), 0.1, 100.0)
-    glEnable(GL_DEPTH_TEST) #########################################
+
+    #------------------------GL ENABLES---------------------------
+    glEnable(GL_DEPTH_TEST) 
+    glEnable(GL_BLEND)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    #-------------------------------------------------------------
+    
     glTranslatef(0.0, 0.0, -10.0)
     glRotatef(30, 1, 0, 0)
     
@@ -272,7 +270,6 @@ def main():
 
         # CONTROL DE DIRECCIÓN
         if key[pygame.K_LEFT]:
-            direction = "Left"
             #glPushMatrix()
             #glTranslatef(camera_speed, 0.0, 0.0)
             verticies[0][0] -= cube_speed
@@ -313,8 +310,6 @@ def main():
             #glPopMatrix()
             
         if key[pygame.K_RIGHT]:
-            direction = "Right"
-            #glTranslatef(-camera_speed, 0.0, 0.0)
             verticies[0][0] += cube_speed
             verticies[1][0] += cube_speed
             verticies[2][0] += cube_speed
@@ -352,8 +347,6 @@ def main():
             verticies4[7][2] += cube_speed
             
         if key[pygame.K_UP]:
-            direction = "Forward"
-            #glTranslatef(0.0, 0.0, camera_speed)
             verticies[0][2] -= cube_speed
             verticies[1][2] -= cube_speed
             verticies[2][2] -= cube_speed
@@ -393,8 +386,6 @@ def main():
             
             
         if key[pygame.K_DOWN]:
-            direction = "Backward"
-            #glTranslatef(0.0, 0.0, -camera_speed)
             verticies[0][2] += cube_speed
             verticies[1][2] += cube_speed
             verticies[2][2] += cube_speed
