@@ -79,6 +79,10 @@ def cube_form(verts,val_list):
     for i in range(0,8):
         verts[i][1] = val_list[i]
 
+
+
+# DIBUJA CONTORNOS DEL LOS CUBOS
+
 def CubeN():
     glLineWidth(3.0)
     glBegin(GL_LINES)
@@ -89,22 +93,7 @@ def CubeN():
             x+=1
             glVertex3fv(verticies2[vertex])
     glEnd()
-
-# DIBUJA CONTORNOS DEL CUBO
-'''def CubeB():
-    glEnable(GL_DEPTH_TEST)
-    glEnable(GL_CULL_FACE)
-    glCullFace(GL_FRONT)
-    glBegin(GL_QUADS)
-    glColor3f(0.0,0.0,0.1)
-    for surface in surfaces: 
-        x=0
-        for vertex in surface:
-            x+=1
-            #glColor3fv(colors[x])
-            glVertex3fv(verticies[vertex])
-    glEnd()'''
-
+    
 def CubeB():
     glLineWidth(3.0)
     glBegin(GL_LINES)
@@ -435,9 +424,7 @@ def main():
             glRotatef(0.1, 0, 0, -1)
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        #CubeN()
         draw_grid()
-        #CubeB()
         Cube()
         CubeN()
         CubeC()
