@@ -79,11 +79,21 @@ def cube_form(verts,val_list):
     for i in range(0,8):
         verts[i][1] = val_list[i]
 
-
-
 # DIBUJA CONTORNOS DEL LOS CUBOS
 
 def CubeN():
+    glEnable(GL_BLEND)
+    #glEnable(GL_DEPTH_TEST)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    glBegin(GL_QUADS)
+    glColor4f(1.0,1.0,0.0,0.4)
+    for surface in surfaces:
+        x=0
+        for vertex in surface:
+            x+=1
+            glVertex3fv(verticies2[vertex])
+    glEnd()
+    
     glLineWidth(3.0)
     glBegin(GL_LINES)
     glColor3f(1.0,1.0,0.0,)
@@ -95,6 +105,18 @@ def CubeN():
     glEnd()
     
 def CubeB():
+    glEnable(GL_BLEND)
+    #glEnable(GL_DEPTH_TEST)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    glBegin(GL_QUADS)
+    glColor4f(0.0,0.0,1.0,0.4)
+    for surface in surfaces:
+        x=0
+        for vertex in surface:
+            x+=1
+            glVertex3fv(verticies3[vertex])
+    glEnd()
+    
     glLineWidth(3.0)
     glBegin(GL_LINES)
     glColor3f(0.0,0.0,1.0)
@@ -107,6 +129,18 @@ def CubeB():
 
 # DIBUJA CUBO SOBRE EL GRID    
 def Cube():
+    glEnable(GL_BLEND)
+    #glEnable(GL_DEPTH_TEST)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    glBegin(GL_QUADS)
+    glColor4f(1.0,0.0,0.0,0.4)
+    for surface in surfaces:
+        x=0
+        for vertex in surface:
+            x+=1
+            glVertex3fv(verticies[vertex])
+    glEnd()
+    
     glLineWidth(3.0)
     glBegin(GL_LINES)
     glColor3f(1.0,0.0,0.0)
@@ -119,6 +153,18 @@ def Cube():
 
 # DIBUJA CUBO SOBRE EL GRID    
 def CubeC():
+    glEnable(GL_BLEND)
+    #glEnable(GL_DEPTH_TEST)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    glBegin(GL_QUADS)
+    glColor4f(0.0,1.0,0.0,0.4)
+    for surface in surfaces:
+        x=0
+        for vertex in surface:
+            x+=1
+            glVertex3fv(verticies4[vertex])
+    glEnd()
+    
     glLineWidth(3.0)
     glBegin(GL_LINES)
     glColor3f(0.0,1.0,0.1)
