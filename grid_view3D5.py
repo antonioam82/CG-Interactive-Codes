@@ -142,7 +142,7 @@ def CubeC():
 
 cube_speed = 0.20 #0.00
 camera_speed = 0.0
-grid_size = 120
+grid_size = 145
 grid_spacing = 1
 hide_data = True
 
@@ -204,36 +204,40 @@ def main():
                         hide_data = False
                         
                 elif event.key == pygame.K_RIGHT:
-                    print("definiendo derecha")
-                    #print(verticies)
-                    cube_form(verticies,[0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
-                    cube_form(verticies2,[0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
-                    cube_form(verticies4,[0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
-                    cube_form(verticies3,[0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
+                    if direction != "Right":
+                        print("definiendo derecha")
+                        direction = "Right"
+                        cube_form(verticies,[0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
+                        cube_form(verticies2,[0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
+                        cube_form(verticies4,[0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
+                        cube_form(verticies3,[0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
                     
                 elif event.key == pygame.K_LEFT:
-                    print("definiendo izquierda")
-                    #print(verticies)
-                    cube_form(verticies,[0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
-                    cube_form(verticies2,[0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
-                    cube_form(verticies3,[0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
-                    cube_form(verticies4,[0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
+                    if direction != "Left":
+                        print("definiendo izquierda")
+                        direction = "Left"
+                        cube_form(verticies,[0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
+                        cube_form(verticies2,[0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
+                        cube_form(verticies3,[0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
+                        cube_form(verticies4,[0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
                     
                 elif event.key == pygame.K_UP:
-                    print("definiendo adelante")
-                    #print(verticies)
-                    cube_form(verticies,[0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
-                    cube_form(verticies2,[0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
-                    cube_form(verticies3,[0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
-                    cube_form(verticies4,[0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
+                    if direction != "Forward":
+                        print("definiendo adelante")
+                        direction = "Forward"
+                        cube_form(verticies,[0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
+                        cube_form(verticies2,[0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
+                        cube_form(verticies3,[0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
+                        cube_form(verticies4,[0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
 
                 elif event.key == pygame.K_DOWN:
-                    print("Definiendo atras")
-                    #print(verticies)
-                    cube_form(verticies,[0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
-                    cube_form(verticies2,[0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
-                    cube_form(verticies3,[0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
-                    cube_form(verticies4,[0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
+                    if direction != "Backward":
+                        print("Definiendo atras")
+                        direction = "Backward"
+                        cube_form(verticies,[0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
+                        cube_form(verticies2,[0.0,0.5,0.5,0.0,0.0,1.0,0.0,1.0])
+                        cube_form(verticies3,[0.0,0.5,1.0,0.0,0.0,0.5,0.0,1.0])
+                        cube_form(verticies4,[0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.5])
                     
                     
         key = pygame.key.get_pressed()
@@ -444,7 +448,7 @@ def main():
             drawText(font, 20, 554, f'Camera speed: {camera_speed:.3f}',(0, 0, 255, 255),(0,0,0))##########
             drawText(font, 20, 538, f'Direction (red): {direction}',(0, 0, 255, 255),(0,0,0))
             
-        direction = "None"
+        #direction = "None"
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
