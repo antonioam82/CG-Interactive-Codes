@@ -83,7 +83,6 @@ def cube_form(verts,val_list):
 
 def CubeN():
     glEnable(GL_BLEND)
-    #glEnable(GL_DEPTH_TEST)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glBegin(GL_QUADS)
     glColor4f(1.0,1.0,0.0,0.4)
@@ -106,7 +105,6 @@ def CubeN():
     
 def CubeB():
     glEnable(GL_BLEND)
-    #glEnable(GL_DEPTH_TEST)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glBegin(GL_QUADS)
     glColor4f(0.0,0.0,1.0,0.4)
@@ -130,7 +128,6 @@ def CubeB():
 # DIBUJA CUBO SOBRE EL GRID    
 def Cube():
     glEnable(GL_BLEND)
-    #glEnable(GL_DEPTH_TEST)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glBegin(GL_QUADS)
     glColor4f(1.0,0.0,0.0,0.4)
@@ -154,7 +151,6 @@ def Cube():
 # DIBUJA CUBO SOBRE EL GRID    
 def CubeC():
     glEnable(GL_BLEND)
-    #glEnable(GL_DEPTH_TEST)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glBegin(GL_QUADS)
     glColor4f(0.0,1.0,0.0,0.4)
@@ -217,12 +213,9 @@ def main():
     direction = None
 
     glClearColor(0.0, 0.0, 0.0, 1.0)
-    #gluPerspective(45, (display[0] / display[1]), 0.1, 100.0)
     gluPerspective(100, (display[0] / display[1]), 0.1, 100.0)
     glEnable(GL_DEPTH_TEST) #########################################
-    #glTranslatef(0.0, 0.0, -20.0)
     glTranslatef(0.0, 0.0, -10.0)
-    #glRotatef(7, 1, 0, 0)
     glRotatef(30, 1, 0, 0)
     
     running = True
