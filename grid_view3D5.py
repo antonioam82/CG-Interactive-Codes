@@ -4,6 +4,7 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+#from random import random
 
 verticies = [
     [1, 0, -1],
@@ -124,6 +125,8 @@ def CubeB():
 # DIBUJA CUBO SOBRE EL GRID    
 def Cube():
     glBegin(GL_QUADS)
+    #red = random()
+    #glColor4f(red,0.0,0.0,0.9)
     glColor4f(1.0,0.0,0.0,0.4)
     for surface in surfaces:
         x=0
@@ -145,6 +148,8 @@ def Cube():
 # DIBUJA CUBO SOBRE EL GRID    
 def CubeC():
     glBegin(GL_QUADS)
+    #green = random()
+    #glColor4f(0.0,green,0.0,0.9)
     glColor4f(0.0,1.0,0.0,0.4)
     for surface in surfaces:
         x=0
