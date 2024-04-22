@@ -64,6 +64,7 @@ def main():
 
     glClearColor(0.0, 0.0, 0.0, 1.0)#(0.0, 0.0, 1.0, 1.0)  # Establece el color de fondo en azul (RGB: 0.0, 0.0, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
+    #glOrtho(-2, 2, -2, 2, -10, 25)
     glTranslatef(0.0, 0.0, -7.0)
     glRotatef(7, 1, 0, 0)
     #glRotatef(4, 1, 0, 0)
