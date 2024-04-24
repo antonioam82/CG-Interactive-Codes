@@ -7,14 +7,14 @@ grid_size = 120#10
 grid_spacing = 1
 
 vertices = [
-    [1, 0.3, -1],#0
-    [1, 2.3, -1],#1
-    [-1, 2.3, -1],#2
-    [-1, 0.3, -1],#3
-    [1, 0.3, 1],#4
-    [1, 2.3, 1],#5
-    [-1, 0.3, 1],#6
-    [-1, 2.3, 1]#7
+    [1, 0.15, -1],#0
+    [1, 2.15, -1],#1
+    [-1, 2.15, -1],#2
+    [-1, 0.15, -1],#3
+    [1, 0.15, 1],#4
+    [1, 2.15, 1],#5
+    [-1, 0.15, 1],#6
+    [-1, 2.15, 1]#7
     ]
 
 
@@ -65,9 +65,8 @@ def main():
     glClearColor(0.0, 0.0, 0.0, 1.0)#(0.0, 0.0, 1.0, 1.0)  # Establece el color de fondo en azul (RGB: 0.0, 0.0, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
     #glOrtho(-2, 2, -2, 2, -10, 25)
-    glTranslatef(0.0, 0.0, -7.0)
+    glTranslatef(0.0, -1.5, -8.5)
     glRotatef(7, 1, 0, 0)
-    #glRotatef(4, 1, 0, 0)
     
     '''while True:
         for event in pygame.event.get():
