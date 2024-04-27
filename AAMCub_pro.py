@@ -82,8 +82,21 @@ def main():
         if key[pygame.K_g]:
             glRotatef(-0.1, 1, 0, 0)
 
-        if key[pygame.K_r]:
+        elif key[pygame.K_r]:
             glRotatef(0.1, 1, 0, 0)
+
+        elif key[pygame.K_LEFT]:
+            glTranslatef(0.1, 0, 0)
+
+        elif key[pygame.K_RIGHT]:
+            glTranslatef(-0.1, 0, 0)
+
+        elif key[pygame.K_UP]:
+            glTranslatef(0, 0, 0.1)
+
+        elif key[pygame.K_DOWN]:
+            glTranslate(0, 0, -0.1)
+            
     
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
