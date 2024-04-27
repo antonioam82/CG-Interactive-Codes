@@ -17,7 +17,6 @@ vertices = [
     [-1, 2.15, 1]#7
     ]
 
-
 edges = (
     (0, 1),
     (0, 3),
@@ -90,6 +89,7 @@ def main():
 
         # Grid
         glPushMatrix()
+        #glRotatef(-angle, 0, 1, 0)
         draw_grid()
         glPopMatrix()
 
@@ -99,7 +99,7 @@ def main():
         Cube()
         glPopMatrix()
 
-        angle += 5
+        angle += 1
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
