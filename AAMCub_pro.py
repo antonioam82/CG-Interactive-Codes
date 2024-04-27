@@ -36,14 +36,17 @@ def Cube():
     glLineWidth(2.0)
     glBegin(GL_LINES)
     glColor3f(1.0, 0.0, 0.0)
+    
     for edge in edges:
         for vertex in edge:
             glVertex3fv(vertices[vertex])
     glEnd()
+    glRotatef(1, 0, 1, 0)
+    
 
 def draw_grid():
-    glBegin(GL_LINES)
     #glColor3f(0.0,1.0,0.0)#(0.5, 0.5, 0.5)  # Color gris
+    glBegin(GL_LINES)
     glColor3f(1.0,1.0,1.0)
 
     for x in range(-grid_size, grid_size + 1, grid_spacing):
@@ -67,6 +70,7 @@ def main():
     #glOrtho(-2, 2, -2, 2, -10, 25)
     glTranslatef(0.0, -1.5, -8.5)
     glRotatef(7, 1, 0, 0)
+    angle = 0
     
     '''while True:
         for event in pygame.event.get():
@@ -95,11 +99,23 @@ def main():
         if key[pygame.K_r]:
             glRotatef(0.1, 1, 0, 0)
         
-        #glRotatef(1, 1, 0, 0)
+        #glRotatef(1, 0, 1, 0)
         #glTranslatef(0.0, 0.0, 0.018)     
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+
+
+        # Grid
+        glPushMatrix()
         draw_grid()
+        glPopMatrix()
+
+        # Cubo
+        glPushMatrix()
+        glRotatef(angle, 0, 1, 0)
         Cube()
+        glPopMatrix()
+
+        angle += 5
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
