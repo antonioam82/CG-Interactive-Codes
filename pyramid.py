@@ -101,7 +101,6 @@ def main():
         elif key[pygame.K_DOWN]:
             glTranslate(0, 0, -0.1)
             
-    
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         # Grid
