@@ -76,6 +76,7 @@ def main():
 
     glClearColor(0.0, 0.0, 0.0, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
+    glEnable(GL_DEPTH_TEST)####
     glTranslatef(0.0, -1.5, -8.5)
     glRotatef(7, 1, 0, 0)
     angle = 0
@@ -114,9 +115,10 @@ def main():
         Pyramid()
         glPopMatrix()
 
-        angle += 2
+        angle += 1.5
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
          
 main()
+
