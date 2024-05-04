@@ -73,13 +73,18 @@ def main():
     angle = 0
     stop = False
     running = True
+    direction = None
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_y:
+                if event.key == pygame.K_DOWN:
+                    direction = "back"
                     angle = 0
+                if event.key == pygame.K_UP:
+                    direction = "front"
+                    angle = 180
 
         key = pygame.key.get_pressed()
         
@@ -106,7 +111,7 @@ def main():
         # Cubo 1
         glPushMatrix()
         #glTranslatef(pos_x,pos_y,pos_z)
-        glScalef(scale_factor, scale_factor, scale_factor)
+        #glScalef(scale_factor, scale_factor, scale_factor)
         glRotatef(angle, 0, 1, 0)
         Cube()
         glPopMatrix()
@@ -117,9 +122,14 @@ def main():
         draw_grid()
         glPopMatrix()
 
-        if angle < 180:
-            angle += 20
-            print(angle)
+        if direction == "back":
+            if angle < 180:
+                angle += 20
+                #print(angle)
+        elif direction == "front":
+            if angle < 360:
+                angle += 20
+                #print(angle)
         
         pygame.display.flip()
         pygame.time.wait(10)
