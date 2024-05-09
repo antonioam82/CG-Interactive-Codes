@@ -73,9 +73,11 @@ def main():
     pygame.init()
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+    #mv = 0
 
     glClearColor(0.0, 0.0, 0.0, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
+    #glOrtho(-2, 2, -2, 2, -10, 25)
     glEnable(GL_DEPTH_TEST)####
     glTranslatef(0.0, -1.5, -8.5)
     glRotatef(7, 1, 0, 0)
@@ -101,7 +103,12 @@ def main():
             glTranslatef(0, 0, 0.1)
         elif key[pygame.K_DOWN]:
             glTranslate(0, 0, -0.1)
+
+        '''elif key[pygame.K_p]:
+            mv += 0.01'''
+        
             
+    
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         # Grid
@@ -112,13 +119,18 @@ def main():
         # Pirámide
         glPushMatrix()
         glRotatef(angle, 0, 1, 0)
+        #glPushMatrix()
+        #glTranslate(mv, mv, mv)
+        #Pyramid()
+        #glPopMatrix()
         Pyramid()
         glPopMatrix()
 
-        angle += 1.5
+        angle += 9
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
          
 main()
+
 
