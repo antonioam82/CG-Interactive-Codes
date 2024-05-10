@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import pygame
 from pygame.locals import *
 from OpenGL.GL import *
@@ -15,7 +17,6 @@ vertices = [
     [0, 1.15, 0]    # 4 (vértice superior de la pirámide)
 ]
 
-
 edges = (
     (0, 1),
     (1, 2),
@@ -26,7 +27,6 @@ edges = (
     (2, 4),
     (3, 4)
 )
-
 
 surfaces = (
     (0, 4, 3),
@@ -55,6 +55,12 @@ def Pyramid():
             x+=1
             glVertex3fv(vertices[vertex])
     glEnd()
+
+def drawText(f, x, y, text, c, bgc):
+    textSurface = f.render(text, True, c, bgc)
+    textData = pygame.image.tostring(textSurface, "RGBA", True)
+    glWindowPos2d(x, y)
+    glDrawPixels(textSurface.get_width(), textSurface.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, textData)
     
 def draw_grid():
     glBegin(GL_LINES)
@@ -74,6 +80,7 @@ def main():
     pygame.init()
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+    font = pygame.font.SysFont('arial', 15)
     speed_factor = 1
 
     glClearColor(0.0, 0.0, 0.0, 1.0)
@@ -110,9 +117,7 @@ def main():
             glTranslatef(0, 0, 0.1)
         elif key[pygame.K_DOWN]:
             glTranslate(0, 0, -0.1)
-        
-            
-    
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         # Grid
@@ -131,11 +136,11 @@ def main():
         Pyramid()
         glPopMatrix()
 
+        drawText(font, 20, 570, f'speed factor: {speed_factor}',(0, 255, 0, 255),(0,0,0))
         angle += speed_factor
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
          
 main()
-
 
