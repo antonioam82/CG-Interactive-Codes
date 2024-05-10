@@ -15,6 +15,7 @@ vertices = [
     [0, 1.15, 0]    # 4 (vértice superior de la pirámide)
 ]
 
+
 edges = (
     (0, 1),
     (1, 2),
@@ -26,6 +27,7 @@ edges = (
     (3, 4)
 )
 
+
 surfaces = (
     (0, 4, 3),
     (1, 4, 0),
@@ -33,7 +35,6 @@ surfaces = (
     (3, 4, 2),
     (0, 3, 2, 1),  # Base triangular
 )
-
 
 def Pyramid():
     glBegin(GL_QUADS)
@@ -73,7 +74,7 @@ def main():
     pygame.init()
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
-    #mv = 0
+    speed_factor = 1
 
     glClearColor(0.0, 0.0, 0.0, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
@@ -89,6 +90,12 @@ def main():
             if (event.type == pygame.QUIT):
                 running = False
 
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    speed_factor += 1
+                elif event.key == pygame.K_o:
+                    speed_factor -= 1
+
         key = pygame.key.get_pressed()
 
         if key[pygame.K_g]:
@@ -103,9 +110,6 @@ def main():
             glTranslatef(0, 0, 0.1)
         elif key[pygame.K_DOWN]:
             glTranslate(0, 0, -0.1)
-
-        '''elif key[pygame.K_p]:
-            mv += 0.01'''
         
             
     
@@ -113,6 +117,7 @@ def main():
 
         # Grid
         glPushMatrix()
+        #glRotatef(angle, 0, 1, 0)
         draw_grid()
         glPopMatrix()
 
@@ -126,7 +131,7 @@ def main():
         Pyramid()
         glPopMatrix()
 
-        angle += 9
+        angle += speed_factor
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
