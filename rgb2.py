@@ -36,7 +36,7 @@ def draw_grid():
     #glColor3f(0.0,1.0,0.0)#(0.5, 0.5, 0.5)  # Color gris
     glLineWidth(1.0)
     glBegin(GL_LINES)
-    glColor3f(1.0,1.0,1.0)
+    glColor3f(0.86,0.15,0.59)#(1.0,1.0,1.0)
 
     for x in range(-grid_size, grid_size + 1, grid_spacing):
         glVertex3f(x, 0, -grid_size)
@@ -49,7 +49,7 @@ def draw_grid():
     glEnd()
 
 def Cube(c):
-    glLineWidth(2.0)
+    glLineWidth(4.0)
     glBegin(GL_LINES)
     if c == 'red':
         glColor3f(1.0, 0.0, 0.0)
@@ -68,6 +68,7 @@ def main():
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
     glTranslatef(0.0, 0.0, -10)
+    glClearColor(0.75, 0.75, 0.75, 1.00)
     glEnable(GL_DEPTH_TEST)
 
     scale_factor = 1
@@ -79,6 +80,7 @@ def main():
     pos_z = 0
 
     angle = 0
+    angleg = 0
     running = True
     while running:
         for event in pygame.event.get():
@@ -139,14 +141,15 @@ def main():
         glPushMatrix()
         #glTranslatef(2, 0, 0)
         glTranslatef(0,-2,0)
-        glTranslatef(movement,0,0)#(0,-2,0)
+        #glTranslatef(movement,0,0)#(0,-2,0)
         #glScalef(scale_factor2, scale_factor2, scale_factor2)
-        #glRotatef(-angle, 0, 1, 0)
+        glRotatef(angleg, 0, 1, 0)
         #Cube('blue')
         draw_grid()
         glPopMatrix()
 
-        angle += 4
+        angle += 3
+        angleg += 1
         movement += 0.01
         pygame.display.flip()
         pygame.time.wait(10)
@@ -154,3 +157,4 @@ def main():
     pygame.quit()
 
 main()
+
