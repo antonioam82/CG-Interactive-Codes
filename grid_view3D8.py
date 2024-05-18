@@ -56,6 +56,12 @@ def Cube():
             glVertex3fv(vertices[vertex])
     glEnd()
 
+def drawText(f, x, y, text, c, bgc):
+    textSurface = f.render(text, True, c, bgc)
+    textData = pygame.image.tostring(textSurface, "RGBA", True)
+    glWindowPos2d(x, y)
+    glDrawPixels(textSurface.get_width(), textSurface.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, textData)
+
 def main():
     pygame.init()
     display = (800, 600)
@@ -63,34 +69,40 @@ def main():
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
     glTranslatef(0.0, 0.0, -10)
     glEnable(GL_DEPTH_TEST)
+    font = pygame.font.SysFont('arial', 15)
 
     scale_factor = 1
     scale_factor2 = 1
-    pos_x = 0
+    
+    '''pos_x = 0
     pos_y = 0
-    pos_z = 0
+    pos_z = 0'''
 
     angle = 0
     stop = False
     running = True
-    direction = None
+    direction = 'front'
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
-                    direction = "back"
-                    angle = 180
+                    if direction != "back":
+                        direction = "back"
+                        angle = 180
                 if event.key == pygame.K_UP:
-                    direction = "front"
-                    angle = 0
+                    if direction != "front":
+                        direction = "front"
+                        angle = 0
                 if event.key == pygame.K_RIGHT:
-                    direction = "right"
-                    angle = -90
+                    if direction != "right":
+                        direction = "right"
+                        angle = -90
                 if event.key == pygame.K_LEFT:
-                    direction = "left"
-                    angle = 90
+                    if direction != "left":
+                        direction = "left"
+                        angle = 90
                     
 
         key = pygame.key.get_pressed()
@@ -147,7 +159,7 @@ def main():
             if angle < 90:
                 angle -= 20
                 print(angle)'''
-        
+        drawText(font, 20, 570, f'f_direction: {direction}',(0, 255, 0, 255),(0,0,0))
         pygame.display.flip()
         pygame.time.wait(10)
 
