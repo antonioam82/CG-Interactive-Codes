@@ -85,6 +85,13 @@ def main():
                 if event.key == pygame.K_UP:
                     direction = "front"
                     angle = 180
+                if event.key == pygame.K_RIGHT:
+                    direction = "right"
+                    angle = -90
+                if event.key == pygame.K_LEFT:
+                    direction = "left"
+                    angle = 90
+                    
 
         key = pygame.key.get_pressed()
         
@@ -125,11 +132,19 @@ def main():
         if direction == "back":
             if angle < 180:
                 angle += 20
-                #print(angle)
+                print(angle)
         elif direction == "front":
             if angle < 360:
                 angle += 20
-                #print(angle)
+                print(angle)
+        elif direction == "right":
+            if angle < -180:
+                angle -= 20
+                print(angle)
+        elif direction == "left":
+            if angle < 90:
+                angle -= 20
+                print(angle)
         
         pygame.display.flip()
         pygame.time.wait(10)
