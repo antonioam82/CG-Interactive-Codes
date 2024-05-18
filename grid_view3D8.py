@@ -81,10 +81,10 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN:
                     direction = "back"
-                    angle = 0
+                    angle = 180
                 if event.key == pygame.K_UP:
                     direction = "front"
-                    angle = 180
+                    angle = 0
                 if event.key == pygame.K_RIGHT:
                     direction = "right"
                     angle = -90
@@ -129,7 +129,7 @@ def main():
         draw_grid()
         glPopMatrix()
 
-        if direction == "back":
+        '''if direction == "back":
             if angle < 180:
                 angle += 20
                 print(angle)
@@ -144,7 +144,7 @@ def main():
         elif direction == "left":
             if angle < 90:
                 angle -= 20
-                print(angle)
+                print(angle)'''
         
         pygame.display.flip()
         pygame.time.wait(10)
