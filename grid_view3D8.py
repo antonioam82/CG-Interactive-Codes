@@ -104,13 +104,15 @@ def main():
             scale_factor -= 0.1
             scale_factor2 += 0.1
 
-        elif key[pygame.K_r]:
+        elif key[pygame.K_t]:
             glRotatef(1, 0, -0.1, 0)
+        elif key[pygame.K_r]:
+            glRotatef(1, 0, 0.1, 0)
 
-        elif key[pygame.K_w]:
+        '''elif key[pygame.K_w]:
             pos_z -= 0.1
         elif key[pygame.K_a]:
-            pos_x -= 0.1
+            pos_x -= 0.1'''
             
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
