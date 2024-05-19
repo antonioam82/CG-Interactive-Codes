@@ -105,22 +105,18 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_DOWN:
-                    if direction != "back":
-                        direction = "back"
-                        angle = 180
-                if event.key == pygame.K_UP:
-                    if direction != "front":
-                        direction = "front"
-                        angle = 0
-                if event.key == pygame.K_RIGHT:
-                    if direction != "right":
-                        direction = "right"
-                        angle = -90
-                if event.key == pygame.K_LEFT:
-                    if direction != "left":
-                        direction = "left"
-                        angle = 90
+                if event.key == pygame.K_DOWN and direction != "back":
+                    direction = "back"
+                    angle = 180
+                if event.key == pygame.K_UP and direction != "front":
+                    direction = "front"
+                    angle = 0
+                if event.key == pygame.K_RIGHT and direction != "right":
+                    direction = "right"
+                    angle = -90
+                if event.key == pygame.K_LEFT and direction != "left":
+                    direction = "left"
+                    angle = 90
                     
 
         key = pygame.key.get_pressed()
