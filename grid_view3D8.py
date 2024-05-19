@@ -67,9 +67,7 @@ def Cube():
     glBegin(GL_QUADS)
     glColor4f(0.0,0.0,1.0,0.3)
     for surface in surfaces:
-        x=0
         for vertex in surface:
-            x+=1
             glVertex3fv(vertices[vertex])
     glEnd()
 
@@ -187,3 +185,4 @@ def main():
     pygame.quit()
 
 main()
+
