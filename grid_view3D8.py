@@ -32,8 +32,16 @@ edges = (
     (5, 7)
 )
 
+surfaces = (
+    (0,1,2,3),
+    (3,2,7,6),
+    (6,7,5,4),
+    (4,5,1,0),
+    (1,5,7,2),
+    (4,0,3,6)
+    )
+
 def draw_grid():
-    #glColor3f(0.0,1.0,0.0)#(0.5, 0.5, 0.5)  # Color gris
     glBegin(GL_LINES)
     glColor3f(1.0,1.0,1.0)
 
@@ -55,6 +63,15 @@ def Cube():
         for vertex in edge:
             glVertex3fv(vertices[vertex])
     glEnd()
+    
+    glBegin(GL_QUADS)
+    glColor4f(0.0,0.0,1.0,0.3)
+    for surface in surfaces:
+        x=0
+        for vertex in surface:
+            x+=1
+            glVertex3fv(vertices[vertex])
+    glEnd()
 
 def drawText(f, x, y, text, c, bgc):
     textSurface = f.render(text, True, c, bgc)
@@ -70,6 +87,9 @@ def main():
     glTranslatef(0.0, 0.0, -10)
     glEnable(GL_DEPTH_TEST)
     font = pygame.font.SysFont('arial', 15)
+
+    glEnable(GL_BLEND)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
     scale_factor = 1
     scale_factor2 = 1
@@ -159,6 +179,7 @@ def main():
             if angle < 90:
                 angle -= 20
                 print(angle)'''
+        
         drawText(font, 20, 570, f'f_direction: {direction}',(0, 255, 0, 255),(0,0,0))
         pygame.display.flip()
         pygame.time.wait(10)
