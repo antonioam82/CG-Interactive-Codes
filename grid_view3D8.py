@@ -144,7 +144,7 @@ def main():
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         
-        # Cubo 1
+        # Figura
         glPushMatrix()
         #glTranslatef(pos_x,pos_y,pos_z)
         #glScalef(scale_factor, scale_factor, scale_factor)
