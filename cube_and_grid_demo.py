@@ -191,11 +191,22 @@ lista_vertices = [verticies, verticies1, verticies2, verticies3, verticies4, ver
 
 def cubes():
     glBegin(GL_LINES)
+    glColor3f(1.0,1.0,0.0)
     for e in lista_vertices:
         for edge in edges:
             for vertex in edge:
                 glVertex3fv(e[vertex])
 
+    glEnd()
+    glBegin(GL_QUADS)
+    for i in lista_vertices:
+        #glColor3d(0,1,0)
+        for surface in surfaces:
+            u=0
+            for vertex in surface:
+                u+=1
+                glColor3fv(colors2[u])
+                glVertex3fv(i[vertex])
     glEnd()
 
 
@@ -232,6 +243,7 @@ def main():
     glClearColor(0.5, 0.5, 0.5, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
     glRotatef(2, 1, 0, 0)
+    glTranslatef(0,0,-20)
     
     running = True
     while (running):
@@ -287,7 +299,7 @@ def main():
 
         glTranslatef(x, 0.0, z)  
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        #draw_double_grid()
+        draw_double_grid()
         #Cube()
         cubes()
         pygame.display.flip()
