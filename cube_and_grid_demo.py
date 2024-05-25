@@ -54,6 +54,150 @@ def Cube():
             glVertex3fv(verticies[vertex])
     glEnd()'''
 
+verticies = [
+    [1, -1, -1],#inf, der, tras
+    [1, 1, -1],#sup, der, tras
+    [-1, 1, -1],#sup, izq, tras
+    [-1, -1, -1],#inf, izq, tras
+    [1, -1, 1],#inf, der, del
+    [1, 1, 1],#sup, der, del
+    [-1, -1, 1],#inf, izg, del
+    [-1, 1, 1]#sup, izq, del
+    ]
+
+verticies1 = [
+    [4, -1, -1],#inf, der, tras
+    [4, 1, -1],#sup, der, tras
+    [2, 1, -1],#sup, izq, tras
+    [2, -1, -1],#inf, izq, tras
+    [4, -1, 1],#inf, der, del
+    [4, 1, 1],#sup, der, del
+    [2, -1, 1],#inf, izg, del
+    [2, 1, 1]#sup, izq, del
+    ]
+
+verticies2 = [
+    [-4, -1, -1],#inf, der, tras
+    [-4, 1, -1],#sup, der, tras
+    [-2, 1, -1],#sup, izq, tras
+    [-2, -1, -1],#inf, izq, tras
+    [-4, -1, 1],#inf, der, del
+    [-4, 1, 1],#sup, der, del
+    [-2, -1, 1],#inf, izg, del
+    [-2, 1, 1]#sup, izq, del        
+    ]
+
+verticies3 = [
+    [1, 4, -1],#inf, der, tras
+    [1, 2, -1],#sup, der, tras
+    [-1, 2, -1],#sup, izq, tras
+    [-1, 4, -1],#inf, izq, tras
+    [1, 4, 1],#inf, der, del
+    [1, 2, 1],#sup, der, del
+    [-1, 4, 1],#inf, izg, del
+    [-1, 2, 1]#sup, izq, del
+    ]
+
+
+verticies4 = [
+    [1, -2, -1],#inf, der, tras
+    [1, -4, -1],#sup, der, tras
+    [-1, -4, -1],#sup, izq, tras
+    [-1, -2, -1],#inf, izq, tras
+    [1, -2, 1],#inf, der, del
+    [1, -4, 1],#sup, der, del
+    [-1, -2, 1],#inf, izg, del
+    [-1, -4, 1]#sup, izq, del
+    ]
+
+verticies5 = [
+    [1, -1, 4],#inf, der, tras
+    [1, 1, 4],#sup, der, tras
+    [-1, 1, 4],#sup, izq, tras
+    [-1, -1, 4],#inf, izq, tras
+    [1, -1, 2],#inf, der, del
+    [1, 1, 2],#sup, der, del
+    [-1, -1, 2],#inf, izg, del
+    [-1, 1, 2]#sup, izq, del
+    ]
+
+
+verticies6 = [
+    [1, -1, -2],#inf, der, tras
+    [1, 1, -2],#sup, der, tras
+    [-1, 1, -2],#sup, izq, tras
+    [-1, -1, -2],#inf, izq, tras
+    [1, -1, -4],#inf, der, del
+    [1, 1, -4],#sup, der, del
+    [-1, -1, -4],#inf, izg, del
+    [-1, 1, -4]#sup, izq, del
+    ]
+    
+edges = (
+    (0,1),
+    (0,3),
+    (0,4),
+    (2,1),
+    (2,3),
+    (2,7),
+    (6,3),
+    (6,4),
+    (6,7),
+    (5,1),
+    (5,4),
+    (5,7)
+    )
+
+surfaces = (
+    (0,1,2,3),
+    (3,2,7,6),
+    (6,7,5,4),
+    (4,5,1,0),
+    (1,5,7,2),
+    (4,0,3,6)
+    )
+
+colors = (
+    (1,0,0),
+    (1,0,0),
+    (1,1,0),
+    (1,0,1),
+    (1,0,1),
+    (1,0,0),
+    (1,0,1),
+    (1,0,1),
+    (1,0,0),
+    (1,1,0),
+    (1,0,0),
+    (1,1,0)
+    )
+
+colors2 = (
+    (1,1,0),
+    (1,0,1),
+    (0,0.3,1),
+    (0,0.7,0.4),
+    (1,1,1),
+    (0,0,0),
+    (0.5,1,1),
+    (1,1,0),
+    (1,0,0),
+    (0,0.5,1),
+    (0,1,1),
+    (1,0,0)
+    )
+        
+lista_vertices = [verticies, verticies1, verticies2, verticies3, verticies4, verticies5, verticies6]
+
+def cubes():
+    glBegin(GL_LINES)
+    for e in lista_vertices:
+        for edge in edges:
+            for vertex in edge:
+                glVertex3fv(e[vertex])
+
+    glEnd()
+
 
 def draw_double_grid():
     glBegin(GL_LINES)
@@ -87,7 +231,6 @@ def main():
     
     glClearColor(0.5, 0.5, 0.5, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
-    glTranslatef(0.5, 0.0, 0.0)
     glRotatef(2, 1, 0, 0)
     
     running = True
@@ -144,8 +287,9 @@ def main():
 
         glTranslatef(x, 0.0, z)  
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        draw_double_grid()
+        #draw_double_grid()
         #Cube()
+        cubes()
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
