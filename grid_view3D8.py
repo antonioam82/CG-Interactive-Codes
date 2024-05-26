@@ -1,3 +1,5 @@
+#/usr/bin/env python
+# -*- coding: utf-8 -*-
 import pygame
 from pygame.locals import *
 from OpenGL.GL import *
@@ -119,13 +121,14 @@ def main():
         key = pygame.key.get_pressed()
         
         if key[pygame.K_UP]:
-            z += 0.050
+            z += 0.090
         elif key[pygame.K_DOWN]:
-            z -= 0.050
+            z -= 0.090
         elif key[pygame.K_RIGHT]:
-            x -= 0.050
+            x -= 0.090
         elif key[pygame.K_LEFT]:
-            x += 0.050
+            x += 0.090
+            
 
         elif key[pygame.K_t]:
             glRotatef(1, 0, -0.1, 0)
