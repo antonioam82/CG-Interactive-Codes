@@ -89,9 +89,8 @@ def main():
 
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-
-    scale_factor = 1
-    scale_factor2 = 1
+    
+    move = 0
     
     '''pos_x = 0
     pos_y = 0
@@ -123,13 +122,8 @@ def main():
         key = pygame.key.get_pressed()
         
         if key[pygame.K_UP]:
-            scale_factor += 0.1
-            scale_factor2 -= 0.1
-            
-
-        elif  key[pygame.K_DOWN]:
-            scale_factor -= 0.1
-            scale_factor2 += 0.1
+            move += 0.050
+            glTranslatef(0.0, 0.0, 0.050) 
 
         elif key[pygame.K_t]:
             glRotatef(1, 0, -0.1, 0)
@@ -148,6 +142,7 @@ def main():
         glPushMatrix()
         #glTranslatef(pos_x,pos_y,pos_z)
         #glScalef(scale_factor, scale_factor, scale_factor)
+        glTranslatef(0.0, 0.0, -move)
         glRotatef(angle, 0, 1, 0)
         Cube()
         glPopMatrix()
@@ -155,6 +150,8 @@ def main():
         # Grid
         glPushMatrix()
         glTranslatef(0,-2,0)
+        glTranslatef(0.0, 0.0, move) 
+        glRotatef(0, 0, 1, 0)
         draw_grid()
         glPopMatrix()
 
