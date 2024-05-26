@@ -86,15 +86,13 @@ def main():
     glTranslatef(0.0, 0.0, -10)
     glEnable(GL_DEPTH_TEST)
     font = pygame.font.SysFont('arial', 15)
+    glRotatef(15, 1, 0, 0)
 
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     
-    move = 0
-    
-    '''pos_x = 0
-    pos_y = 0
-    pos_z = 0'''
+    x = 0
+    z = 0
 
     angle = 0
     stop = False
@@ -122,55 +120,33 @@ def main():
         key = pygame.key.get_pressed()
         
         if key[pygame.K_UP]:
-            move += 0.050
-            glTranslatef(0.0, 0.0, 0.050) 
+            z += 0.050
+        elif key[pygame.K_DOWN]:
+            z -= 0.050
+        elif key[pygame.K_RIGHT]:
+            x -= 0.050
+        elif key[pygame.K_LEFT]:
+            x += 0.050
 
         elif key[pygame.K_t]:
             glRotatef(1, 0, -0.1, 0)
         elif key[pygame.K_r]:
             glRotatef(1, 0, 0.1, 0)
-
-        '''elif key[pygame.K_w]:
-            pos_z -= 0.1
-        elif key[pygame.K_a]:
-            pos_x -= 0.1'''
             
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         
         # Figura
         glPushMatrix()
-        #glTranslatef(pos_x,pos_y,pos_z)
-        #glScalef(scale_factor, scale_factor, scale_factor)
-        glTranslatef(0.0, 0.0, -move)
         glRotatef(angle, 0, 1, 0)
         Cube()
         glPopMatrix()
 
         # Grid
         glPushMatrix()
-        glTranslatef(0,-2,0)
-        glTranslatef(0.0, 0.0, move) 
-        glRotatef(0, 0, 1, 0)
+        glTranslatef(x, 0.0, z) 
         draw_grid()
         glPopMatrix()
-
-        '''if direction == "back":
-            if angle < 180:
-                angle += 20
-                print(angle)
-        elif direction == "front":
-            if angle < 360:
-                angle += 20
-                print(angle)
-        elif direction == "right":
-            if angle < -180:
-                angle -= 20
-                print(angle)
-        elif direction == "left":
-            if angle < 90:
-                angle -= 20
-                print(angle)'''
         
         drawText(font, 20, 570, f'f_direction: {direction}',(0, 255, 0, 255),(0,0,0))
         pygame.display.flip()
