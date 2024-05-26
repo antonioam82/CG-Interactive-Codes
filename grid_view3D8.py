@@ -90,8 +90,8 @@ def main():
     font = pygame.font.SysFont('arial', 15)
     glRotatef(15, 1, 0, 0)
 
-    glEnable(GL_BLEND)
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    #glEnable(GL_BLEND)
+    #glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     
     x = 0
     z = 0
@@ -136,6 +136,12 @@ def main():
             glRotatef(1, 0, 0.1, 0)
             
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+
+        # Grid
+        glPushMatrix()
+        glTranslatef(x, 0.0, z) 
+        draw_grid()
+        glPopMatrix()
         
         # Figura
         glPushMatrix()
@@ -143,11 +149,7 @@ def main():
         Cube()
         glPopMatrix()
 
-        # Grid
-        glPushMatrix()
-        glTranslatef(x, 0.0, z) 
-        draw_grid()
-        glPopMatrix()
+
         
         drawText(font, 20, 570, f'f_direction: {direction}',(0, 255, 0, 255),(0,0,0))
         pygame.display.flip()
