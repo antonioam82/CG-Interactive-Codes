@@ -116,7 +116,6 @@ def main():
                     direction = "left"
                     angle = 90
                     
-
         key = pygame.key.get_pressed()
         
         if key[pygame.K_UP]:
@@ -133,7 +132,6 @@ def main():
         elif key[pygame.K_r]:
             glRotatef(1, 0, 0.1, 0)
             
-
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         
         # Figura
