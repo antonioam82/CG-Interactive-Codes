@@ -122,21 +122,21 @@ def main():
         
         if key[pygame.K_UP]:
             z += 0.090
-        elif key[pygame.K_DOWN]:
+        if key[pygame.K_DOWN]:
             z -= 0.090
-        elif key[pygame.K_RIGHT]:
+        if key[pygame.K_RIGHT]:
             x -= 0.090
-        elif key[pygame.K_LEFT]:
+        if key[pygame.K_LEFT]:
             x += 0.090
             
 
-        elif key[pygame.K_t]:
+        if key[pygame.K_t]:
             glRotatef(1, 0, -0.1, 0)
-        elif key[pygame.K_r]:
+        if key[pygame.K_r]:
             glRotatef(1, 0, 0.1, 0)
-        elif key[pygame.K_q]:
+        if key[pygame.K_q]:
             glRotatef(1, -0.1, 0, 0)
-        elif key[pygame.K_w]:
+        if key[pygame.K_w]:
             glRotatef(1, 0.1, 0, 0)
              
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
