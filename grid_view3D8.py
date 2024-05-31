@@ -97,7 +97,7 @@ def main():
     z = 0
 
     angle = 0
-    #stop = False
+    speed = 0.090
     running = True
     direction = 'front'
     
@@ -122,13 +122,13 @@ def main():
         key = pygame.key.get_pressed()
         
         if key[pygame.K_UP]:
-            z += 0.090
+            z += speed
         if key[pygame.K_DOWN]:
-            z -= 0.090
+            z -= speed
         if key[pygame.K_RIGHT]:
-            x -= 0.090
+            x -= speed
         if key[pygame.K_LEFT]:
-            x += 0.090
+            x += speed
             
 
         if key[pygame.K_t]:
@@ -139,6 +139,11 @@ def main():
             glRotatef(1, -0.1, 0, 0)
         if key[pygame.K_w]:
             glRotatef(1, 0.1, 0, 0)
+
+        if key[pygame.K_z]:
+            speed += 0.001
+        elif key[pygame.K_x]:
+            speed -= 0.001
              
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
@@ -155,6 +160,7 @@ def main():
         glPopMatrix()
 
         drawText(font, 20, 570, f'DIRECTION: {direction}',(0, 255, 0, 255),(0,0,0))
+        drawText(font, 20, 550, f'SPEED: {speed}',(0, 255, 0, 255),(0,0,0))
         pygame.display.flip()
         pygame.time.wait(10)
 
