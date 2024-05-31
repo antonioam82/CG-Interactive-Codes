@@ -145,15 +145,15 @@ def main():
         glPushMatrix()
         glTranslatef(x, 0.0, z) 
         draw_grid()
-        glPopMatrix()
-        
+        glPopMatrix() 
+
         # Figura
         glPushMatrix()
         glRotatef(angle, 0, 1, 0)
         Cube()
         glPopMatrix()
 
-        drawText(font, 20, 570, f'f_direction: {direction}',(0, 255, 0, 255),(0,0,0))
+        drawText(font, 20, 570, f'DIRECTION: {direction}',(0, 255, 0, 255),(0,0,0))
         pygame.display.flip()
         pygame.time.wait(10)
 
