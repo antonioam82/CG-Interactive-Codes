@@ -159,12 +159,15 @@ def main():
         Cube()
         glPopMatrix()
 
+        spd = round(speed, 4)
+
         drawText(font, 20, 570, f'DIRECTION: {direction}',(0, 255, 0, 255),(0,0,0))
-        drawText(font, 20, 550, f'SPEED: {speed}',(0, 255, 0, 255),(0,0,0))
+        drawText(font, 20, 550, f'SPEED: {spd}',(0, 255, 0, 255),(0,0,0))
         pygame.display.flip()
         pygame.time.wait(10)
 
     pygame.quit()
 
 main()
+
 
