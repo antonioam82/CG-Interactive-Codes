@@ -97,9 +97,10 @@ def main():
     z = 0
 
     angle = 0
-    stop = False
+    #stop = False
     running = True
     direction = 'front'
+    
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -160,3 +161,4 @@ def main():
     pygame.quit()
 
 main()
+
