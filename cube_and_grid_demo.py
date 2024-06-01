@@ -191,6 +191,7 @@ lista_vertices = [verticies, verticies1, verticies2, verticies3, verticies4, ver
 
 def cubes():
     glBegin(GL_LINES)
+
     glColor3f(1.0,1.0,0.0)
     for e in lista_vertices:
         for edge in edges:
@@ -237,8 +238,10 @@ def main():
     pygame.init()
     display =(900, 600)#(1600,870)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+    
     x = 0.0
     z = 0.0
+    r = 0.0
     
     glClearColor(0.5, 0.5, 0.5, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
@@ -254,32 +257,32 @@ def main():
 
         # CONTROL DE DIRECCIÓN
         if key[pygame.K_LEFT]:
-            x = 0.050
-            z = 0.0
+            x += 0.050
+            z += 0.0
         if key[pygame.K_RIGHT]:
-            x = -0.050
-            z = 0.0
+            x += -0.050
+            z += 0.0
         if key[pygame.K_UP]:
-            z = 0.050
-            x = 0.0
+            z += 0.050
+            x += 0.0
         if key[pygame.K_DOWN]:
-            z = -0.050
-            x = 0.0
+            z += -0.050
+            x += 0.0
         if key[pygame.K_o]:
-            x = 0.050
-            z = 0.050
+            x += 0.050
+            z += 0.050
         if key[pygame.K_p]:
             x = -0.050
             z = 0.050
         if key[pygame.K_k]:
-            x = -0.050
-            z = -0.050
+            x += -0.050
+            z += -0.050
         if key[pygame.K_l]:
-            x = 0.050
-            z = -0.050 
+            x += 0.050
+            z += -0.050 
         if key[pygame.K_s]:
-            x = 0.0
-            z = 0.0
+            x += 0.0
+            z += 0.0
             
         # ROTACIONES
         if key[pygame.K_r]:
@@ -297,13 +300,19 @@ def main():
         if key[pygame.K_u]:
             glRotatef(0.5, 0, 0, -1)
 
-        glTranslatef(x, 0.0, z)  
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        glPushMatrix()
+        glTranslatef(x, 0.0, z)  
         draw_double_grid()
-        #Cube()
+        glPopMatrix()
+        glPushMatrix()
+        glRotatef(r, 1, 1, 1)
         cubes()
+        glPopMatrix()
+        r += 0.9
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
          
 main()
+
