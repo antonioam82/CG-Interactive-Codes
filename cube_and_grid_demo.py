@@ -242,6 +242,9 @@ def main():
     x = 0.0
     z = 0.0
     r = 0.0
+    scale_x = 1
+    scale_y = 1
+    scale_z = 1
     
     glClearColor(0.5, 0.5, 0.5, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
@@ -271,18 +274,27 @@ def main():
         if key[pygame.K_o]:
             x += 0.050
             z += 0.050
-        if key[pygame.K_p]:
+        '''if key[pygame.K_p]:
             x = -0.050
-            z = 0.050
+            z = 0.050'''
         if key[pygame.K_k]:
             x += -0.050
             z += -0.050
         if key[pygame.K_l]:
             x += 0.050
             z += -0.050 
-        if key[pygame.K_s]:
+        '''if key[pygame.K_s]:
             x += 0.0
-            z += 0.0
+            z += 0.0'''
+        if key[pygame.K_x]:
+            scale_x += 0.1
+        if key[pygame.K_c]:
+            scale_x -= 0.1
+        if key[pygame.K_v]:
+            scale_y += 0.1
+        if key[pygame.K_b]:
+            scale_y -= 0.1
+        
             
         # ROTACIONES
         if key[pygame.K_r]:
@@ -306,17 +318,17 @@ def main():
         glTranslatef(x, 0.0, z)  
         draw_double_grid()
         glPopMatrix()
-        
         glPushMatrix()
+        
         glRotatef(r, 1, 1, 1)
+        glScalef(scale_x, scale_y, scale_z)
         cubes()
         glPopMatrix()
         
-        r += 0.9
+        r += 3
         pygame.display.flip()
         pygame.time.wait(10)
         
     pygame.quit()
          
 main()
-
