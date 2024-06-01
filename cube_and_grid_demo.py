@@ -301,17 +301,21 @@ def main():
             glRotatef(0.5, 0, 0, -1)
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        
         glPushMatrix()
         glTranslatef(x, 0.0, z)  
         draw_double_grid()
         glPopMatrix()
+        
         glPushMatrix()
         glRotatef(r, 1, 1, 1)
         cubes()
         glPopMatrix()
+        
         r += 0.9
         pygame.display.flip()
         pygame.time.wait(10)
+        
     pygame.quit()
          
 main()
