@@ -312,6 +312,9 @@ def main():
         if key[pygame.K_u]:
             glRotatef(0.5, 0, 0, -1)
 
+        '''z += 0.020
+        x += 0.0'''
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         
         glPushMatrix()
