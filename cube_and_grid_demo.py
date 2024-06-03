@@ -236,7 +236,7 @@ def draw_double_grid():
 # FUNCIÓN PRINCIPAL
 def main():
     pygame.init()
-    display =(900, 600)#(1600,870)
+    display = (900, 600)#(1600,870)#(900, 600)#(1600,870)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     
     x = 0.0
@@ -312,8 +312,8 @@ def main():
         if key[pygame.K_u]:
             glRotatef(0.5, 0, 0, -1)
 
-        '''z += 0.020
-        x += 0.0'''
+        z += 0.020
+        x += 0.0
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         
@@ -321,8 +321,8 @@ def main():
         glTranslatef(x, 0.0, z)  
         draw_double_grid()
         glPopMatrix()
-        glPushMatrix()
         
+        glPushMatrix()
         glRotatef(r, 1, 1, 1)
         glScalef(scale_x, scale_y, scale_z)
         cubes()
