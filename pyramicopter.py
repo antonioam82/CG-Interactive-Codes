@@ -40,9 +40,7 @@ def Pyramid():
     glBegin(GL_QUADS)
     glColor3f(1.0,0.0,0.0)
     for surface in surfaces: 
-        #x=0
         for vertex in surface:
-            #x+=1
             glVertex3fv(vertices[vertex])
     glEnd()
     
@@ -50,9 +48,7 @@ def Pyramid():
     glBegin(GL_LINES)
     glColor3f(1.0,1.0,0.0,)
     for edge in edges:  
-        x=0
         for vertex in edge:
-            x+=1
             glVertex3fv(vertices[vertex])
     glEnd()
 
