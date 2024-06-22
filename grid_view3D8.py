@@ -4,9 +4,11 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+#import random 
 
-grid_size = 120#10
+grid_size = 140#10
 grid_spacing = 1
+hide_data = True
 
 vertices = (
     (1.0, 0.0, -1.0),
@@ -57,8 +59,16 @@ def draw_grid():
 
     glEnd()
 
+
+def hide():
+    global hide_data
+    if hide_data == True:
+        hide_data = False
+    else:
+        hide_data = True
+
 def Cube():
-    glLineWidth(2.0)
+    glLineWidth(3.0)
     glBegin(GL_LINES)
     glColor3f(1.0, 0.0, 0.0)
     for edge in edges:
@@ -68,6 +78,9 @@ def Cube():
     
     glBegin(GL_QUADS)
     #glColor4f(0.0,0.0,1.0,0.4)
+    #r = random.uniform(0.0,1.0)
+    #g = random.uniform(0.0,1.0)
+    #b = random.uniform(0.0,1.0)
     glColor3f(0.0,0.0,1.0)
     for surface in surfaces:
         for vertex in surface:
@@ -82,9 +95,9 @@ def drawText(f, x, y, text, c, bgc):
 
 def main():
     pygame.init()
-    display = (800, 600)
+    display = (800, 600)#(1600, 880) #(800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
-    gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
+    gluPerspective(45, (display[0] / display[1]), 0.1, 90.0) #90
     glTranslatef(0.0, 0.0, -10)
     glEnable(GL_DEPTH_TEST)
     font = pygame.font.SysFont('arial', 15)
@@ -122,12 +135,14 @@ def main():
                 if event.key == pygame.K_LEFT and direction != "left":
                     direction = "left"
                     angle = 90
+                if event.key == pygame.K_h:
+                    hide()
                     
         key = pygame.key.get_pressed()
         
         if key[pygame.K_UP]:
             z += speed
-            z_c -= speed_c#
+            z_c -= speed_c
         if key[pygame.K_DOWN]:
             z -= speed
             z_c += speed_c
@@ -137,12 +152,13 @@ def main():
         if key[pygame.K_LEFT]:
             x += speed
             x_c -= speed_c
-            
 
         if key[pygame.K_t]:
             glRotatef(1, 0, -0.1, 0)
+            #glRotatef(5, 0, -1.0, 0)
         if key[pygame.K_r]:
             glRotatef(1, 0, 0.1, 0)
+            #glRotatef(5, 0, 1.0, 0)
         if key[pygame.K_q]:
             glRotatef(1, -0.1, 0, 0)
         if key[pygame.K_w]:
@@ -153,15 +169,32 @@ def main():
         elif key[pygame.K_x]:
             speed -= 0.001
         elif key[pygame.K_c]:
-            speed_c += 0.001#
+            speed_c += 0.001
         elif key[pygame.K_v]:
             speed_c -= 0.001
+        elif key[pygame.K_p]:
+            speed_c = 0.000
              
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        
+        ############################################################################################3
+        '''if direction == "front":
+            z += speed
+            z_c -= speed_c
+        elif direction == "back":
+            z -= speed
+            z_c += speed_c
+        elif direction == "right":
+            x -= speed
+            x_c += speed_c
+        elif direction == "left":
+            x += speed
+            x_c -= speed_c'''
+        ###################################################################################################
 
         # Grid
         glPushMatrix()
-        glTranslatef(x, 0.0, z) 
+        glTranslatef(x, 0.00, z) 
         draw_grid()
         glPopMatrix() 
 
@@ -175,9 +208,10 @@ def main():
         spd = round(speed, 4)
         spdc = round(speed_c, 4)
 
-        drawText(font, 20, 570, f'DIRECTION: {direction}',(0, 255, 0, 255),(0,0,0))
-        drawText(font, 20, 550, f'SPEED: {spd}',(0, 255, 0, 255),(0,0,0))
-        drawText(font, 20, 530, f'SPEED C: {spdc}',(0, 255, 0, 255),(0,0,0))
+        if hide_data == False:
+            drawText(font, 20, 570, f'DIRECTION: {direction}',(0, 255, 0, 255),(0,0,0))
+            drawText(font, 20, 550, f'SPEED: {spd}',(0, 255, 0, 255),(0,0,0))
+            drawText(font, 20, 530, f'SPEED C: {spdc}',(0, 255, 0, 255),(0,0,0))
         pygame.display.flip()
         pygame.time.wait(10)
 
