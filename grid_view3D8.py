@@ -95,7 +95,7 @@ def drawText(f, x, y, text, c, bgc):
 
 def main():
     pygame.init()
-    display = (800, 600)#(1600, 880) #(800, 600)
+    display = (800, 600)#(1600, 880)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     gluPerspective(45, (display[0] / display[1]), 0.1, 90.0) #90
     glTranslatef(0.0, 0.0, -10)
@@ -126,16 +126,16 @@ def main():
                 if event.key == pygame.K_DOWN and direction != "back":
                     direction = "back"
                     angle = 180
-                if event.key == pygame.K_UP and direction != "front":
+                elif event.key == pygame.K_UP and direction != "front":
                     direction = "front"
                     angle = 0
-                if event.key == pygame.K_RIGHT and direction != "right":
+                elif event.key == pygame.K_RIGHT and direction != "right":
                     direction = "right"
                     angle = -90
-                if event.key == pygame.K_LEFT and direction != "left":
+                elif event.key == pygame.K_LEFT and direction != "left":
                     direction = "left"
                     angle = 90
-                if event.key == pygame.K_h:
+                elif event.key == pygame.K_h:
                     hide()
                     
         key = pygame.key.get_pressed()
@@ -155,10 +155,8 @@ def main():
 
         if key[pygame.K_t]:
             glRotatef(1, 0, -0.1, 0)
-            #glRotatef(5, 0, -1.0, 0)
         if key[pygame.K_r]:
             glRotatef(1, 0, 0.1, 0)
-            #glRotatef(5, 0, 1.0, 0)
         if key[pygame.K_q]:
             glRotatef(1, -0.1, 0, 0)
         if key[pygame.K_w]:
