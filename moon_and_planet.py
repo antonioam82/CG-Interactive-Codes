@@ -3,12 +3,10 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
-show_distance = True
-
 '''def draw_sphere():
     glColor3f(1.0, 0.0, 1.0)  # Color blanco
     gluSphere(gluNewQuadric(), 1, 32, 32)  # Crea una esfera con radio 1'''
-
+        
 def draw_sphere():
     glColor3f(1.0, 1.0, 1.0)  # Color blanco
     quad = gluNewQuadric()
@@ -42,8 +40,9 @@ def main():
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     
-    scale_factor = 1.0 ######################
+    scale_factor = 1.0
     distance = 1.3
+    show_distance = True
     
 
     clock = pygame.time.Clock()
@@ -53,7 +52,12 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_d:
+                    if show_distance:
+                        show_distance = False
+                    else:
+                        show_distance = True
         #___________________________________
         key = pygame.key.get_pressed()
         
@@ -65,10 +69,9 @@ def main():
         if  key[pygame.K_o]:
             distance += 0.02
         elif  key[pygame.K_p]:
-            distance -= 0.02
+            distance -= 0.02 
         #____________________________________
-        
-        #glRotatef(1, 3, 1, 1)  # Rotación de la esfera
+
         glRotatef(1, 0, 0, 1)
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -80,8 +83,8 @@ def main():
         draw_lit_sphere()
         glPopMatrix()###################3
 
-        if show_distance == True:
-            drawText(font, 20, 570, f'Distance: {distance:.3f}',(0, 0, 255, 255),(0,0,0))
+        if show_distance:
+            drawText(font, 20, 570, f'Distance: {distance:.3f}',(255, 255, 255, 255),(255,0,0))
         pygame.display.flip()
         clock.tick(30)
             
