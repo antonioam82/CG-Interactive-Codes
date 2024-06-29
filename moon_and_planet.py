@@ -3,6 +3,8 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
+show_distance = True
+
 '''def draw_sphere():
     glColor3f(1.0, 0.0, 1.0)  # Color blanco
     gluSphere(gluNewQuadric(), 1, 32, 32)  # Crea una esfera con radio 1'''
@@ -14,21 +16,34 @@ def draw_sphere():
     gluSphere(quad, 1, 32, 32)  # Crea una esfera con radio 1'''
 
 def draw_lit_sphere():
-    glColor3f(1.0, 1.0, 1.0)  # Color blanco
+    glColor3f(0.0, 1.0, 0.0)  # Color blanco
     quad = gluNewQuadric()
     gluQuadricDrawStyle(quad, GLU_LINE)  # Establecer el estilo de dibujo a líneas
-    gluSphere(quad, 0.07, 32, 32)  # Crea una esfera con radio 1'''
+    gluSphere(quad, 0.07, 20, 20)  # Crea una esfera con radio 1'''
+
+def drawText(f, x, y, text, c, bgc):
+    #textSurface = f.render(text, True, (0, 0, 255, 255), (0, 0, 0))
+    textSurface = f.render(text, True, c, bgc)
+    textData = pygame.image.tostring(textSurface, "RGBA", True)
+    glWindowPos2d(x, y)
+    glDrawPixels(textSurface.get_width(), textSurface.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, textData)
 
 def main():
     pygame.init()
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+    font = pygame.font.SysFont('arial', 15)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
     glTranslatef(0.0, 0.0, -3)  # Mueve la esfera hacia atrás para que sea visible
     glRotatef(90, 1, 0, 0)
     glRotatef(-23, 0, 1, 0)
+
+    glEnable(GL_DEPTH_TEST) 
+    glEnable(GL_BLEND)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     
     scale_factor = 1.0 ######################
+    distance = 1.3
     
 
     clock = pygame.time.Clock()
@@ -42,11 +57,15 @@ def main():
         #___________________________________
         key = pygame.key.get_pressed()
         
-        if key[pygame.K_UP]:
+        '''if key[pygame.K_UP]:
             scale_factor += 0.01
 
         elif  key[pygame.K_DOWN]:
-            scale_factor -= 0.01
+            scale_factor -= 0.01'''
+        if  key[pygame.K_o]:
+            distance += 0.02
+        elif  key[pygame.K_p]:
+            distance -= 0.02
         #____________________________________
         
         #glRotatef(1, 3, 1, 1)  # Rotación de la esfera
@@ -57,12 +76,15 @@ def main():
         glScalef(scale_factor, scale_factor, scale_factor)
         draw_sphere()
         glPushMatrix()#####3######3
-        glTranslatef(1.2, 0.0, 0.0)
+        glTranslatef(distance, 0.0, 0.0)
         draw_lit_sphere()
         glPopMatrix()###################3
+
+        if show_distance == True:
+            drawText(font, 20, 570, f'Distance: {distance:.3f}',(0, 0, 255, 255),(0,0,0))
         pygame.display.flip()
         clock.tick(30)
-
+            
     pygame.quit()
 
 if __name__ == "__main__":
