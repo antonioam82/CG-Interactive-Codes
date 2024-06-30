@@ -46,21 +46,17 @@ def Cube():
     glEnable(GL_CULL_FACE)
     glCullFace(GL_FRONT)
     glBegin(GL_QUADS)
-    glColor3f(0.0,0.0,0.1)
+    glColor3f(0.0,0.0,1.0)
     for surface in surfaces: 
-        x=0
         for vertex in surface:
-            x+=1
             glVertex3fv(verticies[vertex])
     glEnd()
     
     glLineWidth(2.0)
     glBegin(GL_LINES)
-    glColor3f(1.0,0.0,0.0,)
+    glColor3f(1.0, 0.0, 0.0)
     for edge in edges:  
-        x=0
         for vertex in edge:
-            x+=1
             glVertex3fv(verticies[vertex])
     glEnd()
 
@@ -98,15 +94,16 @@ camera_speed = 0.050
 grid_size = 120
 grid_spacing = 1
 hide_data = False
+ortho = False
 
 # FUNCIÓN PRINCIPAL
 def main():
-    global cube_speed, camera_speed, hide_data, display_help
+    global cube_speed, camera_speed, hide_data, display_help, ortho
     pygame.init()
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     font = pygame.font.SysFont('arial', 15)
-    font2 = pygame.font.SysFont('arial', 20)
+    #font2 = pygame.font.SysFont('arial', 20)
     direction = None
 
     glClearColor(0.0, 0.0, 0.0, 1.0)
@@ -150,6 +147,14 @@ def main():
                         direction = "Backward"
                         print("Definiendo atras")
                         cube_form([0.0,1.0,1.0,0.0,0.0,0.5,0.0,0.5])
+
+                elif event.key == pygame.K_o:
+                    if ortho == False:
+                        ortho = True
+                        glOrtho(-2, 2, -2, 2, -10, 25)
+                    else:
+                        gluPerspective(45, (display[0] / display[1]), 0.1, 100.0)
+                    
                     
         key = pygame.key.get_pressed()
 
