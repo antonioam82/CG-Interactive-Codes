@@ -14,7 +14,7 @@ def draw_sphere():
     gluSphere(quad, 1, 32, 32)  # Crea una esfera con radio 1
 
 def draw_lit_sphere():
-    glColor3f(0.0, 1.0, 0.0)  # Color blanco
+    glColor3f(0.0, 1.0, 0.0)  # Color verde
     quad = gluNewQuadric()
     gluQuadricDrawStyle(quad, GLU_LINE)  # Establecer el estilo de dibujo a líneas
     gluSphere(quad, 0.07, 20, 20)  # Crea una esfera con radio 0.07
