@@ -2,18 +2,22 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+
+'''def draw_sphere():
+    glColor3f(1.0, 0.0, 1.0)  # Color blanco
+    gluSphere(gluNewQuadric(), 1, 32, 32)  # Crea una esfera con radio 1'''
         
 def draw_sphere():
     glColor3f(1.0, 1.0, 1.0)  # Color blanco
     quad = gluNewQuadric()
     gluQuadricDrawStyle(quad, GLU_LINE)  # Establecer el estilo de dibujo a líneas
-    gluSphere(quad, 1, 32, 32)  # Crea una esfera con radio 1'''
+    gluSphere(quad, 1, 32, 32)  # Crea una esfera con radio 1
 
 def draw_lit_sphere():
     glColor3f(0.0, 1.0, 0.0)  # Color blanco
     quad = gluNewQuadric()
     gluQuadricDrawStyle(quad, GLU_LINE)  # Establecer el estilo de dibujo a líneas
-    gluSphere(quad, 0.07, 20, 20)  # Crea una esfera con radio 1'''
+    gluSphere(quad, 0.07, 20, 20)  # Crea una esfera con radio 0.07
 
 def drawText(f, x, y, text, c, bgc):
     #textSurface = f.render(text, True, (0, 0, 255, 255), (0, 0, 0))
