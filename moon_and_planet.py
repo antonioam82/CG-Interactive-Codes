@@ -13,12 +13,22 @@ def draw_sphere():
     gluQuadricDrawStyle(quad, GLU_LINE)  # Establecer el estilo de dibujo a líneas
     gluSphere(quad, 1, 32, 32)  # Crea una esfera con radio 1
 
+# Rotacion para esfera menor
+'''def draw_lit_sphere(rot): 
+    glPushMatrix()#####3######3
+    glColor3f(0.0, 1.0, 0.0)  # Color verde
+    glRotatef(rot, 0, 0, 1)
+    quad = gluNewQuadric()
+    gluQuadricDrawStyle(quad, GLU_LINE)  # Establecer el estilo de dibujo a líneas
+    gluSphere(quad, 0.07, 20, 20)  # Crea una esfera con radio 0.07
+    glPopMatrix()'''
+
 def draw_lit_sphere():
     glColor3f(0.0, 1.0, 0.0)  # Color verde
     quad = gluNewQuadric()
     gluQuadricDrawStyle(quad, GLU_LINE)  # Establecer el estilo de dibujo a líneas
     gluSphere(quad, 0.07, 20, 20)  # Crea una esfera con radio 0.07
-
+    
 def drawText(f, x, y, text, c, bgc):
     #textSurface = f.render(text, True, (0, 0, 255, 255), (0, 0, 0))
     textSurface = f.render(text, True, c, bgc)
@@ -43,7 +53,7 @@ def main():
     scale_factor = 1.0
     distance = 1.3
     show_distance = True
-    
+    #rot = 0
 
     clock = pygame.time.Clock()
     
@@ -79,6 +89,7 @@ def main():
         draw_sphere()
         glPushMatrix()#####3######3
         glTranslatef(distance, 0.0, 0.0)
+        #draw_lit_sphere(rot)
         draw_lit_sphere()
         glPopMatrix()###################3
 
@@ -86,6 +97,7 @@ def main():
             drawText(font, 20, 570, f'Distance: {distance:.3f}',(255, 255, 255, 255),(255,0,0))
         pygame.display.flip()
         clock.tick(30)
+        #rot += 3
             
     pygame.quit()
 
