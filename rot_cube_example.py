@@ -42,7 +42,7 @@ def main():
     if not glfw.init():
         return
 
-    window = glfw.create_window(800, 600, "Cuaterniones en OpenGL", None, None)
+    window = glfw.create_window(800, 600, "Cube rotation", None, None)
     if not window:
         glfw.terminate()
         return
