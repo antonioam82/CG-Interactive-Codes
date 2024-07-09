@@ -53,7 +53,7 @@ def main():
     FPS = pygame.time.Clock()
     pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
     gluPerspective(45,1,.1,50)
-    glTranslate(0,-1,-5)
+    glTranslate(0,0,-5)
     glRotate(0,1,0,0)
 
     Left = False
@@ -64,6 +64,7 @@ def main():
             glRotate(-1,0,1,0)
         if Right:
              glRotate(1,0,1,0)
+        
 
     while True:
         for event in pygame.event.get():
@@ -73,13 +74,19 @@ def main():
             if event.type == KEYDOWN:
                 if event.key == K_a:
                     Left = True
+                    Right = False
                 if event.key == K_d:
                     Right = True
-            if event.type == KEYUP:
+                    Left = False
+                if event.key == K_s:
+                    Right = False
+                    Left = False
+                
+            '''if event.type == KEYUP:
                 if event.key == K_a:
                     Left = False
                 if event.key == K_d:
-                    Right = False
+                    Right = False'''
 
         pygame.display.flip()
         drawfaces()
