@@ -66,6 +66,8 @@ def main():
     rot = 0
     angle = 1
     angle_lit = 1
+    r_y = 0.0
+    r_z = 0.0
 
     clock = pygame.time.Clock()
     
@@ -80,17 +82,29 @@ def main():
                         show_distance = False
                     else:
                         show_distance = True
-                elif event.key == pygame.K_UP:
+                if event.key == pygame.K_UP:
                     scale_factor += 0.01
-                elif event.key == pygame.K_DOWN:
+                if event.key == pygame.K_DOWN:
                     scale_factor -= 0.01
+                if event.key == pygame.K_x or event.key == pygame.K_z:
+                    r_z=0.5
+                if event.key == pygame.K_y or event.key == pygame.K_u:
+                    r_y=0.5
         #___________________________________
         key = pygame.key.get_pressed()
         
         if  key[pygame.K_o]:
             distance += 0.02
-        elif  key[pygame.K_p]:
-            distance -= 0.02 
+        if  key[pygame.K_p]:
+            distance -= 0.02
+        if key[pygame.K_y]:
+            glRotatef(r_y, 0, 1, 0)
+        if key[pygame.K_u]:
+            glRotatef(-r_y, 0, 1, 0)
+        if key[pygame.K_z]:
+            glRotatef(r_z, 1, 0, 0)
+        if key[pygame.K_x]:
+            glRotatef(-r_z, 1, 0, 0)    
         #____________________________________
 
         angle += 1
