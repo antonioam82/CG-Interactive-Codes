@@ -9,6 +9,7 @@ from OpenGL.GLU import *
         
 def draw_sphere():
     glColor3f(0.0, 0.0, 0.0)
+    #glColor3f(1.0, 1.0, 1.0)
     #glLineWidth(2)
     quad = gluNewQuadric()
     gluQuadricDrawStyle(quad, GLU_LINE)  # Establecer el estilo de dibujo a líneas
@@ -24,6 +25,7 @@ def draw_lit_sphere(rot):
     #glColor3f(1.0, 1.0, 1.0)
     #gluSphere(gluNewQuadric(), 0.07, 10, 10)
     glColor3f(0.0, 1.0, 0.0)
+    glScalef(2,2,1)
     glRotatef(-rot, 0, 0, 1)
     quad = gluNewQuadric()
     gluQuadricDrawStyle(quad, GLU_LINE)  # Establecer el estilo de dibujo a líneas
@@ -50,8 +52,9 @@ def main():
     font = pygame.font.SysFont('arial', 15)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
     glTranslatef(0.0, 0.0, -3)  # Mueve la esfera hacia atrás para que sea visible
-    glRotatef(90, 1, 0, 0)
-    glRotatef(-23, 0, 1, 0)
+    #glRotatef(90, 1, 0, 0)
+    #glRotatef(-23, 0, 1, 0)
+    glRotatef(60, 1, 0, 0)
 
     glEnable(GL_DEPTH_TEST) 
     glEnable(GL_BLEND)
@@ -112,7 +115,7 @@ def main():
             drawText(font, 20, 570, f'Distance: {distance:.3f}',(255, 255, 255, 255),(255,0,0))
         pygame.display.flip()
         clock.tick(30)
-        rot += 3
+        rot += 10
             
     pygame.quit()
 
