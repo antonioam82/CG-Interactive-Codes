@@ -2,13 +2,9 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
-
-'''def draw_sphere():
-    glColor3f(1.0, 0.0, 1.0)  # Color blanco
-    gluSphere(gluNewQuadric(), 1, 32, 32)  # Crea una esfera con radio 1'''
         
 def draw_sphere():
-    glColor3f(0.0, 0.0, 0.0)
+    glColor3f(1.0, 1.0, 1.0)
     #glColor3f(1.0, 1.0, 1.0)
     #glLineWidth(2)
     quad = gluNewQuadric()
@@ -135,3 +131,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
