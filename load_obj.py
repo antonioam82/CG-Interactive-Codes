@@ -2,11 +2,17 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+import os
+
+os.chdir(r'C:\Users\Antonio\Documents\blender')
 
 grid_size = 120
 grid_spacing = 1
 
-def draw_grid():
+def create_grid_display_list():
+    grid_list = glGenLists(1)
+    glNewList(grid_list, GL_COMPILE)
+    
     glBegin(GL_LINES)
     glColor3f(0.0, 1.0, 0.0)  # Color verde
 
@@ -19,6 +25,9 @@ def draw_grid():
         glVertex3f(grid_size, 0, z)
 
     glEnd()
+    
+    glEndList()
+    return grid_list
 
 def load_obj(filename):
     vertices = []
@@ -37,13 +46,19 @@ def load_obj(filename):
                     edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
     return vertices, edges
 
-def draw_model(vertices, edges):
+def create_model_display_list(vertices, edges):
+    model_list = glGenLists(1)
+    glNewList(model_list, GL_COMPILE)
+    
     glColor3f(1.0, 1.0, 1.0)  # Color blanco
     glBegin(GL_LINES)
     for edge in edges:
         for vertex in edge:
             glVertex3fv(vertices[vertex])
     glEnd()
+    
+    glEndList()
+    return model_list
 
 def main():
     pygame.init()
@@ -56,9 +71,11 @@ def main():
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
     glTranslatef(0.0, 0.0, -10.0)
     glRotatef(20,1,0,0)
-    #glRotatef(25, 2, 1, 0)
 
-    vertices, edges = load_obj('van.obj')  # Reemplaza 'your_model.obj' con la ruta de tu archivo .obj
+    # Cargar y compilar las display lists
+    grid_list = create_grid_display_list()
+    vertices, edges = load_obj('van.obj')
+    model_list = create_model_display_list(vertices, edges)
 
     running = True
     while running:
@@ -67,11 +84,16 @@ def main():
                 running = False
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        draw_grid()
+        
+        # Dibujar la cuadrícula desde la display list
+        glCallList(grid_list)
+        
+        # Dibujar el modelo desde la display list, con rotación
         glPushMatrix()
-        glRotatef(-rot,0,1,0)
-        draw_model(vertices, edges)
+        glRotatef(-rot, 0, 1, 0)
+        glCallList(model_list)
         glPopMatrix()
+        
         rot += 0.6
         pygame.display.flip()
         pygame.time.wait(10)
