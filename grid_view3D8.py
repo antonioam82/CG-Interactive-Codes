@@ -46,6 +46,7 @@ surfaces = (
     )
 
 def draw_grid():
+    glLineWidth(1.3)
     glBegin(GL_LINES)
     glColor3f(1.0,1.0,1.0)
 
@@ -68,6 +69,8 @@ def hide():
         hide_data = True
 
 def Cube():
+    cube_list = glGenLists(1)
+    glNewList(cube_list, GL_COMPILE)
     glLineWidth(3.0)
     glBegin(GL_LINES)
     glColor3f(1.0, 0.0, 0.0)
@@ -77,15 +80,14 @@ def Cube():
     glEnd()
     
     glBegin(GL_QUADS)
-    #glColor4f(0.0,0.0,1.0,0.4)
-    #r = random.uniform(0.0,1.0)
-    #g = random.uniform(0.0,1.0)
-    #b = random.uniform(0.0,1.0)
     glColor3f(0.0,0.0,1.0)
     for surface in surfaces:
         for vertex in surface:
             glVertex3fv(vertices[vertex])
     glEnd()
+
+    glEndList()
+    return cube_list
 
 def drawText(f, x, y, text, c, bgc):
     textSurface = f.render(text, True, c, bgc)
@@ -102,6 +104,8 @@ def main():
     glEnable(GL_DEPTH_TEST)
     font = pygame.font.SysFont('arial', 15)
     glRotatef(15, 1, 0, 0)
+
+    cube_list = Cube()
 
     #glEnable(GL_BLEND)
     #glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -200,7 +204,8 @@ def main():
         glPushMatrix()
         glTranslatef(x_c, 0.0, z_c) 
         glRotatef(angle, 0, 1, 0)
-        Cube()
+        #Cube()
+        glCallList(cube_list)
         glPopMatrix()
 
         spd = round(speed, 4)
