@@ -46,6 +46,8 @@ surfaces = (
     )
 
 def draw_grid():
+    grid_list = glGenLists(1)
+    glNewList(grid_list, GL_COMPILE)
     glLineWidth(1.3)
     glBegin(GL_LINES)
     glColor3f(1.0,1.0,1.0)
@@ -59,6 +61,8 @@ def draw_grid():
         glVertex3f(grid_size, 0, z)
 
     glEnd()
+    glEndList()
+    return grid_list
 
 
 def hide():
@@ -106,6 +110,7 @@ def main():
     glRotatef(15, 1, 0, 0)
 
     cube_list = Cube()
+    grid_list = draw_grid()
 
     #glEnable(GL_BLEND)
     #glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -197,7 +202,8 @@ def main():
         # Grid
         glPushMatrix()
         glTranslatef(x, 0.00, z) 
-        draw_grid()
+        #draw_grid()
+        glCallList(grid_list)
         glPopMatrix() 
 
         # Figura
