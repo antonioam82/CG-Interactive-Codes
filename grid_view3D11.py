@@ -7,7 +7,7 @@ from OpenGL.GLU import *
 
 grid_size = 140#10
 grid_spacing = 1
-hide_data = True
+hide_data = False
 
 vertices = (
     (1.0, 0.0, -1.0),
@@ -180,7 +180,10 @@ def main():
             speed_c -= 0.001
         elif key[pygame.K_p]:
             speed_c = 0.000
-             
+        elif key[pygame.K_d]:
+            speed = 0.090
+            speed_c = 0.00
+                 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         # Grid
