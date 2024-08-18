@@ -4,11 +4,10 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
-#import random 
 
 grid_size = 140#10
 grid_spacing = 1
-hide_data = False
+hide_data = True
 
 vertices = (
     (1.0, 0.0, -1.0),
@@ -122,8 +121,8 @@ def main():
     z_c = 0#
 
     angle = 0
-    speed = 0.005
-    speed_c = 0.005#
+    speed = 0.090
+    speed_c = 0.00#
     running = True
     direction = 'front'
     
@@ -149,7 +148,7 @@ def main():
                     
         key = pygame.key.get_pressed()
         
-        '''if key[pygame.K_UP]:
+        if key[pygame.K_UP]:
             z += speed
             z_c -= speed_c
         if key[pygame.K_DOWN]:
@@ -160,7 +159,7 @@ def main():
             x_c += speed_c
         if key[pygame.K_LEFT]:
             x += speed
-            x_c -= speed_c'''
+            x_c -= speed_c
 
         if key[pygame.K_t]:
             glRotatef(1, 0, -0.1, 0)
@@ -183,32 +182,13 @@ def main():
             speed_c = 0.000
              
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        
-        ############################################################################################3
-        if direction == "front":
-            z = speed
-            z_c = -speed_c
-            x = 0
-        elif direction == "back":
-            z = -speed
-            z_c =  speed_c
-            x = 0
-        elif direction == "right":
-            x = -speed
-            x_c =  speed_c
-            z = 0
-        elif direction == "left":
-            x = speed
-            x_c = -speed_c
-            z = 0
-        ###################################################################################################
 
         # Grid
-        #glPushMatrix()
+        glPushMatrix()
         glTranslatef(x, 0.00, z) 
         #draw_grid()
         glCallList(grid_list)
-        #glPopMatrix() 
+        glPopMatrix() 
 
         # Figura
         glPushMatrix()
