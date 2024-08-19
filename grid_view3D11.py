@@ -122,7 +122,7 @@ def main():
 
     angle = 0
     speed = 0.090
-    speed_c = 0.00#
+    speed_c = 0.090#
     running = True
     direction = 'front'
     
@@ -151,15 +151,19 @@ def main():
         if key[pygame.K_UP]:
             z += speed
             z_c -= speed_c
+            z_c += speed
         if key[pygame.K_DOWN]:
             z -= speed
             z_c += speed_c
+            z_c -= speed
         if key[pygame.K_RIGHT]:
             x -= speed
             x_c += speed_c
+            x_c -= speed
         if key[pygame.K_LEFT]:
             x += speed
             x_c -= speed_c
+            x_c += speed
 
         if key[pygame.K_t]:
             glRotatef(1, 0, -0.1, 0)
@@ -182,14 +186,13 @@ def main():
             speed_c = 0.000
         elif key[pygame.K_d]:
             speed = 0.090
-            speed_c = 0.00
+            speed_c = 0.090
                  
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         # Grid
         glPushMatrix()
         glTranslatef(x, 0.00, z) 
-        #draw_grid()
         glCallList(grid_list)
         glPopMatrix() 
 
@@ -197,12 +200,11 @@ def main():
         glPushMatrix()
         glTranslatef(x_c, 0.0, z_c) 
         glRotatef(angle, 0, 1, 0)
-        #Cube()
         glCallList(cube_list)
         glPopMatrix()
 
-        spd = round(speed, 4)
-        spdc = round(speed_c, 4)
+        spd = round(speed, 3)
+        spdc = round(speed_c, 3)
 
         if hide_data == False:
             drawText(font, 20, 570, f'DIRECTION: {direction}',(0, 255, 0, 255),(0,0,0))
