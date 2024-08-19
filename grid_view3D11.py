@@ -208,8 +208,8 @@ def main():
 
         if hide_data == False:
             drawText(font, 20, 570, f'DIRECTION: {direction}',(0, 255, 0, 255),(0,0,0))
-            drawText(font, 20, 550, f'SPEED: {spd}',(0, 255, 0, 255),(0,0,0))
-            drawText(font, 20, 530, f'SPEED C: {spdc}',(0, 255, 0, 255),(0,0,0))
+            drawText(font, 20, 550, f'CAMERA SPEED: {spd}',(0, 255, 0, 255),(0,0,0))
+            drawText(font, 20, 530, f'FIGURE SPEED: {spdc}',(0, 255, 0, 255),(0,0,0))
         pygame.display.flip()
         pygame.time.wait(10)
 
