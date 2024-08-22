@@ -84,7 +84,7 @@ def main():
     tran = 0
     fall_speed = 0  # Velocidad de caída
     y_pos = 1.0     # Posición inicial en el eje Y
-    z_limit = grid_size
+    z_limit = grid_size + 0.5
 
     glClearColor(0.5, 0.5, 0.5, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
@@ -118,12 +118,15 @@ def main():
             glRotatef(0.1, -1, 0, 0)
         if key[pygame.K_w]:
             glRotatef(0.1, 0, -1, 0)
+        if key[pygame.K_a]:
+            glRotatef(0.1, 1, 0, 0)
+            
 
         # Iniciar la caída al presionar la tecla 'f'
         '''if key[pygame.K_f]:
-            fall_speed = 0.1#0.05  
+            fall_speed = 0.1#0.05'''
 
-        # LET'S FALL!!
+        # LET'S FALL!
         if tran >= z_limit:
             fall_speed = 0.1
 
