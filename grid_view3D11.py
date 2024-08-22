@@ -121,8 +121,8 @@ def main():
     z_c = 0#
 
     angle = 0
-    speed = 0.090
-    speed_c = 0.090#
+    speed = 0.1#0.090
+    speed_c = 0.1#0.090#
     running = True
     direction = 'front'
     
@@ -148,19 +148,19 @@ def main():
                     
         key = pygame.key.get_pressed()
         
-        if key[pygame.K_UP]:
+        if key[pygame.K_UP] and z + speed <= (grid_size - 1):
             z += speed
             z_c -= speed_c
             z_c += speed
-        if key[pygame.K_DOWN]:
+        if key[pygame.K_DOWN] and z - speed >= (-grid_size + 1):
             z -= speed
             z_c += speed_c
             z_c -= speed
-        if key[pygame.K_RIGHT]:
+        if key[pygame.K_RIGHT] and x - speed >= (-grid_size + 1):
             x -= speed
             x_c += speed_c
             x_c -= speed
-        if key[pygame.K_LEFT]:
+        if key[pygame.K_LEFT] and x + speed <= (grid_size - 1):
             x += speed
             x_c -= speed_c
             x_c += speed
@@ -198,7 +198,7 @@ def main():
 
         # Figura
         glPushMatrix()
-        glTranslatef(x_c, 0.0, z_c) 
+        glTranslatef(x_c, 0.0, z_c)
         glRotatef(angle, 0, 1, 0)
         glCallList(cube_list)
         glPopMatrix()
