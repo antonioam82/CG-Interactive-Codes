@@ -148,19 +148,19 @@ def main():
                     
         key = pygame.key.get_pressed()
         
-        if key[pygame.K_UP] and z + speed <= (grid_size - 1):
+        if key[pygame.K_UP]: #and z + speed <= (grid_size - 1):
             z += speed
             z_c -= speed_c
             z_c += speed
-        if key[pygame.K_DOWN] and z - speed >= (-grid_size + 1):
+        if key[pygame.K_DOWN]: #and z - speed >= (-grid_size + 1):
             z -= speed
             z_c += speed_c
             z_c -= speed
-        if key[pygame.K_RIGHT] and x - speed >= (-grid_size + 1):
+        if key[pygame.K_RIGHT]: #and x - speed >= (-grid_size + 1):
             x -= speed
             x_c += speed_c
             x_c -= speed
-        if key[pygame.K_LEFT] and x + speed <= (grid_size - 1):
+        if key[pygame.K_LEFT]: #and x + speed <= (grid_size - 1):
             x += speed
             x_c -= speed_c
             x_c += speed
