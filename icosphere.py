@@ -56,7 +56,7 @@ def create_model_display_list(vertices, surfaces, edges):
     glNewList(model_list, GL_COMPILE)
     
     # Dibuja las superficies del modelo en color azul
-    glColor3f(0.0, 0.0, 1.0)
+    glColor3f(1.0, 0.0, 1.0)
     glBegin(GL_TRIANGLES)
     for surface in surfaces:
         for vertex in surface:
@@ -82,6 +82,9 @@ def main():
 
     rot = 0
     tran = 0
+    fall_speed = 0  # Velocidad de caída
+    y_pos = 1.0     # Posición inicial en el eje Y
+    z_limit = grid_size
 
     glClearColor(0.5, 0.5, 0.5, 1.0)
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
@@ -106,6 +109,7 @@ def main():
 
         key = pygame.key.get_pressed()
 
+        # Rotaciones
         if key[pygame.K_t]:
             glRotatef(0.1, 0, -1, 0)
         if key[pygame.K_r]:
@@ -115,6 +119,17 @@ def main():
         if key[pygame.K_w]:
             glRotatef(0.1, 0, -1, 0)
 
+        # Iniciar la caída al presionar la tecla 'f'
+        '''if key[pygame.K_f]:
+            fall_speed = 0.1#0.05  
+
+        # LET'S FALL!!
+        if tran >= z_limit:
+            fall_speed = 0.1
+
+        # Actualizar la posición en Y del modelo
+        y_pos -= fall_speed
+
         # Dibujar la cuadrícula
         glPushMatrix()
         glTranslatef(0.0, 0.0, -tran)
@@ -123,13 +138,13 @@ def main():
         
         # Dibujar el modelo con las superficies y aristas
         glPushMatrix()
-        glTranslatef(0.0, 1.0, 0.0)
+        glTranslatef(0.0, y_pos, 0.0)
         glRotatef(rot, 1, 0, 0)
         glCallList(model_list)
         glPopMatrix()
 
-        rot += 0.6
-        tran += 0.017
+        rot += 0.6 * 2
+        tran += 0.016 * 2
         pygame.display.flip()
         pygame.time.wait(10)
 
