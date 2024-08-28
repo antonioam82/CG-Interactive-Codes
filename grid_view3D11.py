@@ -7,7 +7,6 @@ from OpenGL.GLU import *
 
 grid_size = 140#10
 grid_spacing = 1
-hide_data = False
 
 vertices = (
     (1.0, 0.0, -1.0),
@@ -61,15 +60,7 @@ def draw_grid():
 
     glEnd()
     glEndList()
-    return grid_list
-
-
-def hide():
-    global hide_data
-    if hide_data == True:
-        hide_data = False
-    else:
-        hide_data = True
+    return grid_list    
 
 def Cube():
     cube_list = glGenLists(1)
@@ -110,6 +101,7 @@ def main():
 
     cube_list = Cube()
     grid_list = draw_grid()
+    hide_data = False
 
     #glEnable(GL_BLEND)
     #glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -144,7 +136,11 @@ def main():
                     direction = "left"
                     angle = 90
                 elif event.key == pygame.K_h:
-                    hide()
+                    if hide_data == True:
+                        hide_data = False
+                    else:
+                        hide_data = True
+              
                     
         key = pygame.key.get_pressed()
         
