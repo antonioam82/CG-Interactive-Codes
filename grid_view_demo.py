@@ -239,7 +239,9 @@ def main():
         glFlush()
         pygame.display.flip()
         pygame.time.wait(10)
- 
+
+    glDeleteLists(grid_list, 1)
+    glDeleteLists(cube_list, 1)
     pygame.quit()
  
 main()
