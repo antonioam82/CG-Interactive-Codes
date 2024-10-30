@@ -152,52 +152,52 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_DOWN and direction != "back":
                     if direction == "front":
-                        glRotatef(-180, 0, 1, 0)
+                        glRotatef(-180, 0, 1, 0) #
                         angle += 180
                     elif direction == "right":
-                        glRotatef(-90, 0, 1, 0)
-                        angle -= 180
+                        glRotatef(90, 0, 1, 0) #
+                        angle -= 90
                     else:
-                        glRotatef(90, 0, 1, 0)
-                        angle += 180
+                        glRotatef(-90, 0, 1, 0) #
+                        angle += 90
 
                     direction = "back"
                     
                 elif event.key == pygame.K_UP and direction != "front":
                     if direction == "back":
-                        glRotatef(180, 0, 1, 0)
-                        angle -= 180 #######################
+                        glRotatef(180, 0, 1, 0) #
+                        angle -= 180 #
                     elif direction == "right":
-                        glRotatef(90, 0, 1, 0)
-                        angle -= 180
+                        glRotatef(-90, 0, 1, 0) #
+                        angle += 90
                     else:
-                        glRotatef(-90, 0, 1, 0)
-                        angle += 180
+                        glRotatef(90, 0, 1, 0) #
+                        angle -= 90
                         
                     direction = "front"
                     
                 elif event.key == pygame.K_RIGHT and direction != "right":
                     if direction == "front":
-                        glRotatef(90, 0, 1, 0)
+                        glRotatef(90, 0, 1, 0) #
                         angle -= 90
                     elif direction == "back":
-                        glRotatef(-90, 0, 1, 0)
+                        glRotatef(-90, 0, 1, 0) #
                         angle += 90
                     else:
-                        glRotatef(180, 0, 1, 0)
+                        glRotatef(180, 0, 1, 0) #
                         angle -= 180
                         
                     direction = "right"
 
                 elif event.key == pygame.K_LEFT and direction != "left":
                     if direction == "front":
-                        glRotatef(-90, 0, 1, 0)
-                        angle -= 90
-                    elif direction == "back":
-                        glRotatef(90, 0, 1, 0)
+                        glRotatef(-90, 0, 1, 0) #
                         angle += 90
+                    elif direction == "back":
+                        glRotatef(90, 0, 1, 0) #
+                        angle -= 90
                     else:
-                        glRotatef(-180, 0, 1, 0)
+                        glRotatef(-180, 0, 1, 0) #
                         angle -= 180
                         
                     direction = "left"
