@@ -8,6 +8,18 @@ from OpenGL.GLU import *
 grid_size = 140
 grid_spacing = 1
 
+
+another_cube = (
+    (1.0, 0.0, -1.0),
+    (1.0, 1.0, -1.0),
+    (-1.0, 1.0, -1.0),
+    (-1.0, 0.0, -1.0),
+    (1.0, 0.0, 1.0),
+    (1.0, 1.0, 1.0),
+    (-1.0, 0.0, 1.0),
+    (-1.0, 1.0, 1.0)
+)
+
 vertices = (
     (1.0, 0.0, -1.0),
     (1.0, 0.5, -1.0),
@@ -111,6 +123,27 @@ def Cube():
     glEndList()
     return cube_list
 
+def other_cube():
+    other_cube_list = glGenLists(1)
+    glNewList(other_cube_list, GL_COMPILE)
+    glLineWidth(3.0)
+    glBegin(GL_LINES)
+    glColor3f(1.0, 0.4, 0.0)
+    for edge in edges:
+        for vertex in edge:
+            glVertex3fv(another_cube[vertex])
+    glEnd()
+
+    '''glBegin(GL_QUADS)
+    glColor3f(0.0,0.0,1.0)
+    for surface in surfaces:
+        for vertex in surface:
+            glVertex3fv(vertices[vertex])
+    glEnd()'''
+
+    glEndList()
+    return other_cube_list
+
 def drawText(f, x, y, text, c, bgc):
     textSurface = f.render(text, True, c, bgc)
     textData = pygame.image.tostring(textSurface, "RGBA", True)
@@ -129,6 +162,7 @@ def main():
 
     cube_list = Cube()
     grid_list = draw_grid()
+    other_list = other_cube()
     hide_data = False
 
     show_controls()
@@ -252,10 +286,13 @@ def main():
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        # Dibujar la grilla
+        # Dibujar el grid
         glPushMatrix()
         glTranslatef(x, 0.00, z)
         glCallList(grid_list)
+        #glPushMatrix()
+        glCallList(other_list)
+        #glPopMatrix()
         glPopMatrix()
 
         # Dibujar el cubo
