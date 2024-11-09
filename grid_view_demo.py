@@ -86,6 +86,7 @@ def show_controls():
     print("\nMiscellaneous:")
     print("  - 'H' Key: Toggle visibility of on-screen data")
     print("  - 'P' Key: Pause the figure movement")
+    print("  - 'I' Key: Close the application")
     
     print("\n----------------------------------------------------")
 
@@ -175,6 +176,8 @@ def main():
                         hide_data = False
                     else:
                         hide_data = True
+                elif event.key == pygame.K_i:
+                    running = False
  
  
         key = pygame.key.get_pressed()
