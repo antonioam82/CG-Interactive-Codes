@@ -209,38 +209,60 @@ def main():
                         glRotatef(90, 0, 1, 0) #
                         angle -= 90
                         
-                    direction = "front"
+                    direction = "front"'''
+
+                if event.key == pygame.K_LEFT:
+                    glRotatef(-90, 0, 1, 0) #
+                    angle += 90
+                    direction = "left"
                     
-                if event.key == pygame.K_RIGHT:
+                elif event.key == pygame.K_RIGHT:
                     glRotatef(90, 0, 1, 0) #
                     angle -= 90
                     direction = "right"
 
-                elif event.key == pygame.K_LEFT:
-                    glRotatef(-90, 0, 1, 0) #
-                    angle += 90
-                    direction = "left"'''
                 
-                if event.key == pygame.K_d:
+                elif event.key == pygame.K_d:
                     speed = 0.1
                     speed_c = 0.1
                 elif event.key == pygame.K_p:
                     speed_c = 0.000
                 elif event.key == pygame.K_h:
                     hide_data = not hide_data
-
+                
+                elif event.key == pygame.K_i:  # Detectar si la tecla 'i' se presionó
+                    running = False  # Salir del bucle y cerrar la ventana
             #angle = 0
      
         key = pygame.key.get_pressed()
 
         if key[pygame.K_UP]:
-            z += speed
-            z_c -= speed_c
-            z_c += speed
+            if direction == "front":
+                z += speed
+                z_c -= speed_c
+                z_c += speed
+            elif direction == "right":
+                x -= speed
+                x_c += speed_c
+                x_c -= speed
+            elif direction == "left":
+                x += speed
+                x_c -= speed_c
+                x_c += speed
         if key[pygame.K_DOWN]:
-            z -= speed
-            z_c += speed_c
-            z_c -= speed
+            if direction == "front":
+                z -= speed
+                z_c += speed_c
+                z_c -= speed
+            elif direction == "right":
+                x += speed
+                x_c -= speed_c
+                x_c += speed
+            elif direction == "left":
+                x -= speed
+                x_c += speed_c
+                x_c -= speed
+            
         '''if key[pygame.K_RIGHT]:
             x -= speed
             x_c += speed_c
@@ -304,4 +326,3 @@ def main():
         pygame.time.wait(10)
 
 main()
-pygame.quit()
