@@ -28,6 +28,7 @@ def create_model_display_list(vertices, edges):
     glNewList(model_list, GL_COMPILE)
     
     glColor3f(1.0, 1.0, 1.0)  # Color blanco
+    glLineWidth(0.1)
     glBegin(GL_LINES)
     for edge in edges:
         for vertex in edge:
@@ -51,7 +52,7 @@ def main():
     #glRotatef(20,1,0,0)
 
     # Cargar y compilar las display lists
-    vertices, edges = load_obj('arm.obj')
+    vertices, edges = load_obj('bumpy-cube.obj')
     model_list = create_model_display_list(vertices, edges)
 
     running = True
@@ -79,9 +80,9 @@ def main():
             glRotatef(-1,0,1,0)
 
         elif key[pygame.K_z]:
-            scale += 0.005
+            scale += 0.05
         elif key[pygame.K_x]:
-            scale -= 0.005
+            scale -= 0.05
 
             
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -98,3 +99,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
