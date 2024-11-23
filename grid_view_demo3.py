@@ -179,49 +179,43 @@ def main():
     running = True
     direction = 'front'
     rot = 0
+    scene = 0
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.KEYDOWN:
-                '''if event.key == pygame.K_DOWN and direction != "back":
-                    if direction == "front":
-                        glRotatef(-180, 0, 1, 0) #
-                        angle += 180
-                    elif direction == "right":
-                        glRotatef(90, 0, 1, 0) #
-                        angle -= 90
-                    else:
-                        glRotatef(-90, 0, 1, 0) #
-                        angle += 90
-
-                    direction = "back"
                     
-                elif event.key == pygame.K_UP and direction != "front":
-                    if direction == "back":
-                        glRotatef(180, 0, 1, 0) #
-                        angle -= 180 #
-                    elif direction == "right":
-                        glRotatef(-90, 0, 1, 0) #
-                        angle += 90
-                    else:
-                        glRotatef(90, 0, 1, 0) #
-                        angle -= 90
-                        
-                    direction = "front"'''
-
-                if event.key == pygame.K_LEFT:
-                    glRotatef(-90, 0, 1, 0) #
-                    angle += 90
-                    direction = "left"
-                    
-                elif event.key == pygame.K_RIGHT:
-                    glRotatef(90, 0, 1, 0) #
-                    angle -= 90
+                if event.key == pygame.K_RIGHT:# and direction != "right":
+                    #if direction == "front":
+                    scene += 90
+                    glRotatef(scene, 0, 1, 0) #
+                    #angle -= 90
                     direction = "right"
+                    scene = 0
+                    
+                    '''elif direction == "back":
+                        glRotatef(-90, 0, 1, 0) #
+                        angle += 90
+                    else:
+                        glRotatef(180, 0, 1, 0) #
+                        angle -= 180'''
 
-                
+                elif event.key == pygame.K_LEFT: # and direction != "left":
+                    #if direction == "front":
+                    scene -= 90
+                    glRotatef(scene, 0, 1, 0) #
+                    #angle += 90
+                    direction = "left"
+                    scene = 0
+                    '''elif direction == "back":
+                        glRotatef(90, 0, 1, 0) #
+                        angle -= 90
+                    else:
+                        glRotatef(-180, 0, 1, 0) #
+                        angle -= 180'''
+
                 elif event.key == pygame.K_d:
                     speed = 0.1
                     speed_c = 0.1
@@ -229,48 +223,29 @@ def main():
                     speed_c = 0.000
                 elif event.key == pygame.K_h:
                     hide_data = not hide_data
-                
-                elif event.key == pygame.K_i:  # Detectar si la tecla 'i' se presionó
-                    running = False  # Salir del bucle y cerrar la ventana
+                elif event.key == pygame.K_i:
+                    running = False
+
             #angle = 0
      
         key = pygame.key.get_pressed()
 
         if key[pygame.K_UP]:
-            if direction == "front":
-                z += speed
-                z_c -= speed_c
-                z_c += speed
-            elif direction == "right":
-                x -= speed
-                x_c += speed_c
-                x_c -= speed
-            elif direction == "left":
-                x += speed
-                x_c -= speed_c
-                x_c += speed
+            z += speed
+            z_c -= speed_c
+            z_c += speed
         if key[pygame.K_DOWN]:
-            if direction == "front":
-                z -= speed
-                z_c += speed_c
-                z_c -= speed
-            elif direction == "right":
-                x += speed
-                x_c -= speed_c
-                x_c += speed
-            elif direction == "left":
-                x -= speed
-                x_c += speed_c
-                x_c -= speed
-            
-        '''if key[pygame.K_RIGHT]:
+            z -= speed
+            z_c += speed_c
+            z_c -= speed
+        if key[pygame.K_RIGHT]:
             x -= speed
             x_c += speed_c
             x_c -= speed
         if key[pygame.K_LEFT]:
             x += speed
             x_c -= speed_c
-            x_c += speed'''
+            x_c += speed
 
         # Rotación manual
         if key[pygame.K_t]:
@@ -295,18 +270,19 @@ def main():
 
         # Dibujar el grid
         glPushMatrix()
-        glTranslatef(x, 0.00, z)
+        #glTranslatef(x, 0.00, z)
         glCallList(grid_list)
-        glPushMatrix()#############################
-        glTranslatef(0, 0, 4)
-        glRotatef(rot,0,1,0)
+        glPushMatrix()
+        glTranslatef(0.0,0.0,2.6)
+        #glRotatef(rot,0,1,0)
+        
         glCallList(other_list)
-        glPopMatrix()##############################
+        glPopMatrix()
         glPopMatrix()
 
         # Dibujar el cubo
         glPushMatrix()
-        glTranslatef(x_c, 0.0, z_c)
+        #glTranslatef(x_c, 0.0, z_c)
         glRotatef(angle, 0, 1, 0)
         glCallList(cube_list)
         glPopMatrix()
@@ -326,3 +302,4 @@ def main():
         pygame.time.wait(10)
 
 main()
+pygame.quit()
