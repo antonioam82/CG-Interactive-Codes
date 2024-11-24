@@ -191,7 +191,7 @@ def main():
                     #if direction == "front":
                     scene += 90
                     glRotatef(scene, 0, 1, 0) #
-                    #angle -= 90
+                    angle -= 90
                     direction = "right"
                     scene = 0
                     
@@ -206,7 +206,7 @@ def main():
                     #if direction == "front":
                     scene -= 90
                     glRotatef(scene, 0, 1, 0) #
-                    #angle += 90
+                    angle += 90
                     direction = "left"
                     scene = 0
                     '''elif direction == "back":
@@ -270,7 +270,7 @@ def main():
 
         # Dibujar el grid
         glPushMatrix()
-        #glTranslatef(x, 0.00, z)
+        glTranslatef(x, 0.00, z)##########################################
         glCallList(grid_list)
         glPushMatrix()
         glTranslatef(0.0,0.0,2.6)
