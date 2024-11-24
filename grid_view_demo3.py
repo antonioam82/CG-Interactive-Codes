@@ -180,6 +180,8 @@ def main():
     direction = 'front'
     rot = 0
     scene = 0
+    index = 0
+    directions = ['front','right','back','left']
 
     while running:
         for event in pygame.event.get():
@@ -190,9 +192,14 @@ def main():
                 if event.key == pygame.K_RIGHT:# and direction != "right":
                     #if direction == "front":
                     scene += 90
+                    index += 1
+                    if index > len(directions)-1:
+                        index = 0
+                    print(directions[index])
                     glRotatef(scene, 0, 1, 0) #
                     angle -= 90
                     direction = "right"
+                    print(scene)
                     scene = 0
                     
                     '''elif direction == "back":
@@ -205,9 +212,14 @@ def main():
                 elif event.key == pygame.K_LEFT: # and direction != "left":
                     #if direction == "front":
                     scene -= 90
+                    index -= 1
+                    if index < 0:
+                        index = len(directions)-1
+                    print(directions[index])
                     glRotatef(scene, 0, 1, 0) #
                     angle += 90
                     direction = "left"
+                    print(scene)
                     scene = 0
                     '''elif direction == "back":
                         glRotatef(90, 0, 1, 0) #
@@ -227,25 +239,30 @@ def main():
                     running = False
 
             #angle = 0
+            
      
         key = pygame.key.get_pressed()
 
         if key[pygame.K_UP]:
-            z += speed
+            '''z += speed
             z_c -= speed_c
-            z_c += speed
+            z_c += speed'''
+            x -= speed
+            x_c += speed_c
+            x_c -= speed##########################
+            
         if key[pygame.K_DOWN]:
             z -= speed
             z_c += speed_c
             z_c -= speed
-        if key[pygame.K_RIGHT]:
+        '''if key[pygame.K_RIGHT]:
             x -= speed
             x_c += speed_c
             x_c -= speed
         if key[pygame.K_LEFT]:
             x += speed
             x_c -= speed_c
-            x_c += speed
+            x_c += speed'''
 
         # Rotación manual
         if key[pygame.K_t]:
@@ -270,7 +287,7 @@ def main():
 
         # Dibujar el grid
         glPushMatrix()
-        glTranslatef(x, 0.00, z)##########################################
+        #glTranslatef(x, 0.00, z)##########################################
         glCallList(grid_list)
         glPushMatrix()
         glTranslatef(0.0,0.0,2.6)
