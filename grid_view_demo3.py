@@ -193,12 +193,12 @@ def main():
                     #if direction == "front":
                     scene += 90
                     index += 1
-                    if index > len(directions)-1:
+                    if index > 3:  #len(directions)-1:
                         index = 0
                     print(directions[index])
                     glRotatef(scene, 0, 1, 0) #
                     angle -= 90
-                    direction = "right"
+                    direction = directions[index]
                     print(scene)
                     scene = 0
                     
@@ -214,11 +214,11 @@ def main():
                     scene -= 90
                     index -= 1
                     if index < 0:
-                        index = len(directions)-1
+                        index = 3 #len(directions)-1
                     print(directions[index])
                     glRotatef(scene, 0, 1, 0) #
                     angle += 90
-                    direction = "left"
+                    direction = directions[index]
                     print(scene)
                     scene = 0
                     '''elif direction == "back":
