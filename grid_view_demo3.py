@@ -244,18 +244,44 @@ def main():
         key = pygame.key.get_pressed()
 
         if key[pygame.K_UP]:
-            '''z += speed
-            z_c -= speed_c
-            z_c += speed'''
-            x -= speed
-            x_c += speed_c
-            x_c -= speed##########################
+            if direction == 'front':
+                z += speed
+                z_c -= speed_c
+                z_c += speed
+            elif direction == 'back':
+                z -= speed
+                z_c += speed_c
+                z_c -= speed
+            elif direction == 'right':
+                x -= speed
+                x_c += speed_c
+                x_c -= speed##########################'''
+            elif direction == 'left':
+                x += speed
+                x_c -= speed_c
+                x_c += speed
             
         if key[pygame.K_DOWN]:
-            z -= speed
+            if direction == 'front':
+                z -= speed
+                z_c += speed_c
+                z_c -= speed
+            elif direction == 'back':
+                z += speed
+                z_c -= speed_c
+                z_c += speed
+            elif direction == 'right':
+                x += speed
+                x_c -= speed_c
+                x_c += speed
+            elif direction == 'left':
+                x -= speed
+                x_c += speed_c
+                x_c -= speed
+            '''z -= speed
             z_c += speed_c
             z_c -= speed
-        '''if key[pygame.K_RIGHT]:
+        if key[pygame.K_RIGHT]:
             x -= speed
             x_c += speed_c
             x_c -= speed
@@ -287,7 +313,7 @@ def main():
 
         # Dibujar el grid
         glPushMatrix()
-        #glTranslatef(x, 0.00, z)##########################################
+        glTranslatef(x, 0.00, z)##########################################
         glCallList(grid_list)
         glPushMatrix()
         glTranslatef(0.0,0.0,2.6)
@@ -299,7 +325,7 @@ def main():
 
         # Dibujar el cubo
         glPushMatrix()
-        #glTranslatef(x_c, 0.0, z_c)
+        glTranslatef(x_c, 0.0, z_c)
         glRotatef(angle, 0, 1, 0)
         glCallList(cube_list)
         glPopMatrix()
