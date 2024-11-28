@@ -61,35 +61,35 @@ def draw_grid():
     glEnd()
     glEndList()
     return grid_list
- 
+
 def show_controls():
     print("\n--------------------- Controls ---------------------")
- 
+    
     print("\nKeyboard Controls:")
     print("  - Up Arrow: Move forward in the scene")
     print("  - Down Arrow: Move backward in the scene")
     print("  - Left Arrow: Move left in the scene")
     print("  - Right Arrow: Move right in the scene")
- 
+    
     print("\nRotation Controls:")
     print("  - 'T' Key: Rotate the scene clockwise")
     print("  - 'R' Key: Rotate the scene counterclockwise")
     print("  - 'Q' Key: Tilt the scene upwards")
     print("  - 'W' Key: Tilt the scene downwards")
- 
+    
     print("\nSpeed Controls:")
     print("  - 'Z' Key: Increase camera movement speed")
     print("  - 'X' Key: Decrease camera movement speed")
     print("  - 'C' Key: Increase figure movement speed")
     print("  - 'V' Key: Decrease figure movement speed")
- 
+    
     print("\nMiscellaneous:")
     print("  - 'H' Key: Toggle visibility of on-screen data")
     print("  - 'P' Key: Pause the figure movement")
-    print("  - 'I' Key: Close the application")
- 
+    print("  - 'ESC' Key: Close the application (close window)")
+    
     print("\n----------------------------------------------------")
- 
+
  
 def Cube():
     cube_list = glGenLists(1)
@@ -134,7 +134,7 @@ def main():
  
     #glEnable(GL_BLEND)
     #glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
- 
+
     show_controls()
  
     x = 0
@@ -176,7 +176,7 @@ def main():
                         hide_data = False
                     else:
                         hide_data = True
-                elif event.key == pygame.K_i:
+                elif event.key == pygame.K_ESCAPE:
                     running = False
  
  
@@ -239,11 +239,10 @@ def main():
             drawText(font, 20, 570, f'DIRECTION: {direction}',(0, 255, 0, 255),(0,0,0))
             drawText(font, 20, 550, f'CAMERA SPEED: {spd}',(0, 255, 0, 255),(0,0,0))
             drawText(font, 20, 530, f'FIGURE SPEED: {spdc}',(0, 255, 0, 255),(0,0,0))
- 
-        glFlush()
+        #glFlush()
         pygame.display.flip()
         pygame.time.wait(10)
- 
+
     glDeleteLists(grid_list, 1)
     glDeleteLists(cube_list, 1)
     pygame.quit()
