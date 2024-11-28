@@ -28,7 +28,10 @@ def create_model_display_list(vertices, edges):
     glNewList(model_list, GL_COMPILE)
     
     glColor3f(1.0, 1.0, 1.0)  # Color blanco
-    glLineWidth(0.1)
+    
+    #glLineStipple(1, 0x0101)
+    #glEnable(GL_LINE_STIPPLE)
+    glLineWidth(1.0)
     glBegin(GL_LINES)
     for edge in edges:
         for vertex in edge:
@@ -52,7 +55,7 @@ def main():
     #glRotatef(20,1,0,0)
 
     # Cargar y compilar las display lists
-    vertices, edges = load_obj('bumpy-cube.obj')
+    vertices, edges = load_obj('cube.obj')
     model_list = create_model_display_list(vertices, edges)
 
     running = True
@@ -61,7 +64,7 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_i:
+                if event.key == pygame.K_ESCAPE:
                     running = False
                 '''elif event.key == pygame.K_z:
                     #scale += 0.5
@@ -71,13 +74,13 @@ def main():
         key = pygame.key.get_pressed()
 
         if key[pygame.K_UP]:
-            glRotatef(-1,1,0,0)
-        elif key[pygame.K_DOWN]:
-            glRotatef(1,1,0,0)
-        elif key[pygame.K_RIGHT]:
-            glRotatef(1,0,1,0)
-        elif key[pygame.K_LEFT]:
-            glRotatef(-1,0,1,0)
+            glRotatef(-0.5,1,0,0)
+        if key[pygame.K_DOWN]:
+            glRotatef(0.5,1,0,0)
+        if key[pygame.K_RIGHT]:
+            glRotatef(0.5,0,1,0)
+        if key[pygame.K_LEFT]:
+            glRotatef(-0.5,0,1,0)
 
         elif key[pygame.K_z]:
             scale += 0.05
