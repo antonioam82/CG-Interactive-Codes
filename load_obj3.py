@@ -24,6 +24,12 @@ def load_obj(filename):
                     edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
     return vertices, edges
 
+def drawText(f, x, y, text, c, bgc):
+    textSurface = f.render(text, True, c, bgc)
+    textData = pygame.image.tostring(textSurface, "RGBA", True)
+    glWindowPos2d(x, y)
+    glDrawPixels(textSurface.get_width(), textSurface.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, textData)
+
 # Función para convertir un cuaternión a una matriz de rotación
 class Quaternion:
     def __init__(self, w, x, y, z):
@@ -72,11 +78,15 @@ def main():
     pygame.init()
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+    font = pygame.font.SysFont('arial', 15)
 
     # Cargar el modelo OBJ
     #vertices, edges = load_obj('cube.obj')
-    vertices, edges = load_obj(r'C:\Users\Usuario\Documents\repositorios\libigl-tutorial-data\truck.obj')
+    path = r'C:\Users\Usuario\Documents\repositorios\libigl-tutorial-data\truck.obj'
+    model_name = os.path.basename(path)
+    vertices, edges = load_obj(path)
     scale = 1
+    hide_data = False
 
     # Crear la lista de display para el modelo
     model_list = glGenLists(1)
@@ -104,6 +114,11 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
+                if event.key == pygame.K_h:
+                    if hide_data == True:
+                        hide_data = False
+                    else:
+                        hide_data = True
 
         key = pygame.key.get_pressed()
 
@@ -144,6 +159,9 @@ def main():
         glCallList(model_list)
 
         glPopMatrix()
+
+        if not hide_data:
+            drawText(font, 20, 570, f'MODEL: {model_name}',(0, 255, 0, 255),(0,0,0))
 
         pygame.display.flip()
         pygame.time.wait(10)
