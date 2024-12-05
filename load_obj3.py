@@ -115,16 +115,16 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_z:
                     scale += 0.05
-                if event.key == pygame.K_x:
+                elif event.key == pygame.K_x:
                     scale -= 0.05
-                if event.key == pygame.K_ESCAPE:
+                elif event.key == pygame.K_ESCAPE:
                     running = False
-                if event.key == pygame.K_h:
+                elif event.key == pygame.K_h:
                     if hide_data == True:
                         hide_data = False
                     else:
                         hide_data = True
-                if event.key == pygame.K_r:
+                elif event.key == pygame.K_r:
                     quaternion = Quaternion(1, 0, 0, 0)
                     scale = 1
 
