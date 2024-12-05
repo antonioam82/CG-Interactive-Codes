@@ -113,6 +113,10 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_z:
+                    scale += 0.05
+                if event.key == pygame.K_x:
+                    scale -= 0.05
                 if event.key == pygame.K_ESCAPE:
                     running = False
                 if event.key == pygame.K_h:
@@ -145,10 +149,10 @@ def main():
         if key[pygame.K_n]:
             rotation = create_rotation_quaternion(2, 0, 0, 1)
             quaternion = quaternion * rotation
-        if key[pygame.K_z]:
+        '''if key[pygame.K_z]:
             scale += 0.005
         if key[pygame.K_x]:
-            scale -= 0.005
+            scale -= 0.005'''
 
         # Limpiar la pantalla y cargar la nueva matriz de rotación
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
