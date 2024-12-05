@@ -13,15 +13,18 @@ def load_obj(filename):
     with open(filename, 'r') as file:
         for line in file:
             if line.startswith('v '):  # Vértice
+                #num_verts += 1
                 parts = line.strip().split()
                 vertex = [float(parts[1]), float(parts[2]), float(parts[3])]
                 vertices.append(vertex)
             elif line.startswith('f '):  # Cara
+                #num_faces += 1
                 parts = line.strip().split()
                 # Las caras pueden tener más de 3 vértices, por lo tanto tenemos que manejar polígonos
                 face_indices = [int(part.split('/')[0]) - 1 for part in parts[1:]]
                 for i in range(len(face_indices)):
                     edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
+    
     return vertices, edges
 
 def drawText(f, x, y, text, c, bgc):
@@ -79,14 +82,17 @@ def main():
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     font = pygame.font.SysFont('arial', 15)
+    #num_verts = 0
+    #num_faces = 0
 
     # Cargar el modelo OBJ
     #vertices, edges = load_obj('cube.obj')
-    #path = r'C:\Users\Usuario\Documents\repositorios\libigl-tutorial-data\truck.obj'
-    path = r'C:\Users\Usuario\Desktop\DATOS RECUPERADOS Antonio\Documents\docs\Software_3D_engine-main\Software_3D_engine-main\t_34_obj.obj'
+    #path = r'C:\Users\Usuario\Documents\repositorios\libigl-tutorial-data\cube.obj'
+    #path = r'C:\Users\Usuario\Desktop\DATOS RECUPERADOS Antonio\Documents\docs\Software_3D_engine-main\Software_3D_engine-main\t_34_obj.obj'
+    path = r'C:\Users\Usuario\Desktop\DATOS RECUPERADOS Antonio\Documents\pruebas\Javidx9\ConsoleGameEngine\BiggerProjects\Engine3D\teapot.obj'
     model_name = os.path.basename(path)
     vertices, edges = load_obj(path)
-    scale = 1
+    scale = 1.0
     hide_data = False
 
     # Crear la lista de display para el modelo
@@ -127,6 +133,11 @@ def main():
                 elif event.key == pygame.K_r:
                     quaternion = Quaternion(1, 0, 0, 0)
                     scale = 1
+            elif event.type == pygame.MOUSEWHEEL: # Rueda ratón
+                if event.y > 0:  
+                    scale += 0.05
+                elif event.y < 0:  
+                    scale -= 0.05
 
         key = pygame.key.get_pressed()
 
@@ -149,10 +160,6 @@ def main():
         if key[pygame.K_n]:
             rotation = create_rotation_quaternion(2, 0, 0, 1)
             quaternion = quaternion * rotation
-        '''if key[pygame.K_z]:
-            scale += 0.005
-        if key[pygame.K_x]:
-            scale -= 0.005'''
 
         # Limpiar la pantalla y cargar la nueva matriz de rotación
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -169,8 +176,8 @@ def main():
         glPopMatrix()
 
         if not hide_data:
-            drawText(font, 20, 570, f'MODEL: {model_name}',(0, 255, 0, 255),(0,0,0))
-
+            drawText(font, 20, 570, f'Model: {model_name}',(0, 255, 0, 255),(0,0,0))
+            drawText(font, 20, 550, f'Scale: {round(scale,2)}',(0, 255, 0, 255),(0,0,0))
 
         pygame.display.flip()
         pygame.time.wait(10)
