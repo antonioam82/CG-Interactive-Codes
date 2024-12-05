@@ -113,6 +113,10 @@ def main():
     # Inicializar el cuaternión de rotación (sin rotación inicial)
     quaternion = Quaternion(1, 0, 0, 0)
 
+    dragging = False
+    last_mouse_pos = (0, 0)
+    translation = [0.0, 0.0]
+
     running = True
     while running:
         for event in pygame.event.get():
@@ -133,11 +137,29 @@ def main():
                 elif event.key == pygame.K_r:
                     quaternion = Quaternion(1, 0, 0, 0)
                     scale = 1
+                    dragging = False
+                    last_mouse_pos = (0, 0)
+                    translation = [0.0, 0.0]
             elif event.type == pygame.MOUSEWHEEL: # Rueda ratón
                 if event.y > 0:  
                     scale += 0.05
                 elif event.y < 0:  
                     scale -= 0.05
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:  
+                    dragging = True
+                    last_mouse_pos = pygame.mouse.get_pos()
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 1:  
+                    dragging = False
+            elif event.type == pygame.MOUSEMOTION:
+                if dragging:
+                    mouse_x, mouse_y = pygame.mouse.get_pos()
+                    dx = mouse_x - last_mouse_pos[0]
+                    dy = mouse_y - last_mouse_pos[1]
+                    translation[0] += dx * 0.01  # Ajusta la velocidad de desplazamiento
+                    translation[1] -= dy * 0.01  # Invertir el movimiento vertical
+                    last_mouse_pos = (mouse_x, mouse_y)
 
         key = pygame.key.get_pressed()
 
@@ -164,6 +186,8 @@ def main():
         # Limpiar la pantalla y cargar la nueva matriz de rotación
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glPushMatrix()
+
+        glTranslatef(translation[0], translation[1], 0)
 
         # Convertir el cuaternión a matriz de rotación
         rotation_matrix = quaternion.to_matrix()
