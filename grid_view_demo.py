@@ -5,7 +5,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
  
-grid_size = 140#10
+grid_size = 140
 grid_spacing = 1
  
 vertices = (
@@ -86,6 +86,7 @@ def show_controls():
     print("\nMiscellaneous:")
     print("  - 'H' Key: Toggle visibility of on-screen data")
     print("  - 'P' Key: Pause the figure movement")
+    print("  - 'L' Key: Restore the view to the original position")
     print("  - 'ESC' Key: Close the application (close window)")
     
     print("\n----------------------------------------------------")
@@ -111,7 +112,7 @@ def Cube():
  
     glEndList()
     return cube_list
- 
+
 def drawText(f, x, y, text, c, bgc):
     textSurface = f.render(text, True, c, bgc)
     textData = pygame.image.tostring(textSurface, "RGBA", True)
@@ -178,6 +179,24 @@ def main():
                         hide_data = True
                 elif event.key == pygame.K_ESCAPE:
                     running = False
+                elif event.key == pygame.K_l:
+                    # Restaurar la vista original
+                    direction = 'front'
+                    x = 0
+                    z = 0
+                    x_c = 0
+                    z_c = 0
+                    angle = 0
+                    speed = 0.1
+                    speed_c = 0.1
+        
+                    # Restaurar las rotaciones acumuladas
+                    glLoadIdentity()  # Resetea las transformaciones
+                    gluPerspective(45, (display[0] / display[1]), 0.1, 90.0)  # Reestablece la perspectiva
+                    glTranslatef(0.0, 0.0, -10)  # Reestablece la cámara alejada
+                    glRotatef(15, 1, 0, 0) 
+                    
+                    
  
  
         key = pygame.key.get_pressed()
