@@ -82,7 +82,8 @@ def main():
 
     # Cargar el modelo OBJ
     #vertices, edges = load_obj('cube.obj')
-    path = r'C:\Users\Usuario\Documents\repositorios\libigl-tutorial-data\truck.obj'
+    #path = r'C:\Users\Usuario\Documents\repositorios\libigl-tutorial-data\truck.obj'
+    path = r'C:\Users\Usuario\Desktop\DATOS RECUPERADOS Antonio\Documents\docs\Software_3D_engine-main\Software_3D_engine-main\t_34_obj.obj'
     model_name = os.path.basename(path)
     vertices, edges = load_obj(path)
     scale = 1
@@ -119,6 +120,9 @@ def main():
                         hide_data = False
                     else:
                         hide_data = True
+                if event.key == pygame.K_r:
+                    quaternion = Quaternion(1, 0, 0, 0)
+                    scale = 1
 
         key = pygame.key.get_pressed()
 
@@ -142,9 +146,9 @@ def main():
             rotation = create_rotation_quaternion(2, 0, 0, 1)
             quaternion = quaternion * rotation
         if key[pygame.K_z]:
-            scale += 0.05
+            scale += 0.005
         if key[pygame.K_x]:
-            scale -= 0.05
+            scale -= 0.005
 
         # Limpiar la pantalla y cargar la nueva matriz de rotación
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -162,6 +166,7 @@ def main():
 
         if not hide_data:
             drawText(font, 20, 570, f'MODEL: {model_name}',(0, 255, 0, 255),(0,0,0))
+
 
         pygame.display.flip()
         pygame.time.wait(10)
