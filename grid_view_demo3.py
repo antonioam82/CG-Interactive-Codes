@@ -221,32 +221,37 @@ def main():
             if direction == 'front':
                 z += speed
                 z_c -= speed_c
-                z_c -= speed
+                z_c += speed
             elif direction == 'back':
                 z -= speed
                 z_c += speed_c
-                z_c += speed
+                z_c -= speed
             elif direction == 'right':
-                x -= speed
-                x_c += speed_c
-                x_c += speed
-            elif direction == 'left':
                 x += speed
                 x_c -= speed_c
+                x_c += speed##########################'''
+            elif direction == 'left':
+                x -= speed
+                x_c += speed_c
                 x_c -= speed
+            
         if key[pygame.K_DOWN]:
             if direction == 'front':
                 z -= speed
                 z_c += speed_c
+                z_c -= speed
             elif direction == 'back':
                 z += speed
                 z_c -= speed_c
+                z_c += speed
             elif direction == 'right':
-                x += speed
-                x_c -= speed_c
-            elif direction == 'left':
                 x -= speed
                 x_c += speed_c
+                x_c -= speed
+            elif direction == 'left':
+                x += speed
+                x_c -= speed_c
+                x_c += speed
 
         if rotating:
             if abs(current_angle - target_angle) > rotation_speed:
