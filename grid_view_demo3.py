@@ -256,7 +256,6 @@ def main():
         if rotating:
             angle_difference = target_angle - current_angle
             if abs(angle_difference) > rotation_speed:
-            # Si el ángulo actual aún está lejos del objetivo, continúa rotando
                 if angle_difference > 0:
                     current_angle += rotation_speed
                     glRotatef(rotation_speed, 0, 1, 0)
@@ -264,10 +263,9 @@ def main():
                     current_angle -= rotation_speed
                     glRotatef(-rotation_speed, 0, 1, 0)
             else:
-                # Ajustar el ángulo final para asegurar que no haya errores de precisión
-                glRotatef(angle_difference, 0, 1, 0)  # Termina de rotar con el ángulo exacto restante
-                current_angle = target_angle  # Asegura que el ángulo sea exactamente el objetivo
-                rotating = False  # Detén la rotación
+                glRotatef(angle_difference, 0, 1, 0)
+                current_angle = target_angle 
+                rotating = False  
 
 
 
@@ -306,4 +304,3 @@ def main():
 
 main()
 pygame.quit()
-
