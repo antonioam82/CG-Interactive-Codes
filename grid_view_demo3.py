@@ -199,7 +199,7 @@ def main():
                 # Rotación a la izquierda
                 elif event.key == pygame.K_LEFT and not rotating:
                     index -= 1
-                    if index == 0:
+                    if index < 0:
                         index = 3
                     direction = directions[index]
                     target_angle += 90.5
