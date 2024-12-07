@@ -193,7 +193,7 @@ def main():
                     if index > 3:
                         index = 0
                     direction = directions[index]
-                    target_angle -= 90.5
+                    target_angle -= 90
                     rotating = True
                 
                 # Rotación a la izquierda
@@ -202,7 +202,7 @@ def main():
                     if index < 0:
                         index = 3
                     direction = directions[index]
-                    target_angle += 90.5
+                    target_angle += 90
                     rotating = True
 
                 elif event.key == pygame.K_d:
@@ -254,15 +254,20 @@ def main():
                 x_c += speed
 
         if rotating:
-            if abs(current_angle - target_angle) > rotation_speed:
-                if current_angle < target_angle:
+            angle_difference = target_angle - current_angle
+            if abs(angle_difference) > rotation_speed:
+                if angle_difference > 0:
                     current_angle += rotation_speed
+                    glRotatef(rotation_speed, 0, 1, 0)
                 else:
                     current_angle -= rotation_speed
-                glRotatef(rotation_speed if current_angle < target_angle else -rotation_speed, 0, 1, 0)
+                    glRotatef(-rotation_speed, 0, 1, 0)
             else:
-                rotating = False
+                glRotatef(angle_difference, 0, 1, 0)
                 current_angle = target_angle
+                rotating = False  
+
+
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
