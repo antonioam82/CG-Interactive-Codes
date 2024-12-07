@@ -193,7 +193,7 @@ def main():
                     if index > 3:
                         index = 0
                     direction = directions[index]
-                    target_angle -= 90
+                    target_angle += 90
                     rotating = True
                 
                 # Rotación a la izquierda
@@ -202,7 +202,7 @@ def main():
                     if index < 0:
                         index = 3
                     direction = directions[index]
-                    target_angle += 90
+                    target_angle -= 90
                     rotating = True
 
                 elif event.key == pygame.K_d:
@@ -218,22 +218,22 @@ def main():
         key = pygame.key.get_pressed()
 
         if key[pygame.K_UP]:
-            if direction == 'front':
+            if direction == 'front' and z + speed <= (grid_size - 1):
                 z += speed
                 z_c -= speed_c
                 z_c += speed
-            elif direction == 'back':
+            elif direction == 'back' and z - speed >= (-grid_size + 1):
                 z -= speed
                 z_c += speed_c
                 z_c -= speed
-            elif direction == 'right':
-                x += speed
-                x_c -= speed_c
-                x_c += speed##########################'''
-            elif direction == 'left':
+            elif direction == 'right' and x - speed >= (-grid_size + 1):
                 x -= speed
                 x_c += speed_c
-                x_c -= speed
+                x_c -= speed##########################'''
+            elif direction == 'left' and x + speed <= (grid_size - 1):
+                x += speed
+                x_c -= speed_c
+                x_c += speed
             
         if key[pygame.K_DOWN]:
             if direction == 'front':
@@ -245,17 +245,18 @@ def main():
                 z_c -= speed_c
                 z_c += speed
             elif direction == 'right':
-                x -= speed
-                x_c += speed_c
-                x_c -= speed
-            elif direction == 'left':
                 x += speed
                 x_c -= speed_c
                 x_c += speed
+            elif direction == 'left':
+                x -= speed
+                x_c += speed_c
+                x_c -= speed
 
         if rotating:
             angle_difference = target_angle - current_angle
             if abs(angle_difference) > rotation_speed:
+            # Si el ángulo actual aún está lejos del objetivo, continúa rotando
                 if angle_difference > 0:
                     current_angle += rotation_speed
                     glRotatef(rotation_speed, 0, 1, 0)
@@ -263,9 +264,10 @@ def main():
                     current_angle -= rotation_speed
                     glRotatef(-rotation_speed, 0, 1, 0)
             else:
-                glRotatef(angle_difference, 0, 1, 0)
-                current_angle = target_angle
-                rotating = False  
+                # Ajustar el ángulo final para asegurar que no haya errores de precisión
+                glRotatef(angle_difference, 0, 1, 0)  # Termina de rotar con el ángulo exacto restante
+                current_angle = target_angle  # Asegura que el ángulo sea exactamente el objetivo
+                rotating = False  # Detén la rotación
 
 
 
@@ -304,3 +306,4 @@ def main():
 
 main()
 pygame.quit()
+
