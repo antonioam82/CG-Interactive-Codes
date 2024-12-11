@@ -220,11 +220,11 @@ def main():
  
         if key[pygame.K_t]:
             glRotatef(1, 0, -0.1, 0)
-        if key[pygame.K_r]:
+        elif key[pygame.K_r]:
             glRotatef(1, 0, 0.1, 0)
-        if key[pygame.K_q]:
+        elif key[pygame.K_q]:
             glRotatef(1, -0.1, 0, 0)
-        if key[pygame.K_w]:
+        elif key[pygame.K_w]:
             glRotatef(1, 0.1, 0, 0)
  
         if key[pygame.K_z]:
