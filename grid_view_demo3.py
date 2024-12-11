@@ -172,9 +172,6 @@ def main():
     z_c = 0
 
     global current_angle, target_angle, rotating
-    #current_angle = 0
-    #target_angle = 0
-    #rotating = False
     speed = 0.1
     speed_c = 0.1
     running = True
@@ -216,7 +213,26 @@ def main():
                 elif event.key == pygame.K_h:
                     hide_data = not hide_data
                 elif event.key == pygame.K_ESCAPE:
-                    running = False 
+                    running = False
+                elif event.key == pygame.K_l:
+                    direction = 'front'
+                    current_angle = 0
+                    target_angle = 0
+                    angle_diference = 0
+                    index = 0
+                    x = 0
+                    z = 0
+                    x_c = 0
+                    z_c = 0
+                    angle = 0
+                    speed = 0.1
+                    speed_c = 0.1
+        
+                    # Restaurar las rotaciones acumuladas
+                    glLoadIdentity()  # Resetea las transformaciones
+                    gluPerspective(45, (display[0] / display[1]), 0.1, 90.0)  # Reestablece la perspectiva
+                    glTranslatef(0.0, 0.0, -10)  # Reestablece la cámara alejada
+                    glRotatef(15, 1, 0, 0)
 
         key = pygame.key.get_pressed()
 
@@ -280,10 +296,6 @@ def main():
                 current_angle = target_angle 
                 rotating = False
 
-        
-
-
-
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         # Dibujar el grid
@@ -292,6 +304,7 @@ def main():
         glCallList(grid_list)
         glPushMatrix()
         glTranslatef(0.0, 0.0, 2.6)
+        glRotatef(rot,0,1,0)
         glCallList(other_list)
         glPopMatrix()
         glPopMatrix()
