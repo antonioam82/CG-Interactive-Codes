@@ -172,6 +172,9 @@ def main():
     z_c = 0
 
     global current_angle, target_angle, rotating
+    #current_angle = 0
+    #target_angle = 0
+    #rotating = False
     speed = 0.1
     speed_c = 0.1
     running = True
@@ -212,8 +215,8 @@ def main():
                     speed_c = 0.000
                 elif event.key == pygame.K_h:
                     hide_data = not hide_data
-                elif event.key == pygame.K_i:
-                    running = False
+                elif event.key == pygame.K_ESCAPE:
+                    running = False 
 
         key = pygame.key.get_pressed()
 
@@ -253,6 +256,16 @@ def main():
                 x_c += speed_c
                 x_c -= speed
 
+        if key[pygame.K_y]:
+            glRotatef(1, 0, -0.1, 0)
+        elif key[pygame.K_r]:
+            glRotatef(1, 0, 0.1, 0)
+        elif key[pygame.K_q]:
+            glRotatef(1, -0.1, 0, 0)
+        elif key[pygame.K_w]:
+            glRotatef(1, 0.1, 0, 0)
+        
+
         if rotating:
             angle_difference = target_angle - current_angle
             if abs(angle_difference) > rotation_speed:
@@ -265,7 +278,9 @@ def main():
             else:
                 glRotatef(angle_difference, 0, 1, 0)
                 current_angle = target_angle 
-                rotating = False  
+                rotating = False
+
+        
 
 
 
