@@ -57,6 +57,7 @@ surfaces = (
 def load_obj(filename):
     vertices = []
     edges = []
+    surfaces = []
     with open(filename, 'r') as file:
         for line in file:
             if line.startswith('v '):  # Vértice
@@ -66,10 +67,11 @@ def load_obj(filename):
             elif line.startswith('f '):  # Cara
                 parts = line.strip().split()
                 face_indices = [int(part.split('/')[0]) - 1 for part in parts[1:]]
+                surfaces.append(face_indices)
                 for i in range(len(face_indices)):
                     edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
     
-    return vertices, edges
+    return vertices, edges, surfaces
 
 def draw_walls():
     model_list = glGenLists(1)
@@ -79,9 +81,15 @@ def draw_walls():
     glBegin(GL_LINES)
     glColor3f(1.0,1.0,0.0)
     path = r'C:\Users\Usuario\Documents\fondo\untitled.obj'
-    vertices, edges = load_obj(path)
+    vertices, edges, surfaces = load_obj(path)
     for edge in edges:
         for vertex in edge:
+            glVertex3fv(vertices[vertex])
+    glEnd()
+    glColor3f(1.0,0.5,0.3)
+    glBegin(GL_QUADS)
+    for surface in surfaces:
+        for vertex in surface:
             glVertex3fv(vertices[vertex])
     glEnd()
     glEndList()
@@ -337,7 +345,7 @@ def main():
         glTranslatef(x, 0.00, z)
         glCallList(grid_list)
         glPushMatrix()
-        glTranslatef(0.0, 0.0, 2.6)
+        glTranslatef(0.0, 0.0, -17.5)
         glTranslatef(0.0, 1.9, 0.0)
         glScalef(10.0,10.0,10.0)
         #glRotatef(rot,0,1,0)
