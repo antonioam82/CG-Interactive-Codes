@@ -80,13 +80,13 @@ def draw_walls():
     
     glBegin(GL_LINES)
     glColor3f(1.0,1.0,0.0)
-    path = r'C:\Users\Usuario\Documents\fondo\untitled.obj'
+    path = r'C:\Users\Usuario\Documents\fondo\temple_maze.obj'
     vertices, edges, surfaces = load_obj(path)
     for edge in edges:
         for vertex in edge:
             glVertex3fv(vertices[vertex])
     glEnd()
-    glColor3f(1.0,0.5,0.3)
+    glColor3f(0.2,0.5,0.3)
     glBegin(GL_QUADS)
     for surface in surfaces:
         for vertex in surface:
@@ -168,7 +168,7 @@ def other_cube():
     glNewList(other_cube_list, GL_COMPILE)
     glLineWidth(3.0)
     glBegin(GL_LINES)
-    glColor3f(1.0, 0.4, 0.0)
+    glColor3f(0.2, 0.4, 0.0)
     for edge in edges:
         for vertex in edge:
             glVertex3fv(another_cube[vertex])
@@ -377,3 +377,4 @@ def main():
 
 main()
 pygame.quit()
+
