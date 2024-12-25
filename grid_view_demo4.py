@@ -193,8 +193,9 @@ def main():
     pygame.init()
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
-    gluPerspective(45, (display[0] / display[1]), 0.1, 90.0)
+    gluPerspective(45, (display[0] / display[1]), 0.1, 150.0)
     glTranslatef(0.0, 0.0, -10)
+    
     glEnable(GL_DEPTH_TEST)
     font = pygame.font.SysFont('arial', 15)
     glRotatef(15, 1, 0, 0)
@@ -322,6 +323,14 @@ def main():
             glRotatef(1, -0.1, 0, 0)
         elif key[pygame.K_w]:
             glRotatef(1, 0.1, 0, 0)
+        ########################################################33
+        elif key[pygame.K_k]:
+            #camera_dist += 0.5
+            glTranslatef(0.0, 0.0, -0.02)
+        elif key[pygame.K_j]:
+            glTranslatef(0.0, 0.0, 0.02)
+        ##########################################################
+            
         
 
         if rotating:
