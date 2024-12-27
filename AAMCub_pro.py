@@ -34,7 +34,7 @@ edges = (
 def Cube():
     glLineWidth(2.0)
     glBegin(GL_LINES)
-    glColor3f(1.0, 0.0, 0.0)
+    glColor3f(0.0, 0.3, 1.0)
     
     for edge in edges:
         for vertex in edge:
@@ -69,7 +69,12 @@ def main():
     #glOrtho(-2, 2, -2, 2, -10, 25)
     glTranslatef(0.0, -1.5, -8.5)
     glRotatef(7, 1, 0, 0)
+    glRotatef(-16.8, 1, 0, 0)
     angle = 0
+    scale_x = 1
+    scale_y = 1
+    scale_z = 1
+    mov = 0
     
     running = True
     while (running):
@@ -82,7 +87,7 @@ def main():
         if key[pygame.K_g]:
             glRotatef(-0.1, 1, 0, 0)
 
-        elif key[pygame.K_r]:
+        '''elif key[pygame.K_r]:
             glRotatef(0.1, 1, 0, 0)
 
         elif key[pygame.K_LEFT]:
@@ -95,24 +100,38 @@ def main():
             glTranslatef(0, 0, 0.1)
 
         elif key[pygame.K_DOWN]:
-            glTranslate(0, 0, -0.1)
-            
-    
+            glTranslate(0, 0, -0.1)'''
+
+        if key[pygame.K_a]:
+            scale_x += 0.01
+            scale_z += 0.01
+        if key[pygame.K_s]:
+            scale_x -= 0.01
+            scale_z -= 0.01
+
+        if key[pygame.K_q]:
+            scale_y += 0.01
+        if key[pygame.K_w]:
+            scale_y -= 0.01
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         # Grid
         glPushMatrix()
         #glRotatef(-angle, 0, 1, 0)
+        glTranslatef(0, 0, mov)
         draw_grid()
         glPopMatrix()
 
         # Cubo
         glPushMatrix()
         glRotatef(angle, 0, 1, 0)
+        glScalef(scale_x,scale_y,scale_z)
         Cube()
         glPopMatrix()
 
         angle += 1
+        mov += 0.01
         pygame.display.flip()
         pygame.time.wait(10)
     pygame.quit()
