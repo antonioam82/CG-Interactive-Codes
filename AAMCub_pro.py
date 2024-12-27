@@ -69,7 +69,7 @@ def main():
     #glOrtho(-2, 2, -2, 2, -10, 25)
     glTranslatef(0.0, -1.5, -8.5)
     glRotatef(7, 1, 0, 0)
-    glRotatef(-16.8, 1, 0, 0)
+    glRotatef(-16.46, 1, 0, 0)
     angle = 0
     scale_x = 1
     scale_y = 1
@@ -84,10 +84,10 @@ def main():
 
         key = pygame.key.get_pressed()
 
-        if key[pygame.K_g]:
+        '''if key[pygame.K_g]:
             glRotatef(-0.1, 1, 0, 0)
 
-        '''elif key[pygame.K_r]:
+        elif key[pygame.K_r]:
             glRotatef(0.1, 1, 0, 0)
 
         elif key[pygame.K_LEFT]:
