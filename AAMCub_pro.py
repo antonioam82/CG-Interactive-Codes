@@ -92,15 +92,16 @@ def draw_grid():
     glEnd()
     glEnable(GL_TEXTURE_2D)
 
-def Cube(texture_id):
-    glBindTexture(GL_TEXTURE_2D, texture_id)  # Vincular la textura
+def Cube(texture_id,wire):
+    if not wire:
+        glBindTexture(GL_TEXTURE_2D, texture_id)  # Vincular la textura
 
-    glBegin(GL_QUADS)
-    for i, face in enumerate(faces):
-        for j, vertex in enumerate(face):
-            glTexCoord2fv(texture_coords[i][j])  # Coordenada de textura para cada vértice
-            glVertex3fv(vertices[vertex])  # Dibuja cada vértice de la cara
-    glEnd()
+        glBegin(GL_QUADS)
+        for i, face in enumerate(faces):
+            for j, vertex in enumerate(face):
+                glTexCoord2fv(texture_coords[i][j])  # Coordenada de textura para cada vértice
+                glVertex3fv(vertices[vertex])  # Dibuja cada vértice de la cara
+        glEnd()
     
     glLineWidth(2.0)
     glDisable(GL_TEXTURE_2D)
@@ -137,6 +138,7 @@ def main():
     scale_y = 1
     scale_z = 1
     mov = 0
+    wire = False
     
     running = True
     while (running):
@@ -148,6 +150,14 @@ def main():
                     scale_x = 1
                     scale_y = 1
                     scale_z = 1
+                elif event.key == pygame.K_u:
+                    if wire:
+                        wire = False
+                    else:
+                        wire = True
+                elif event.key == pygame.K_ESCAPE:
+                    running = False
+                    
             
 
         key = pygame.key.get_pressed()
@@ -197,7 +207,7 @@ def main():
         glPushMatrix()
         glRotatef(angle, 0, 1, 0)
         glScalef(scale_x,scale_y,scale_z)
-        Cube(texture_id)
+        Cube(texture_id,wire)
         glPopMatrix()
 
         angle += 1
@@ -208,5 +218,6 @@ def main():
     pygame.quit()
          
 main()
+
 
 
