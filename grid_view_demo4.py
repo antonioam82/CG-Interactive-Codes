@@ -315,6 +315,7 @@ def main():
                 x_c += speed_c
                 x_c -= speed
 
+        # Rotations
         if key[pygame.K_y]:
             glRotatef(1, 0, -0.1, 0)
         elif key[pygame.K_r]:
@@ -323,6 +324,15 @@ def main():
             glRotatef(1, -0.1, 0, 0)
         elif key[pygame.K_w]:
             glRotatef(1, 0.1, 0, 0)
+
+        # Change speed
+        elif key[pygame.K_z]:
+            speed += 0.001
+            speed_c += 0.001
+        elif key[pygame.K_x]:
+            speed -= 0.001
+            speed_c -= 0.001
+            
         ########################################################33
         elif key[pygame.K_k]:
             #camera_dist += 0.5
@@ -330,6 +340,7 @@ def main():
         elif key[pygame.K_j]:
             glTranslatef(0.0, 0.0, 0.02)
         ##########################################################
+            
             
         
 
