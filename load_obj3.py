@@ -13,18 +13,14 @@ def load_obj(filename):
     with open(filename, 'r') as file:
         for line in file:
             if line.startswith('v '):  # Vértice
-                #num_verts += 1
                 parts = line.strip().split()
                 vertex = [float(parts[1]), float(parts[2]), float(parts[3])]
                 vertices.append(vertex)
             elif line.startswith('f '):  # Cara
-                #num_faces += 1
                 parts = line.strip().split()
-                # Las caras pueden tener más de 3 vértices, por lo tanto tenemos que manejar polígonos
                 face_indices = [int(part.split('/')[0]) - 1 for part in parts[1:]]
                 for i in range(len(face_indices)):
                     edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
-    
     return vertices, edges
 
 def drawText(f, x, y, text, c, bgc):
@@ -33,7 +29,7 @@ def drawText(f, x, y, text, c, bgc):
     glWindowPos2d(x, y)
     glDrawPixels(textSurface.get_width(), textSurface.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, textData)
 
-# Función para convertir un cuaternión a una matriz de rotación
+# Clase para manejar cuaterniones
 class Quaternion:
     def __init__(self, w, x, y, z):
         self.w = w
@@ -63,17 +59,35 @@ class Quaternion:
             w1 * z2 + x1 * y2 - y1 * x2 + z1 * w2
         )
 
-# Función para crear un cuaternión de rotación a partir de un ángulo y un eje
+# Función para crear un cuaternión de rotación
 def create_rotation_quaternion(angle, x, y, z):
     half_angle = math.radians(angle) / 2.0
     sin_half_angle = math.sin(half_angle)
     return Quaternion(math.cos(half_angle), x * sin_half_angle, y * sin_half_angle, z * sin_half_angle)
 
-# Función para inicializar la proyección y la vista
-def setup_view(display):
-    glClearColor(0.0, 0.0, 0.0, 1.0)
-    glEnable(GL_DEPTH_TEST)
+# Función para inicializar la proyección ortogonal
+def setup_view_ortho(display):
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    
+    # Definir el rango de la proyección ortogonal
+    aspect_ratio = display[0] / display[1]
+    ortho_size = 10  # Tamaño del área visible en la proyección ortogonal
+    #glOrtho(-ortho_size * aspect_ratio, ortho_size * aspect_ratio, -ortho_size, ortho_size, -50, 50)
+    glOrtho(-ortho_size * 0.5 * aspect_ratio, ortho_size * 0.5 * aspect_ratio, -ortho_size * 0.5, ortho_size * 0.5, -50, 50)
+
+    
+    glMatrixMode(GL_MODELVIEW)
+    glLoadIdentity()
+    #glTranslatef(0.0,0.0,-3.0)
+
+# Función para inicializar la proyección en perspectiva
+def setup_view_perspective(display):
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
     gluPerspective(50, (display[0] / display[1]), 0.1, 50.0)
+    glMatrixMode(GL_MODELVIEW)
+    glLoadIdentity()
     glTranslatef(0.0, 0.0, -10.0)
 
 # Función principal
@@ -82,13 +96,9 @@ def main():
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     font = pygame.font.SysFont('arial', 15)
-    #num_verts = 0
-    #num_faces = 0
 
     # Cargar el modelo OBJ
-    #vertices, edges = load_obj('cube.obj')
-    #path = r'C:\Users\Usuario\Documents\repositorios\libigl-tutorial-data\cube.obj'
-    #path = r'C:\Users\Usuario\Desktop\DATOS RECUPERADOS Antonio\Documents\docs\Software_3D_engine-main\Software_3D_engine-main\t_34_obj.obj'
+    #path = r'C:\Users\Usuario\Documents\fondo\temple_maze.obj'
     path = r'C:\Users\Usuario\Desktop\DATOS RECUPERADOS Antonio\Documents\pruebas\Javidx9\ConsoleGameEngine\BiggerProjects\Engine3D\teapot.obj'
     model_name = os.path.basename(path)
     vertices, edges = load_obj(path)
@@ -107,8 +117,9 @@ def main():
     glEnd()
     glEndList()
 
-    # Inicializar la vista y proyección
-    setup_view(display)
+    # Inicializar la vista en perspectiva por defecto
+    is_ortho = False
+    setup_view_perspective(display)
 
     # Inicializar el cuaternión de rotación (sin rotación inicial)
     quaternion = Quaternion(1, 0, 0, 0)
@@ -130,27 +141,30 @@ def main():
                 elif event.key == pygame.K_ESCAPE:
                     running = False
                 elif event.key == pygame.K_h:
-                    if hide_data == True:
-                        hide_data = False
-                    else:
-                        hide_data = True
+                    hide_data = not hide_data
                 elif event.key == pygame.K_r:
                     quaternion = Quaternion(1, 0, 0, 0)
                     scale = 1
                     dragging = False
                     last_mouse_pos = (0, 0)
                     translation = [0.0, 0.0]
-            elif event.type == pygame.MOUSEWHEEL: # Rueda ratón
-                if event.y > 0:  
+                elif event.key == pygame.K_p:  # Cambiar entre ortogonal y perspectiva
+                    is_ortho = not is_ortho
+                    if is_ortho:
+                        setup_view_ortho(display)
+                    else:
+                        setup_view_perspective(display)
+            elif event.type == pygame.MOUSEWHEEL:  # Rueda ratón
+                if event.y > 0:
                     scale += 0.05
-                elif event.y < 0:  
+                elif event.y < 0:
                     scale -= 0.05
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:  
+                if event.button == 1:
                     dragging = True
                     last_mouse_pos = pygame.mouse.get_pos()
             elif event.type == pygame.MOUSEBUTTONUP:
-                if event.button == 1:  
+                if event.button == 1:
                     dragging = False
             elif event.type == pygame.MOUSEMOTION:
                 if dragging:
@@ -194,14 +208,16 @@ def main():
         glMultMatrixf(rotation_matrix)
 
         # Dibujar el modelo
-        glScalef(scale,scale,scale)
+        glScalef(scale, scale, scale)
         glCallList(model_list)
 
         glPopMatrix()
 
         if not hide_data:
-            drawText(font, 20, 570, f'Model: {model_name}',(0, 255, 0, 255),(0,0,0))
-            drawText(font, 20, 550, f'Scale: {round(scale,2)}',(0, 255, 0, 255),(0,0,0))
+            drawText(font, 20, 570, f'Model: {model_name}', (0, 255, 0, 255), (0, 0, 0))
+            drawText(font, 20, 550, f'Scale: {round(scale, 2)}', (0, 255, 0, 255), (0, 0, 0))
+            view_mode = "Orthographic" if is_ortho else "Perspective"
+            drawText(font, 20, 530, f'View: {view_mode}', (0, 255, 0, 255), (0, 0, 0))
 
         pygame.display.flip()
         pygame.time.wait(10)
