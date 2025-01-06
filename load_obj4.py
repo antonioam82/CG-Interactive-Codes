@@ -124,6 +124,7 @@ def window(args):
     pygame.init()
     display = (args.window_width, args.window_height)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+    pygame.display.set_caption("Model Viewer")
     font = pygame.font.SysFont('arial', 15)
 
     # Cargar el modelo OBJ
