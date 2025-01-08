@@ -153,8 +153,14 @@ def text_pos(h,p):
 def check_color(color):
     colors = ['blue','gray','black']
     if color not in colors:
-        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"Background color must be 'blue', 'gray' or 'black."+Fore.RESET+Style.RESET_ALL)
+        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+"Background color must be 'blue', 'gray' or 'black."+Fore.RESET+Style.RESET_ALL)
     return color
+
+def check_lw(w):
+    width = float(w)
+    if width < 1.0:
+        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+"Line width must be equal or greater than 1.0."+Fore.RESET+Style.RESET_ALL)
+    return width
     
 
 # Función para inicializar la proyección en perspectiva
@@ -193,7 +199,7 @@ def window(args):
     model_list = glGenLists(1)
     glNewList(model_list, GL_COMPILE)
     glColor3f(1.0, 1.0, 1.0)  # Color blanco
-    glLineWidth(1.0)
+    glLineWidth(args.line_width)
     glBegin(GL_LINES)
     for edge in edges:
         for vertex in edge:
@@ -317,6 +323,7 @@ def main():
     parser.add_argument('-width','--window_width',type=check_width_value,default=800,help="Widow width")
     parser.add_argument('-height','--window_height',type=check_height_value,default=600,help="Window height")
     parser.add_argument('-bg','--bg_color',type=check_color,default='black',help="Background color")
+    parser.add_argument('-lw','--line_width',type=check_lw,default=1.0,help='Line width')
 
     args = parser.parse_args()
     #print(args.window_width)
