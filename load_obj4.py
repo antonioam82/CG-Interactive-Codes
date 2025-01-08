@@ -10,16 +10,24 @@ from colorama import init, Fore, Style
 
 init()
 
+rgb_colors = {'blue':[0.0,0.0,1.0,1.0],
+              'gray':[0.5,0.5,0.5,1.0],
+              'black':[0.0,0.0,0.0,1.0]}
+
+rgb_t = {'blue':[0,0,255],
+               'gray':[125,125,125],
+               'black':[0,0,0]}
+
 def check_width_value(width):
     val = int(width)
     if val < 800 or val > 1600:
-        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"Width value must be less than 1600 and greater than 799."+Fore.RESET+Style.RESET_ALL)
+        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"Width value must be less than 1601 and greater than 799."+Fore.RESET+Style.RESET_ALL)
     return val
 
 def check_height_value(height):
     val = int(height)
     if val < 600 or val > 900:
-        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"Height value must be less than 900 and greater than 600."+Fore.RESET+Style.RESET_ALL)
+        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"Height value must be less than 901 and greater than 599."+Fore.RESET+Style.RESET_ALL)
     return val
 
 def check_source_ext(file):
@@ -53,6 +61,38 @@ def drawText(f, x, y, text, c, bgc):
     glWindowPos2d(x, y)
     glDrawPixels(textSurface.get_width(), textSurface.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, textData)
 
+def show_controls():
+    print("\n--------------------- Controls ---------------------")
+    
+    print("\nKeyboard Controls (Movement):")
+    print("  - Up Arrow: Move the scene forward (rotate upwards)")
+    print("  - Down Arrow: Move the scene backward (rotate downwards)")
+    print("  - Left Arrow: Move the scene left (rotate left)")
+    print("  - Right Arrow: Move the scene right (rotate right)")
+    
+    print("\nRotation Controls:")
+    print("  - 'R' Key: Reset the scene rotation and scaling")
+    print("  - 'M' Key: Rotate the scene clockwise around the Z-axis")
+    print("  - 'N' Key: Rotate the scene counterclockwise around the Z-axis")
+    
+    print("\nView Mode Toggle:")
+    print("  - 'P' Key: Toggle between Orthographic and Perspective views")
+    
+    print("\nZoom Controls:")
+    print("  - 'Z' Key: Zoom in (increase scale)")
+    print("  - 'X' Key: Zoom out (decrease scale)")
+    print("  - Mouse Wheel: Zoom in/out")
+
+    print("\nTranslation Controls (Drag):")
+    print("  - Hold Left Mouse Button: Drag to move the scene")
+    
+    print("\nMiscellaneous:")
+    print("  - 'H' Key: Toggle the visibility of on-screen information (model name, scale, view mode)")
+    print("  - ESC Key: Exit the program")
+    
+    print("\n----------------------------------------------------")
+
+    
 # Clase para manejar cuaterniones
 class Quaternion:
     def __init__(self, w, x, y, z):
@@ -109,6 +149,12 @@ def text_pos(h,p):
     inc_total = (h - 600)
     h_pos = p + inc_total
     return h_pos
+
+def check_color(color):
+    colors = ['blue','gray','black']
+    if color not in colors:
+        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"Background color must be 'blue', 'gray' or 'black."+Fore.RESET+Style.RESET_ALL)
+    return color
     
 
 # Función para inicializar la proyección en perspectiva
@@ -121,11 +167,19 @@ def setup_view_perspective(display):
     glTranslatef(0.0, 0.0, -10.0)
 
 def window(args):
+    show_controls()
     pygame.init()
     display = (args.window_width, args.window_height)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     pygame.display.set_caption("Model Viewer")
     font = pygame.font.SysFont('arial', 15)
+
+    #glClearColor(0.0, 0.0, 1.0, 1.0)
+
+    glClearColor(rgb_colors[args.bg_color][0],
+                 rgb_colors[args.bg_color][1],
+                 rgb_colors[args.bg_color][2],
+                 rgb_colors[args.bg_color][3])
 
     # Cargar el modelo OBJ
     #path = r'C:\Users\Usuario\Documents\fondo\temple_maze.obj'
@@ -246,10 +300,10 @@ def window(args):
         if not hide_data:
             #inc_total = (args.window_height - 600)
             #h_pos = 570 + inc_total
-            drawText(font, 20, text_pos(args.window_height,570), f'Model: {model_name}', (0, 255, 0, 255), (0, 0, 0))
-            drawText(font, 20, text_pos(args.window_height,550), f'Scale: {round(scale, 2)}', (0, 255, 0, 255), (0, 0, 0))
+            drawText(font, 20, text_pos(args.window_height,570), f'Model: {model_name}', (0, 255, 0, 255), (rgb_t[args.bg_color][0], rgb_t[args.bg_color][1], rgb_t[args.bg_color][2]))
+            drawText(font, 20, text_pos(args.window_height,550), f'Scale: {round(scale, 2)}', (0, 255, 0, 255), (rgb_t[args.bg_color][0], rgb_t[args.bg_color][1], rgb_t[args.bg_color][2]))
             view_mode = "Orthographic" if is_ortho else "Perspective"
-            drawText(font, 20, text_pos(args.window_height,530), f'View: {view_mode}', (0, 255, 0, 255), (0, 0, 0))
+            drawText(font, 20, text_pos(args.window_height,530), f'View: {view_mode}', (0, 255, 0, 255),(rgb_t[args.bg_color][0], rgb_t[args.bg_color][1], rgb_t[args.bg_color][2]))
 
         pygame.display.flip()
         pygame.time.wait(10)
@@ -262,6 +316,7 @@ def main():
     parser.add_argument('-load','--load_object',required=True,type=check_source_ext,help="Obj model to load")
     parser.add_argument('-width','--window_width',type=check_width_value,default=800,help="Widow width")
     parser.add_argument('-height','--window_height',type=check_height_value,default=600,help="Window height")
+    parser.add_argument('-bg','--bg_color',type=check_color,default='black',help="Background color")
 
     args = parser.parse_args()
     #print(args.window_width)
@@ -270,3 +325,4 @@ def main():
     
 if __name__ =="__main__":
     main()
+
