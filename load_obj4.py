@@ -11,11 +11,11 @@ from colorama import init, Fore, Style
 init()
 
 rgb_colors = {'blue':[0.0,0.0,1.0,1.0],
-              'gray':[0.5,0.5,0.5,1.0],
+              'gray':[0.2,0.2,0.2,1.0],
               'black':[0.0,0.0,0.0,1.0]}
 
 rgb_t = {'blue':[0,0,255],
-               'gray':[125,125,125],
+               'gray':[51,51,51],
                'black':[0,0,0]}
 
 def check_width_value(width):
@@ -175,6 +175,11 @@ def setup_view_perspective(display):
 def window(args):
     show_controls()
     pygame.init()
+    
+    text_bgR = rgb_t[args.bg_color][0]
+    text_bgG = rgb_t[args.bg_color][1]
+    text_bgB = rgb_t[args.bg_color][2]
+    
     display = (args.window_width, args.window_height)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     pygame.display.set_caption("Model Viewer")
@@ -306,10 +311,10 @@ def window(args):
         if not hide_data:
             #inc_total = (args.window_height - 600)
             #h_pos = 570 + inc_total
-            drawText(font, 20, text_pos(args.window_height,570), f'Model: {model_name}', (0, 255, 0, 255), (rgb_t[args.bg_color][0], rgb_t[args.bg_color][1], rgb_t[args.bg_color][2]))
-            drawText(font, 20, text_pos(args.window_height,550), f'Scale: {round(scale, 2)}', (0, 255, 0, 255), (rgb_t[args.bg_color][0], rgb_t[args.bg_color][1], rgb_t[args.bg_color][2]))
+            drawText(font, 20, text_pos(args.window_height,570), f'Model: {model_name}', (0, 255, 0, 255), (text_bgR, text_bgG, text_bgB))
+            drawText(font, 20, text_pos(args.window_height,550), f'Scale: {round(scale, 2)}', (0, 255, 0, 255), (text_bgR, text_bgG, text_bgB))
             view_mode = "Orthographic" if is_ortho else "Perspective"
-            drawText(font, 20, text_pos(args.window_height,530), f'View: {view_mode}', (0, 255, 0, 255),(rgb_t[args.bg_color][0], rgb_t[args.bg_color][1], rgb_t[args.bg_color][2]))
+            drawText(font, 20, text_pos(args.window_height,530), f'View: {view_mode}', (0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
 
         pygame.display.flip()
         pygame.time.wait(10)
