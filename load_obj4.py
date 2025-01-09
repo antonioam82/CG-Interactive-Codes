@@ -179,7 +179,11 @@ def window(args):
     text_bgR = rgb_t[args.bg_color][0]
     text_bgG = rgb_t[args.bg_color][1]
     text_bgB = rgb_t[args.bg_color][2]
-    
+
+    text_pos1 = text_pos(args.window_height,570)
+    text_pos2 = text_pos(args.window_height,550)
+    text_pos3 = text_pos(args.window_height,530)
+  
     display = (args.window_width, args.window_height)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     pygame.display.set_caption("Model Viewer")
@@ -311,10 +315,10 @@ def window(args):
         if not hide_data:
             #inc_total = (args.window_height - 600)
             #h_pos = 570 + inc_total
-            drawText(font, 20, text_pos(args.window_height,570), f'Model: {model_name}', (0, 255, 0, 255), (text_bgR, text_bgG, text_bgB))
-            drawText(font, 20, text_pos(args.window_height,550), f'Scale: {round(scale, 2)}', (0, 255, 0, 255), (text_bgR, text_bgG, text_bgB))
+            drawText(font, 20, text_pos1, f'Model: {model_name}', (0, 255, 0, 255), (text_bgR, text_bgG, text_bgB))
+            drawText(font, 20, text_pos2, f'Scale: {round(scale, 2)}', (0, 255, 0, 255), (text_bgR, text_bgG, text_bgB))
             view_mode = "Orthographic" if is_ortho else "Perspective"
-            drawText(font, 20, text_pos(args.window_height,530), f'View: {view_mode}', (0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
+            drawText(font, 20, text_pos3, f'View: {view_mode}', (0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
 
         pygame.display.flip()
         pygame.time.wait(10)
@@ -331,8 +335,6 @@ def main():
     parser.add_argument('-lw','--line_width',type=check_lw,default=1.0,help='Line width')
 
     args = parser.parse_args()
-    #print(args.window_width)
-    #print(args.window_height)
     window(args)
     
 if __name__ =="__main__":
