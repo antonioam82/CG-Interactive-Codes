@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+from pathlib import Path
 import os
 import math
 import numpy as np
@@ -29,6 +30,11 @@ def check_height_value(height):
     if val < 600 or val > 900:
         raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"Height value must be less than 901 and greater than 599."+Fore.RESET+Style.RESET_ALL)
     return val
+
+def get_objs():
+    extension = '.obj'
+    directory = os.getcwd()
+    return [file.name for file in Path(directory).glob(f'*{extension}')]
 
 def check_source_ext(file):
     name, ex = os.path.splitext(file)
@@ -174,6 +180,8 @@ def setup_view_perspective(display):
 
 def window(args):
     show_controls()
+    list_objects = get_objs()
+    #print(list_objects)
     pygame.init()
     
     text_bgR = rgb_t[args.bg_color][0]
@@ -247,6 +255,9 @@ def window(args):
                     dragging = False
                     last_mouse_pos = (0, 0)
                     translation = [0.0, 0.0]
+                    is_ortho = False
+                    setup_view_perspective(display) # Restablece vista en perspectiva
+                    
                 elif event.key == pygame.K_p:  # Cambiar entre ortogonal y perspectiva
                     is_ortho = not is_ortho
                     if is_ortho:
