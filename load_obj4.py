@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import pygame
 from pygame.locals import *
 from OpenGL.GL import *
@@ -48,18 +50,22 @@ def check_source_ext(file):
 def load_obj(filename):
     vertices = []
     edges = []
+    num_verts = 0
+    num_triangles = 0
     with open(filename, 'r') as file:
         for line in file:
             if line.startswith('v '):  # Vértice
+                num_verts += 1
                 parts = line.strip().split()
                 vertex = [float(parts[1]), float(parts[2]), float(parts[3])]
                 vertices.append(vertex)
             elif line.startswith('f '):  # Cara
+                num_triangles += 1
                 parts = line.strip().split()
                 face_indices = [int(part.split('/')[0]) - 1 for part in parts[1:]]
                 for i in range(len(face_indices)):
                     edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
-    return vertices, edges
+    return vertices, edges, num_verts, num_triangles
 
 def drawText(f, x, y, text, c, bgc):
     textSurface = f.render(text, True, c, bgc)
@@ -173,7 +179,7 @@ def check_lw(w):
 def setup_view_perspective(display):
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    gluPerspective(50, (display[0] / display[1]), 0.1, 50.0)
+    gluPerspective(50, (display[0] / display[1]), 0.1, 80)#50.0)
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
     glTranslatef(0.0, 0.0, -10.0)
@@ -191,6 +197,8 @@ def window(args):
     text_pos1 = text_pos(args.window_height,570)
     text_pos2 = text_pos(args.window_height,550)
     text_pos3 = text_pos(args.window_height,530)
+    text_pos4 = text_pos(args.window_height,510)
+    text_pos5 = text_pos(args.window_height,490)
   
     display = (args.window_width, args.window_height)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
@@ -208,7 +216,7 @@ def window(args):
     #path = r'C:\Users\Usuario\Documents\fondo\temple_maze.obj'
     path = args.load_object
     model_name = os.path.basename(path)
-    vertices, edges = load_obj(path)
+    vertices, edges, num_verts, num_triangles = load_obj(path)
     scale = 1.0
     hide_data = False
 
@@ -334,6 +342,8 @@ def window(args):
             drawText(font, 20, text_pos2, f'Scale: {round(scale, 2)}', (0, 255, 0, 255), (text_bgR, text_bgG, text_bgB))
             view_mode = "Orthographic" if is_ortho else "Perspective"
             drawText(font, 20, text_pos3, f'View: {view_mode}', (0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
+            drawText(font, 20, text_pos4, f'Nun Verts: {num_verts}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
+            drawText(font, 20, text_pos5, f'Nun Triangles: {num_triangles}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
 
         pygame.display.flip()
         pygame.time.wait(10)
