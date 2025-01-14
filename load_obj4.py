@@ -205,6 +205,8 @@ def window(args):
     pygame.display.set_caption("Model Viewer")
     font = pygame.font.SysFont('arial', 15)
 
+    #glEnable(GL_DEPTH_TEST)#######################################################
+
     #glClearColor(0.0, 0.0, 1.0, 1.0)
 
     glClearColor(rgb_colors[args.bg_color][0],
