@@ -165,7 +165,7 @@ def text_pos(h,p):
 def check_color(color):
     colors = ['blue','gray','black']
     if color not in colors:
-        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+"Background color must be 'blue', 'gray' or 'black."+Fore.RESET+Style.RESET_ALL)
+        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+"Background color must be 'blue', 'gray' or 'black'."+Fore.RESET+Style.RESET_ALL)
     return color
 
 def check_lw(w):
@@ -366,4 +366,3 @@ def main():
     
 if __name__ =="__main__":
     main()
-
