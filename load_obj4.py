@@ -49,7 +49,9 @@ def check_source_ext(file):
 
 def load_obj(filename):
     vertices = []
-    edges = []
+    #edges = []
+    edges = set()
+    num_edges = 0
     num_verts = 0
     num_triangles = 0
     with open(filename, 'r') as file:
@@ -64,8 +66,10 @@ def load_obj(filename):
                 parts = line.strip().split()
                 face_indices = [int(part.split('/')[0]) - 1 for part in parts[1:]]
                 for i in range(len(face_indices)):
-                    edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
-    return vertices, edges, num_verts, num_triangles
+                    edges.add(tuple(sorted((face_indices[i], face_indices[(i + 1) % len(face_indices)]))))
+                    #edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
+                    num_edges = len(edges)
+    return vertices, edges, num_verts, num_triangles, num_edges
 
 def drawText(f, x, y, text, c, bgc):
     textSurface = f.render(text, True, c, bgc)
@@ -199,6 +203,7 @@ def window(args):
     text_pos3 = text_pos(args.window_height,530)
     text_pos4 = text_pos(args.window_height,510)
     text_pos5 = text_pos(args.window_height,490)
+    text_pos6 = text_pos(args.window_height,470)
   
     display = (args.window_width, args.window_height)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
@@ -218,7 +223,7 @@ def window(args):
     #path = r'C:\Users\Usuario\Documents\fondo\temple_maze.obj'
     path = args.load_object
     model_name = os.path.basename(path)
-    vertices, edges, num_verts, num_triangles = load_obj(path)
+    vertices, edges, num_verts, num_triangles, num_edges = load_obj(path)
     scale = 1.0
     hide_data = False
 
@@ -346,6 +351,7 @@ def window(args):
             drawText(font, 20, text_pos3, f'View: {view_mode}', (0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
             drawText(font, 20, text_pos4, f'Nun Verts: {num_verts}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
             drawText(font, 20, text_pos5, f'Nun Triangles: {num_triangles}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
+            drawText(font, 20, text_pos6, f'Num Edges: {num_edges}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
 
         pygame.display.flip()
         pygame.time.wait(10)
