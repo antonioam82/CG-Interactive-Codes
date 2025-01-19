@@ -350,7 +350,7 @@ def window(args):
             view_mode = "Orthographic" if is_ortho else "Perspective"
             drawText(font, 20, text_pos3, f'View: {view_mode}', (0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
             drawText(font, 20, text_pos4, f'Nun Verts: {num_verts}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
-            drawText(font, 20, text_pos5, f'Nun Triangles: {num_triangles}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
+            drawText(font, 20, text_pos5, f'Nun Faces: {num_triangles}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
             drawText(font, 20, text_pos6, f'Num Edges: {num_edges}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
 
         pygame.display.flip()
