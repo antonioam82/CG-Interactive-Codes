@@ -190,7 +190,7 @@ def setup_view_perspective(display):
 
 def window(args):
     show_controls()
-    list_objects = get_objs()
+    #list_objects = get_objs()
     #print(list_objects)
     pygame.init()
     
