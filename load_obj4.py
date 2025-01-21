@@ -152,7 +152,7 @@ def setup_view_ortho(display):
     
     # Definir el rango de la proyección ortogonal
     aspect_ratio = display[0] / display[1]
-    ortho_size = 10  # Tamaño del área visible en la proyección ortogonal
+    ortho_size = 10  # Tamaño del área visible en la proyección ortogonal 10
     #glOrtho(-ortho_size * aspect_ratio, ortho_size * aspect_ratio, -ortho_size, ortho_size, -50, 50)
     glOrtho(-ortho_size * 0.5 * aspect_ratio, ortho_size * 0.5 * aspect_ratio, -ortho_size * 0.5, ortho_size * 0.5, -50, 50)
 
@@ -190,7 +190,7 @@ def setup_view_perspective(display):
 
 def window(args):
     show_controls()
-    #list_objects = get_objs()
+    list_objects = get_objs()
     #print(list_objects)
     pygame.init()
     
@@ -279,6 +279,37 @@ def window(args):
                         setup_view_ortho(display)
                     else:
                         setup_view_perspective(display)
+                        
+                elif event.key == pygame.K_t:  # Vista cenital (tecla 't')
+                    # Aplicar rotación para la vista cenital
+                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                    #translation = [0.0, 0.0]  # Restablece la traslación
+                    #scale = 1  # Restablece el zoom
+                    # Rotar la cámara 90 grados sobre el eje X para vista cenital
+                    rotation = create_rotation_quaternion(-90, 1, 0, 0)
+                    quaternion = quaternion * rotation
+                elif event.key == pygame.K_b:
+                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                    rotation = create_rotation_quaternion(90, 1, 0, 0)
+                    quaternion = quaternion * rotation
+                elif event.key == pygame.K_j:
+                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                    rotation = create_rotation_quaternion(90, 0, 1, 0)
+                    quaternion = quaternion * rotation
+                elif event.key == pygame.K_l:
+                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                    rotation = create_rotation_quaternion(-90, 0, 1, 0)
+                    quaternion = quaternion * rotation
+                elif event.key == pygame.K_f:
+                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                    rotation = create_rotation_quaternion(-180, 0, 1, 0)
+                    quaternion = quaternion * rotation
+                elif event.key == pygame.K_k:
+                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                    rotation = create_rotation_quaternion(180, 0, 1, 0)
+                    quaternion = quaternion * rotation
+
+                    
             elif event.type == pygame.MOUSEWHEEL:  # Rueda ratón
                 if event.y > 0:
                     scale += 0.05
@@ -350,7 +381,7 @@ def window(args):
             view_mode = "Orthographic" if is_ortho else "Perspective"
             drawText(font, 20, text_pos3, f'View: {view_mode}', (0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
             drawText(font, 20, text_pos4, f'Nun Verts: {num_verts}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
-            drawText(font, 20, text_pos5, f'Nun Faces: {num_triangles}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
+            drawText(font, 20, text_pos5, f'Nun Triangles: {num_triangles}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
             drawText(font, 20, text_pos6, f'Num Edges: {num_edges}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
 
         pygame.display.flip()
