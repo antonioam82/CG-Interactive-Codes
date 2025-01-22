@@ -284,28 +284,43 @@ def window(args):
                     # Aplicar rotación para la vista cenital
                     quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
                     #translation = [0.0, 0.0]  # Restablece la traslación
-                    #scale = 1  # Restablece el zoom
+                    scale = 1  # Restablece el zoom
                     # Rotar la cámara 90 grados sobre el eje X para vista cenital
                     rotation = create_rotation_quaternion(-90, 1, 0, 0)
                     quaternion = quaternion * rotation
                 elif event.key == pygame.K_b:
-                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                    quaternion = Quaternion(1, 0, 0, 0)  
+                    translation = [0.0, 0.0]
+                    quaternion = Quaternion(1, 0, 0, 0)  
+                    scale = 1
                     rotation = create_rotation_quaternion(90, 1, 0, 0)
                     quaternion = quaternion * rotation
                 elif event.key == pygame.K_j:
-                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                    quaternion = Quaternion(1, 0, 0, 0)  
+                    translation = [0.0, 0.0]
+                    quaternion = Quaternion(1, 0, 0, 0)  
+                    scale = 1
                     rotation = create_rotation_quaternion(90, 0, 1, 0)
                     quaternion = quaternion * rotation
                 elif event.key == pygame.K_l:
-                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                    quaternion = Quaternion(1, 0, 0, 0)  
+                    translation = [0.0, 0.0]
+                    quaternion = Quaternion(1, 0, 0, 0)  
+                    scale = 1
                     rotation = create_rotation_quaternion(-90, 0, 1, 0)
                     quaternion = quaternion * rotation
                 elif event.key == pygame.K_f:
-                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                    quaternion = Quaternion(1, 0, 0, 0)  
+                    translation = [0.0, 0.0]
+                    quaternion = Quaternion(1, 0, 0, 0)  
+                    scale = 1
                     rotation = create_rotation_quaternion(-180, 0, 1, 0)
                     quaternion = quaternion * rotation
                 elif event.key == pygame.K_k:
-                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                    quaternion = Quaternion(1, 0, 0, 0)  
+                    translation = [0.0, 0.0]
+                    quaternion = Quaternion(1, 0, 0, 0)
+                    scale = 1
                     rotation = create_rotation_quaternion(180, 0, 1, 0)
                     quaternion = quaternion * rotation
 
@@ -381,7 +396,7 @@ def window(args):
             view_mode = "Orthographic" if is_ortho else "Perspective"
             drawText(font, 20, text_pos3, f'View: {view_mode}', (0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
             drawText(font, 20, text_pos4, f'Nun Verts: {num_verts}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
-            drawText(font, 20, text_pos5, f'Nun Triangles: {num_triangles}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
+            drawText(font, 20, text_pos5, f'Nun Faces: {num_triangles}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
             drawText(font, 20, text_pos6, f'Num Edges: {num_edges}',(0, 255, 0, 255),(text_bgR, text_bgG, text_bgB))
 
         pygame.display.flip()
