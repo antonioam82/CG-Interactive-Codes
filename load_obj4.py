@@ -289,38 +289,23 @@ def window(args):
                     rotation = create_rotation_quaternion(-90, 1, 0, 0)
                     quaternion = quaternion * rotation
                 elif event.key == pygame.K_b:
-                    quaternion = Quaternion(1, 0, 0, 0)  
-                    translation = [0.0, 0.0]
-                    quaternion = Quaternion(1, 0, 0, 0)  
-                    #scale = 1
+                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
                     rotation = create_rotation_quaternion(90, 1, 0, 0)
                     quaternion = quaternion * rotation
                 elif event.key == pygame.K_j:
-                    quaternion = Quaternion(1, 0, 0, 0)  
-                    translation = [0.0, 0.0]
-                    quaternion = Quaternion(1, 0, 0, 0)  
-                    #scale = 1
+                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
                     rotation = create_rotation_quaternion(90, 0, 1, 0)
                     quaternion = quaternion * rotation
                 elif event.key == pygame.K_l:
-                    quaternion = Quaternion(1, 0, 0, 0)  
-                    translation = [0.0, 0.0]
-                    quaternion = Quaternion(1, 0, 0, 0)  
-                    #scale = 1
+                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
                     rotation = create_rotation_quaternion(-90, 0, 1, 0)
                     quaternion = quaternion * rotation
                 elif event.key == pygame.K_f:
-                    quaternion = Quaternion(1, 0, 0, 0)  
-                    translation = [0.0, 0.0]
-                    quaternion = Quaternion(1, 0, 0, 0)  
-                    #scale = 1
+                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
                     rotation = create_rotation_quaternion(-180, 0, 1, 0)
                     quaternion = quaternion * rotation
                 elif event.key == pygame.K_k:
-                    quaternion = Quaternion(1, 0, 0, 0)  
-                    translation = [0.0, 0.0]
-                    quaternion = Quaternion(1, 0, 0, 0)
-                    #scale = 1
+                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
                     rotation = create_rotation_quaternion(180, 0, 1, 0)
                     quaternion = quaternion * rotation
 
