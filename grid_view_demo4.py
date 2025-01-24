@@ -168,7 +168,8 @@ def other_cube():
     glNewList(other_cube_list, GL_COMPILE)
     glLineWidth(3.0)
     glBegin(GL_LINES)
-    glColor3f(0.2, 0.4, 0.0)
+    glColor3f(1.0,0.0,0.0)
+    #glColor3f(0.2, 0.4, 0.0)
     for edge in edges:
         for vertex in edge:
             glVertex3fv(another_cube[vertex])
@@ -202,7 +203,7 @@ def main():
 
     cube_list = Cube()
     grid_list = draw_grid()
-    #other_list = other_cube()
+    other_list = other_cube()
     model_list = draw_walls()
     hide_data = False
 
@@ -368,10 +369,13 @@ def main():
         glTranslatef(0.0, 0.0, -17.5)
         glTranslatef(0.0, 1.9, 0.0)
         glScalef(10.0,10.0,10.0)
-        #glRotatef(rot,0,1,0)
-        #glCallList(other_list)
         glCallList(model_list)
         glPopMatrix()
+        glPushMatrix()################################3
+        glTranslatef(-20.0, 0.0, -80.5)
+        glRotatef(rot, 0.0, 1.0, 0.0)
+        glCallList(other_list)
+        glPopMatrix()####################################
         glPopMatrix()
 
         # Dibujar el cubo
@@ -381,7 +385,7 @@ def main():
         glCallList(cube_list)
         glPopMatrix()
 
-        #rot += 1
+        rot += 2
 
         spd = round(speed, 3)
         spdc = round(speed_c, 3)
