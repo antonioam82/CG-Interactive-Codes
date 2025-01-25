@@ -178,6 +178,7 @@ def main():
     grid_list = draw_grid()
     other_list = other_cube()
     hide_data = False
+    collision = False
 
     show_controls()
 
@@ -205,8 +206,11 @@ def main():
         # Comprobar colisión
         if check_collision(aabb_cube, aabb_other_cube):
             print("¡Colisión detectada!")
+            collision = True
         else:
             print("No hay colisión.")
+            collision = False
+            
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -262,19 +266,19 @@ def main():
         key = pygame.key.get_pressed()
 
         if key[pygame.K_UP]:
-            if direction == 'front' and z + speed <= (grid_size - 1):
+            if direction == 'front' and z + speed <= (grid_size - 1) and not collision:
                 z += speed
                 z_c -= speed_c
                 z_c += speed
-            elif direction == 'back' and z - speed >= (-grid_size + 1):
+            elif direction == 'back' and z - speed >= (-grid_size + 1) and not collision:
                 z -= speed
                 z_c += speed_c
                 z_c -= speed
-            elif direction == 'right' and x - speed >= (-grid_size + 1):
+            elif direction == 'right' and x - speed >= (-grid_size + 1) and not collision:
                 x -= speed
                 x_c += speed_c
                 x_c -= speed##########################'''
-            elif direction == 'left' and x + speed <= (grid_size - 1):
+            elif direction == 'left' and x + speed <= (grid_size - 1) and not collision:
                 x += speed
                 x_c -= speed_c
                 x_c += speed
