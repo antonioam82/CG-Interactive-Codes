@@ -249,8 +249,6 @@ def window(args):
     dragging = False
     last_mouse_pos = (0, 0)
     translation = [0.0, 0.0]
-    back_view = False
-    front_view = False
 
     running = True
     while running:
@@ -302,9 +300,13 @@ def window(args):
                     quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
                     rotation = create_rotation_quaternion(-90, 0, 1, 0)
                     quaternion = quaternion * rotation
+                elif event.key == pygame.K_f:
+                    quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                    rotation = create_rotation_quaternion(0, 0, 1, 0)
+                    quaternion = quaternion * rotation
                 elif event.key == pygame.K_k:
                     quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
-                    rotation = create_rotation_quaternion(-180, 0, 1, 0)
+                    rotation = create_rotation_quaternion(180, 0, 1, 0)
                     quaternion = quaternion * rotation
 
                     
