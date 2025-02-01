@@ -156,13 +156,13 @@ def calculate_aabb(vertices, position):
     # Comprobar si los rangos de las AABBs se solapan en cada eje
     return (aabb1[0] <= aabb2[1] and aabb1[1] >= aabb2[0] and  # Eje X
             aabb1[2] <= aabb2[3] and aabb1[3] >= aabb2[2] and  # Eje Y
-            aabb1[4] <= aabb2[5] and aabb1[5] >= aabb2[4])     # Eje Z'''
+            aabb1[4] <= aabb2[5] and aabb1[5]+0.1 >= aabb2[4])     # Eje Z'''
 
 def check_collision(aabb1, aabb2):
     # Comprobar si los rangos de las AABBs se solapan en cada eje
     x_col = aabb1[0] <= aabb2[1] and aabb1[1] >= aabb2[0]
     y_col = aabb1[2] <= aabb2[3] and aabb1[3] >= aabb2[2]
-    z_col = aabb1[4] <= aabb2[5] and aabb1[5] >= aabb2[4]
+    z_col = aabb1[4] <= aabb2[5] and aabb1[5]+0.1 >= aabb2[4]
     
     return (x_col, y_col, z_col)
 
