@@ -6,7 +6,6 @@ from OpenGL.GLU import *
 import numpy as np
 import math
 
-# Función para generar el mapa de alturas (montañas)
 def generate_height_map(size, scale):
     height_map = np.zeros((size, size))
     for x in range(size):
@@ -15,7 +14,6 @@ def generate_height_map(size, scale):
             height_map[x, y] = height
     return height_map
 
-# Función para generar los vértices del terreno (sin shaders, solo la malla)
 def generate_terrain(size, scale):
     height_map = generate_height_map(size, scale)
     vertices = []
@@ -31,7 +29,6 @@ def generate_terrain(size, scale):
 
     return np.array(vertices, dtype=np.float32)
 
-# Inicialización de Pygame y OpenGL
 def main():
     pygame.init()
     pygame.display.set_mode((800, 600), DOUBLEBUF | OPENGL)
