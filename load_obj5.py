@@ -324,7 +324,7 @@ def window(args):
                 elif event.key == pygame.K_q:
                     if use_quaternions:
                         use_quaternions = False
-                        quaternion = Quaternion(1, 0, 0, 0)
+                        #quaternion = Quaternion(1, 0, 0, 0)
                         scale = 1
                         dragging = False
                         last_mouse_pos = (0, 0)
@@ -333,7 +333,7 @@ def window(args):
                         setup_view_perspective(display)
                     else:
                         use_quaternions = True
-                        quaternion = Quaternion(1, 0, 0, 0)
+                        #quaternion = Quaternion(1, 0, 0, 0)
                         scale = 1
                         dragging = False
                         last_mouse_pos = (0, 0)
