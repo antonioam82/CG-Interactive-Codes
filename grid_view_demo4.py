@@ -387,19 +387,19 @@ def main():
         glCallList(cube_list)
         glPopMatrix()
 
-        rot += 2
+        rot += 3
 
-        '''if cube_translation >= -30.0 and sentido == "LEFT":
-            cube_translation -= 0.05
-            print("TO LEFT: ",cube_translation)
+        if cube_translation >= -37.0 and sentido == "LEFT":
+            cube_translation -= 0.25
+            #print("TO LEFT: ",cube_translation)
         else:
             sentido = "RIGHT"
 
         if cube_translation <= -20.0 and sentido == "RIGHT":
-            cube_translation += 0.05
-            print("TO RIGHT: ",cube_translation)
+            cube_translation += 0.25
+            #print("TO RIGHT: ",cube_translation)
         else:
-            sentido = "LEFT"'''
+            sentido = "LEFT"
 
         spd = round(speed, 3)
         spdc = round(speed_c, 3)
