@@ -220,7 +220,11 @@ def main():
     speed_c = 0.1
     running = True
     direction = 'front'
+    
     rot = 0
+    cube_translation = -20.0
+    sentido = "LEFT"
+    
     scene = 0
     index = 0
     directions = ['front', 'right', 'back', 'left']
@@ -342,8 +346,6 @@ def main():
             glTranslatef(0.0, 0.0, 0.02)
         ##########################################################
             
-            
-        
 
         if rotating:
             angle_difference = target_angle - current_angle
@@ -372,7 +374,7 @@ def main():
         glCallList(model_list)
         glPopMatrix()
         glPushMatrix()################################3
-        glTranslatef(-20.0, 0.0, -80.5)
+        glTranslatef(cube_translation, 0.0, -80.5)
         glRotatef(rot, 0.0, 1.0, 0.0)
         glCallList(other_list)
         glPopMatrix()####################################
@@ -387,13 +389,25 @@ def main():
 
         rot += 2
 
+        '''if cube_translation >= -30.0 and sentido == "LEFT":
+            cube_translation -= 0.05
+            print("TO LEFT: ",cube_translation)
+        else:
+            sentido = "RIGHT"
+
+        if cube_translation <= -20.0 and sentido == "RIGHT":
+            cube_translation += 0.05
+            print("TO RIGHT: ",cube_translation)
+        else:
+            sentido = "LEFT"'''
+
         spd = round(speed, 3)
         spdc = round(speed_c, 3)
 
         if not hide_data:
             drawText(font, 20, 570, f'DIRECTION: {direction}', (0, 255, 0, 255), (0, 0, 0))
             drawText(font, 20, 550, f'CAMERA SPEED: {spd}', (0, 255, 0, 255), (0, 0, 0))
-            drawText(font, 20, 530, f'FIGURE SPEED: {spdc}', (0, 255, 0, 255), (0, 0, 0))
+            drawText(font, 20, 530, f'FIGngvhgURE SPEED: {spdc}', (0, 255, 0, 255), (0, 0, 0))
 
         glFlush()
         pygame.display.flip()
