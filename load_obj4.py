@@ -312,9 +312,9 @@ def window(args):
                     
             elif event.type == pygame.MOUSEWHEEL:  # Rueda ratón
                 if event.y > 0:
-                    scale += 0.05
+                    scale += 0.05       ###############3
                 elif event.y < 0:
-                    scale -= 0.05
+                    scale -= 0.05       ###############
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     dragging = True
@@ -352,10 +352,10 @@ def window(args):
         if key[pygame.K_n]:
             rotation = create_rotation_quaternion(2, 0, 0, 1)
             quaternion = quaternion * rotation
-        if key[pygame.K_z]:
-            scale -= 0.05
+        if key[pygame.K_z] and scale >= 0.00:
+            scale -= 0.005
         if key[pygame.K_x]:
-            scale += 0.05
+            scale += 0.005
 
         # Limpiar la pantalla y cargar la nueva matriz de rotación
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -403,3 +403,4 @@ def main():
     
 if __name__ =="__main__":
     main()
+
