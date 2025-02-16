@@ -152,19 +152,19 @@ def calculate_aabb(vertices, position):
     max_z = max([vertex[2] + position[2] for vertex in vertices])
     return min_x, max_x, min_y, max_y, min_z, max_z
 
-'''def check_collision(aabb1, aabb2):
+def check_collision(aabb1, aabb2):
     # Comprobar si los rangos de las AABBs se solapan en cada eje
     return (aabb1[0] <= aabb2[1] and aabb1[1] >= aabb2[0] and  # Eje X
             aabb1[2] <= aabb2[3] and aabb1[3] >= aabb2[2] and  # Eje Y
-            aabb1[4] <= aabb2[5] and aabb1[5]+0.1 >= aabb2[4])     # Eje Z'''
+            aabb1[4] <= aabb2[5] and aabb1[5]+0.1 >= aabb2[4])     # Eje Z
 
-def check_collision(aabb1, aabb2):
+'''def check_collision(aabb1, aabb2):
     # Comprobar si los rangos de las AABBs se solapan en cada eje
     x_col = aabb1[0] <= aabb2[1] and aabb1[1] >= aabb2[0]
     y_col = aabb1[2] <= aabb2[3] and aabb1[3] >= aabb2[2]
     z_col = aabb1[4] <= aabb2[5] and aabb1[5]+0.1 >= aabb2[4]
     
-    return (x_col, y_col, z_col)
+    return (x_col, y_col, z_col)'''
 
 # Variables globales para controlar la rotación
 rotation_speed = 2.0  # velocidad de rotación por frame (más baja es más lenta)
@@ -215,15 +215,15 @@ def main():
         aabb_other_cube = calculate_aabb(another_cube, (x, 0, z))
 
         col = check_collision(aabb_cube, aabb_other_cube)
-        print(col)
+        #print(col)
 
-        '''# Comprobar colisión
+        # Comprobar colisión
         if check_collision(aabb_cube, aabb_other_cube):
             print("¡Colisión detectada!")
             collision = True
         else:
             print("No hay colisión.")
-            collision = False'''
+            collision = False
             
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -280,19 +280,19 @@ def main():
         key = pygame.key.get_pressed()
 
         if key[pygame.K_UP]:
-            if direction == 'front' and z + speed <= (grid_size - 1):
+            if direction == 'front' and z + speed <= (grid_size - 1) and not collision:
                 z += speed
                 z_c -= speed_c
                 z_c += speed
-            elif direction == 'back' and z - speed >= (-grid_size + 1):
+            elif direction == 'back' and z - speed >= (-grid_size + 1) and not collision:
                 z -= speed
                 z_c += speed_c
                 z_c -= speed
-            elif direction == 'right' and x - speed >= (-grid_size + 1):
+            elif direction == 'right' and x - speed >= (-grid_size + 1) and not collision:
                 x -= speed
                 x_c += speed_c
                 x_c -= speed##########################'''
-            elif direction == 'left' and x + speed <= (grid_size - 1):
+            elif direction == 'left' and x + speed <= (grid_size - 1) and not collision:
                 x += speed
                 x_c -= speed_c
                 x_c += speed
