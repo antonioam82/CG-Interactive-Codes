@@ -95,15 +95,23 @@ def show_controls():
     
     print("\nView Mode Toggle:")
     print("  - 'P' Key: Toggle between Orthographic and Perspective views")
-    
+
     print("\nZoom Controls:")
-    print("  - 'Z' Key: Zoom in (increase scale)")
-    print("  - 'X' Key: Zoom out (decrease scale)")
+    print("  - 'X' Key: Zoom in (increase scale)")
+    print("  - 'Z' Key: Zoom out (decrease scale)")
     print("  - Mouse Wheel: Zoom in/out")
 
     print("\nTranslation Controls (Drag):")
     print("  - Hold Left Mouse Button: Drag to move the scene")
-    
+
+    print("\nPreset Views:")
+    print("  - 'T' Key: Top view (cenital)")
+    print("  - 'B' Key: Bottom view")
+    print("  - 'L' Key: Left side view")
+    print("  - 'J' Key: Right side view")
+    print("  - 'F' Key: Front view")
+    print("  - 'K' Key: Back view")
+
     print("\nMiscellaneous:")
     print("  - 'H' Key: Toggle the visibility of on-screen information (model name, scale, view mode)")
     print("  - ESC Key: Exit the program")
