@@ -56,6 +56,7 @@ def load_obj(filename):
     num_edges = 0
     num_verts = 0
     num_triangles = 0
+    faces = []
     with open(filename, 'r') as file:
         for line in file:
             if line.startswith('v '):  # Vértice
@@ -67,11 +68,12 @@ def load_obj(filename):
                 num_triangles += 1
                 parts = line.strip().split()
                 face_indices = [int(part.split('/')[0]) - 1 for part in parts[1:]]
+                faces.append(face_indices)
                 for i in range(len(face_indices)):
                     edges.add(tuple(sorted((face_indices[i], face_indices[(i + 1) % len(face_indices)]))))
                     #edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
                     num_edges = len(edges)
-    return vertices, edges, num_verts, num_triangles, num_edges
+    return vertices, edges, num_verts, num_triangles, num_edges, faces
 
 def drawText(f, x, y, text, c, bgc):
     textSurface = f.render(text, True, c, bgc)
@@ -95,23 +97,15 @@ def show_controls():
     
     print("\nView Mode Toggle:")
     print("  - 'P' Key: Toggle between Orthographic and Perspective views")
-
+    
     print("\nZoom Controls:")
-    print("  - 'X' Key: Zoom in (increase scale)")
-    print("  - 'Z' Key: Zoom out (decrease scale)")
+    print("  - 'Z' Key: Zoom in (increase scale)")
+    print("  - 'X' Key: Zoom out (decrease scale)")
     print("  - Mouse Wheel: Zoom in/out")
 
     print("\nTranslation Controls (Drag):")
     print("  - Hold Left Mouse Button: Drag to move the scene")
-
-    print("\nPreset Views:")
-    print("  - 'T' Key: Top view (cenital)")
-    print("  - 'B' Key: Bottom view")
-    print("  - 'L' Key: Left side view")
-    print("  - 'J' Key: Right side view")
-    print("  - 'F' Key: Front view")
-    print("  - 'K' Key: Back view")
-
+    
     print("\nMiscellaneous:")
     print("  - 'H' Key: Toggle the visibility of on-screen information (model name, scale, view mode)")
     print("  - ESC Key: Exit the program")
@@ -233,7 +227,7 @@ def window(args):
     #path = r'C:\Users\Usuario\Documents\fondo\temple_maze.obj'
     path = args.load_object
     model_name = os.path.basename(path)
-    vertices, edges, num_verts, num_triangles, num_edges = load_obj(path)
+    vertices, edges, num_verts, num_triangles, num_edges, faces = load_obj(path)
     scale = 1.0
     hide_data = False
     green_val = 255
@@ -241,12 +235,22 @@ def window(args):
     # Crear la lista de display para el modelo
     model_list = glGenLists(1)
     glNewList(model_list, GL_COMPILE)
+    
+    glLineWidth(args.line_width)
+    
+    glBegin(GL_TRIANGLES)##################
+    glColor3f(0, 0, 1)
+    for face in faces:
+        for vertex in face:
+            glVertex3fv(vertices[vertex])
+    glEnd()################################
+
     if args.bg_color == 'white':
         glColor3f(0.0, 0.0, 0.0)  # Color negro
         green_val = 100
     else:
         glColor3f(1.0, 1.0, 1.0)  # Color blanco
-    glLineWidth(args.line_width)
+    
     glBegin(GL_LINES)
     for edge in edges:
         for vertex in edge:
@@ -389,8 +393,6 @@ def window(args):
         glPopMatrix()
 
         if not hide_data:
-            #inc_total = (args.window_height - 600)
-            #h_pos = 570 + inc_total
             drawText(font, 20, text_pos1, f'Model: {model_name}', (0, green_val, 0, 255), (text_bgR, text_bgG, text_bgB))
             drawText(font, 20, text_pos2, f'Scale: {round(scale, 2)}', (0, green_val, 0, 255), (text_bgR, text_bgG, text_bgB))
             view_mode = "Orthographic" if is_ortho else "Perspective"
