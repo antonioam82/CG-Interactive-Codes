@@ -231,19 +231,20 @@ def window(args):
     scale = 1.0
     hide_data = False
     green_val = 255
-
+    
     # Crear la lista de display para el modelo
     model_list = glGenLists(1)
     glNewList(model_list, GL_COMPILE)
     
     glLineWidth(args.line_width)
-    
-    glBegin(GL_TRIANGLES)##################
-    glColor3f(0, 0, 1)
-    for face in faces:
-        for vertex in face:
-            glVertex3fv(vertices[vertex])
-    glEnd()################################
+
+    if args.color:
+        glBegin(GL_TRIANGLES)##################
+        glColor3f(0.0, 0.5, 0.0)
+        for face in faces:
+            for vertex in face:
+                glVertex3fv(vertices[vertex])
+        glEnd()################################
 
     if args.bg_color == 'white':
         glColor3f(0.0, 0.0, 0.0)  # Color negro
@@ -414,6 +415,7 @@ def main():
     parser.add_argument('-height','--window_height',type=check_height_value,default=600,help="Window height")
     parser.add_argument('-bg','--bg_color',type=check_color,default='black',help="Background color")
     parser.add_argument('-lw','--line_width',type=check_lw,default=1.0,help='Line width')
+    parser.add_argument('-cl','--color',action='store_true',help='Add color to model')
 
     args = parser.parse_args()
     window(args)
