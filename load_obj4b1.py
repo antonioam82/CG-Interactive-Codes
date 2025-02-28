@@ -49,7 +49,7 @@ def check_source_ext(file):
         raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"FILE NOT FOUND: file or path '{file}' not found."+Fore.RESET+Style.RESET_ALL)
     return file
 
-def load_obj(filename):
+def load_obj(filename,color):
     vertices = []
     #edges = []
     edges = set()
@@ -68,7 +68,8 @@ def load_obj(filename):
                 num_triangles += 1
                 parts = line.strip().split()
                 face_indices = [int(part.split('/')[0]) - 1 for part in parts[1:]]
-                faces.append(face_indices)
+                if color:
+                    faces.append(face_indices)
                 for i in range(len(face_indices)):
                     edges.add(tuple(sorted((face_indices[i], face_indices[(i + 1) % len(face_indices)]))))
                     #edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
@@ -227,7 +228,7 @@ def window(args):
     #path = r'C:\Users\Usuario\Documents\fondo\temple_maze.obj'
     path = args.load_object
     model_name = os.path.basename(path)
-    vertices, edges, num_verts, num_triangles, num_edges, faces = load_obj(path)
+    vertices, edges, num_verts, num_triangles, num_edges, faces = load_obj(path,args.color)
     scale = 1.0
     hide_data = False
     green_val = 255
@@ -375,7 +376,7 @@ def window(args):
         if key[pygame.K_z]:
             scale -= 0.05
         if key[pygame.K_x]:
-            scale += 0.05
+            scale += 0.005
 
         # Limpiar la pantalla y cargar la nueva matriz de rotación
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
