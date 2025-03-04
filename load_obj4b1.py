@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import pygame
@@ -182,8 +183,13 @@ def check_lw(w):
     if width < 1.0:
         raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+"Line width must be equal or greater than 1.0."+Fore.RESET+Style.RESET_ALL)
     return width
-    
 
+def check_positive(v):
+    ivalue = float(v)
+    if ivalue <= 0:
+        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"Object scale must be positive ('{v}' is not valid)."+Fore.RESET+Style.RESET_ALL)
+    return ivalue
+    
 # Función para inicializar la proyección en perspectiva
 def setup_view_perspective(display):
     glMatrixMode(GL_PROJECTION)
@@ -215,7 +221,7 @@ def window(args):
     pygame.display.set_caption("Model Viewer")
     font = pygame.font.SysFont('arial', 15)
 
-    #glEnable(GL_DEPTH_TEST)#######################################################
+    glEnable(GL_DEPTH_TEST)#######################################################
 
     #glClearColor(0.0, 0.0, 1.0, 1.0)
 
@@ -229,7 +235,7 @@ def window(args):
     path = args.load_object
     model_name = os.path.basename(path)
     vertices, edges, num_verts, num_triangles, num_edges, faces = load_obj(path,args.color)
-    scale = 1.0
+    scale = args.scale
     hide_data = False
     green_val = 255
     
@@ -415,11 +421,13 @@ def main():
     parser.add_argument('-width','--window_width',type=check_width_value,default=800,help="Widow width")
     parser.add_argument('-height','--window_height',type=check_height_value,default=600,help="Window height")
     parser.add_argument('-bg','--bg_color',type=check_color,default='black',help="Background color")
-    parser.add_argument('-lw','--line_width',type=check_lw,default=1.0,help='Line width')
-    parser.add_argument('-cl','--color',action='store_true',help='Add color to model')
+    parser.add_argument('-lw','--line_width',type=check_lw,default=1.0,help="Line width")
+    parser.add_argument('-cl','--color',action='store_true',help="Add color to model")
+    parser.add_argument('-scl','--scale',type=check_positive,default=1.0,help="Object scale")
 
     args = parser.parse_args()
     window(args)
     
 if __name__ =="__main__":
     main()
+
