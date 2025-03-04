@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import pygame
@@ -293,7 +292,7 @@ def window(args):
                     hide_data = not hide_data
                 elif event.key == pygame.K_r:
                     quaternion = Quaternion(1, 0, 0, 0)
-                    scale = 1
+                    scale = args.scale
                     dragging = False
                     last_mouse_pos = (0, 0)
                     translation = [0.0, 0.0]
