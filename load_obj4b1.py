@@ -244,14 +244,6 @@ def window(args):
     
     glLineWidth(args.line_width)
 
-    if args.color:
-        glBegin(GL_TRIANGLES)##################
-        glColor3f(0.0, 0.5, 0.0)
-        for face in faces:
-            for vertex in face:
-                glVertex3fv(vertices[vertex])
-        glEnd()################################
-
     if args.bg_color == 'white':
         glColor3f(0.0, 0.0, 0.0)  # Color negro
         green_val = 100
@@ -263,6 +255,15 @@ def window(args):
         for vertex in edge:
             glVertex3fv(vertices[vertex])
     glEnd()
+
+    if args.color:
+        glBegin(GL_TRIANGLES)##################
+        glColor3f(0.0, 0.5, 0.0)
+        for face in faces:
+            for vertex in face:
+                glVertex3fv(vertices[vertex])
+        glEnd()################################
+        
     glEndList()
 
     # Inicializar la vista en perspectiva por defecto
