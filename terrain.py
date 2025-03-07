@@ -36,7 +36,6 @@ def generate_terrain(size, scale):
 
 def load_obj():
     vertices = []
-    #edges = []
     edges = set()
     filename = 'VideoShip.obj'
     with open(filename, 'r') as file:
@@ -50,28 +49,42 @@ def load_obj():
                 face_indices = [int(part.split('/')[0]) - 1 for part in parts[1:]]
                 for i in range(len(face_indices)):
                     edges.add(tuple(sorted((face_indices[i], face_indices[(i + 1) % len(face_indices)]))))
-                    #edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
     return vertices, edges
 
 # Inicialización de Pygame y OpenGL
 def main():
     pygame.init()
     pygame.display.set_mode((800, 600), DOUBLEBUF | OPENGL)
-    #gluLookAt (-130.0, -10.0, -150.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
 
     # Configuración de OpenGL
-    glEnable(GL_DEPTH_TEST)  # Habilitar prueba de profundidad para la correcta visualización de la malla
+    glEnable(GL_DEPTH_TEST)  # Habilitar prueba de profundidad
 
     # Generar el terreno
     size = 300
     scale = 0.1
     vertices = generate_terrain(size, scale)
+
+    x = -size/2
+    y = -10.0
+    z = -150.0
+
+    # Cargar el modelo .obj
     model_vertices, edges = load_obj()
 
-    # Crear VBOs (Vertex Buffer Objects)
+    # Crear la lista de visualización para el modelo cargado
+    model_list = glGenLists(1)
+    glNewList(model_list, GL_COMPILE)
+    glBegin(GL_LINES)
+    for edge in edges:
+        for vertex in edge:
+            glVertex3fv(model_vertices[vertex])
+    glEnd()
+    glEndList()
+
+    # Crear VBOs (Vertex Buffer Objects) para el terreno
     VBO = glGenBuffers(1)
 
-    # Vértices
+    # Vértices del terreno
     glBindBuffer(GL_ARRAY_BUFFER, VBO)
     glBufferData(GL_ARRAY_BUFFER, vertices.nbytes, vertices, GL_STATIC_DRAW)
 
@@ -82,11 +95,9 @@ def main():
     # Habilitar el modo wireframe (solo dibujar la malla)
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
 
-    # Configuración de la cámara (ajustada para ver todo el terreno)
-    gluPerspective(45, (800 / 600), 0.1, 320.0)  # Perspectiva de 45 grados, relación de aspecto, cerca y lejos
-    #glTranslatef(-50.0, -10.0, -150.0)  # Mover la cámara hacia atrás y en una posición adecuada
-    glTranslatef(-size/2, -10.0, -150.0)
-
+    # Configuración de la cámara
+    gluPerspective(45, (800 / 600), 0.1, 320.0)
+    glTranslatef(x, y, z)
 
     # Bucle principal
     running = True
@@ -121,9 +132,18 @@ def main():
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         # Dibujar el terreno (malla)
+        glColor3f(1.0,1.0,1.0)
         glDrawArrays(GL_TRIANGLES, 0, len(vertices))
 
-        #load_obj()
+        # Dibujar el modelo cargado (sobre el grid)
+        glPushMatrix()
+        #glTranslatef(-20.0, 0.0, 0.0)  # Ajusta la posición del modelo sobre el terreno si es necesario
+        glTranslatef(size/2, 10.0, 120.0)
+        glRotatef(-90,0,1,0)
+        glColor3f(0.0,1.0,0.0)
+        glCallList(model_list)
+        glPopMatrix()
+        
 
         # Actualizar pantalla
         pygame.display.flip()
