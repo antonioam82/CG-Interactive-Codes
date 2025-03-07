@@ -112,13 +112,17 @@ def main():
 
         # TRANSLACIONES
         if key[pygame.K_UP]:
-            glTranslatef(0,0,0.3)
+            #glTranslatef(0,0,0.3)
+            z += 0.3
         if key[pygame.K_DOWN]:
-            glTranslatef(0,0,-0.3)
+            z -= 0.3
+            #glTranslatef(0,0,-0.3)
         if key[pygame.K_RIGHT]:
-            glTranslatef(-0.3,0,0)
+            x -= 0.3
+            #glTranslatef(-0.3,0,0)
         if key[pygame.K_LEFT]:
-            glTranslatef(0.3,0,0)
+            x += 0.3
+            #glTranslatef(0.3,0,0)
 
         # ROTACIONES
         if key[pygame.K_r]:
@@ -132,8 +136,12 @@ def main():
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         # Dibujar el terreno (malla)
+        glPushMatrix()
         glColor3f(1.0,1.0,1.0)
+        #glTranslatef(x,0,z)
+        glTranslatef(x, 0, z)
         glDrawArrays(GL_TRIANGLES, 0, len(vertices))
+        glPopMatrix()
 
         # Dibujar el modelo cargado (sobre el grid)
         glPushMatrix()
