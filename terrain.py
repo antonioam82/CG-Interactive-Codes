@@ -65,8 +65,10 @@ def main():
     vertices = generate_terrain(size, scale)
 
     x = -size/2
-    y = -10.0
+    y = -5.0
     z = -150.0
+
+    rot = 0.0
 
     # Cargar el modelo .obj
     model_vertices, edges = load_obj()
@@ -131,6 +133,8 @@ def main():
             glRotatef(-0.05,1.0,0.0,0.0)
         if key[pygame.K_q]:
             glRotatef(-0.05,0.0,1.0,0.0)
+        if key[pygame.K_w]:
+            glRotate(0.05,0.0,1.0,0.0)
 
         # Limpiar pantalla
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -138,7 +142,6 @@ def main():
         # Dibujar el terreno (malla)
         glPushMatrix()
         glColor3f(1.0,1.0,1.0)
-        #glTranslatef(x,0,z)
         glTranslatef(x, 0, z)
         glDrawArrays(GL_TRIANGLES, 0, len(vertices))
         glPopMatrix()
@@ -146,11 +149,14 @@ def main():
         # Dibujar el modelo cargado (sobre el grid)
         glPushMatrix()
         #glTranslatef(-20.0, 0.0, 0.0)  # Ajusta la posición del modelo sobre el terreno si es necesario
-        glTranslatef(size/2, 10.0, 120.0)
+        glTranslatef(size/2, 8.0, 120.0)
         glRotatef(-90,0,1,0)
+        glRotatef(rot,0,0,1)
         glColor3f(0.0,1.0,0.0)
         glCallList(model_list)
         glPopMatrix()
+
+        #rot += 0.8
         
 
         # Actualizar pantalla
