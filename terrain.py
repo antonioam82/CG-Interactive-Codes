@@ -68,6 +68,11 @@ def main():
     y = -5.0
     z = -150.0
 
+    x_ship = 0.0
+    y_ship = 0.0
+    z_ship = 0.0
+
+
     rot = 0.0
 
     # Cargar el modelo .obj
@@ -114,17 +119,19 @@ def main():
 
         # TRANSLACIONES
         if key[pygame.K_UP]:
-            #glTranslatef(0,0,0.3)
+            glTranslatef(0,0,0.3)
             z += 0.3
         if key[pygame.K_DOWN]:
             z -= 0.3
             #glTranslatef(0,0,-0.3)
         if key[pygame.K_RIGHT]:
             x -= 0.3
-            #glTranslatef(-0.3,0,0)
+            z_ship -= 0.3
+            glTranslatef(-0.3,0,0)
         if key[pygame.K_LEFT]:
             x += 0.3
-            #glTranslatef(0.3,0,0)
+            z_ship += 0.3
+            glTranslatef(0.3,0,0)
 
         # ROTACIONES
         if key[pygame.K_r]:
@@ -132,9 +139,9 @@ def main():
         if key[pygame.K_t]:
             glRotatef(-0.05,1.0,0.0,0.0)
         if key[pygame.K_q]:
-            glRotatef(-0.05,0.0,1.0,0.0)
+            glRotatef(-0.5,0.0,1.0,0.0)
         if key[pygame.K_w]:
-            glRotate(0.05,0.0,1.0,0.0)
+            glRotate(0.5,0.0,1.0,0.0)
 
         # Limpiar pantalla
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -142,7 +149,7 @@ def main():
         # Dibujar el terreno (malla)
         glPushMatrix()
         glColor3f(1.0,1.0,1.0)
-        glTranslatef(x, 0, z)
+        #glTranslatef(x, 0, z)
         glDrawArrays(GL_TRIANGLES, 0, len(vertices))
         glPopMatrix()
 
@@ -153,10 +160,11 @@ def main():
         glRotatef(-90,0,1,0)
         glRotatef(rot,0,0,1)
         glColor3f(0.0,1.0,0.0)
+        glTranslatef(x_ship, y_ship, z_ship)
         glCallList(model_list)
         glPopMatrix()
 
-        #rot += 0.8
+        rot += 0.8
         
 
         # Actualizar pantalla
