@@ -233,7 +233,7 @@ def window(args):
     #path = r'C:\Users\Usuario\Documents\fondo\temple_maze.obj'
     path = args.load_object
     model_name = os.path.basename(path)
-    vertices, edges, num_verts, num_triangles, num_edges, faces = load_obj(path,args.color)
+    vertices, edges, num_verts, num_triangles, num_edges, faces = load_obj(path,args.solid)
     scale = args.scale
     hide_data = False
     green_val = 255
@@ -243,6 +243,14 @@ def window(args):
     glNewList(model_list, GL_COMPILE)
     
     glLineWidth(args.line_width)
+
+    if args.solid:
+        glBegin(GL_TRIANGLES)##################
+        glColor3f(0.0, 0.5, 0.0)
+        for face in faces:
+            for vertex in face:
+                glVertex3fv(vertices[vertex])
+        glEnd()################################
 
     if args.bg_color == 'white':
         glColor3f(0.0, 0.0, 0.0)  # Color negro
@@ -255,15 +263,6 @@ def window(args):
         for vertex in edge:
             glVertex3fv(vertices[vertex])
     glEnd()
-
-    if args.color:
-        glBegin(GL_TRIANGLES)##################
-        glColor3f(0.0, 0.5, 0.0)
-        for face in faces:
-            for vertex in face:
-                glVertex3fv(vertices[vertex])
-        glEnd()################################
-        
     glEndList()
 
     # Inicializar la vista en perspectiva por defecto
@@ -299,6 +298,7 @@ def window(args):
                     translation = [0.0, 0.0]
                     is_ortho = False
                     setup_view_perspective(display) # Restablece vista en perspectiva
+                    args.solid = False
                     
                 elif event.key == pygame.K_p:  # Cambiar entre ortogonal y perspectiva
                     is_ortho = not is_ortho
@@ -422,7 +422,7 @@ def main():
     parser.add_argument('-height','--window_height',type=check_height_value,default=600,help="Window height")
     parser.add_argument('-bg','--bg_color',type=check_color,default='black',help="Background color")
     parser.add_argument('-lw','--line_width',type=check_lw,default=1.0,help="Line width")
-    parser.add_argument('-cl','--color',action='store_true',help="Add color to model")
+    parser.add_argument('-sl','--solid',action='store_true',help="Add solid color to model")
     parser.add_argument('-scl','--scale',type=check_positive,default=1.0,help="Object scale")
 
     args = parser.parse_args()
