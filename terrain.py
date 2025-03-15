@@ -7,7 +7,7 @@ import numpy as np
 import math
 import os
 
-os.chdir(r'C:\Users\anton\OneDrive\Documentos\files_used')
+os.chdir(r'C:\Users\Usuario\Documents\fondo')
 
 # Función para generar el mapa de alturas (montañas)
 def generate_height_map(size, scale):
@@ -23,16 +23,21 @@ def generate_terrain(size, scale):
     height_map = generate_height_map(size, scale)
     vertices = []
 
-    for x in range(size - 1):
-        for y in range(size - 1):
+    center = size // 2  # Centro del terreno
+
+    for x_offset in range(-center, center - 1):
+        for y_offset in range(-center, center - 1):
+            x = center + x_offset
+            y = center + y_offset
             # Definir los 6 vértices para cada cuadrado de la malla
             for i, j in [(0, 0), (1, 0), (0, 1), (1, 0), (1, 1), (0, 1)]:
                 vx = x + i
                 vy = y + j
                 vz = height_map[vx, vy]
-                vertices.append([vx, vz, vy])
+                vertices.append([vx - center, vz, vy - center])  # Centrar la malla en (0, 0)
 
     return np.array(vertices, dtype=np.float32)
+
 
 def load_obj():
     vertices = []
@@ -60,33 +65,39 @@ def main():
     glEnable(GL_DEPTH_TEST)  # Habilitar prueba de profundidad
 
     # Generar el terreno
-    size = 300
+    size = 100
     scale = 0.1
     vertices = generate_terrain(size, scale)
 
-    x = -size/2
-    y = -5.0
-    z = -150.0
+    x = 0.0
+    y = 0.0
+    z = -10.0
 
     x_ship = 0.0
     y_ship = 0.0
     z_ship = 0.0
 
+    #scl = 1.0
 
-    rot = 0.0
+    '''orientation = -90
+    x_o = 0.0
+    y_o = 1.0
+    z_o = 0.0'''
+    
+    #rot = 0.0
 
     # Cargar el modelo .obj
-    model_vertices, edges = load_obj()
+    #model_vertices, edges = load_obj()
 
     # Crear la lista de visualización para el modelo cargado
-    model_list = glGenLists(1)
+    '''model_list = glGenLists(1)
     glNewList(model_list, GL_COMPILE)
     glBegin(GL_LINES)
     for edge in edges:
         for vertex in edge:
             glVertex3fv(model_vertices[vertex])
     glEnd()
-    glEndList()
+    glEndList()'''
 
     # Crear VBOs (Vertex Buffer Objects) para el terreno
     VBO = glGenBuffers(1)
@@ -103,7 +114,7 @@ def main():
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
 
     # Configuración de la cámara
-    gluPerspective(45, (800 / 600), 0.1, 320.0)
+    gluPerspective(45, (800 / 600), 0.1, 90.0)
     glTranslatef(x, y, z)
 
     # Bucle principal
@@ -114,24 +125,37 @@ def main():
         for event in pygame.event.get():
             if event.type == QUIT:
                 running = False
+            '''elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    orientation = -90
+                    x_o = 0
+                    y_o = 1
+                    z_o = 0
+                elif event.key == pygame.K_RIGHT:
+                    orientation = 90
+                    x_o = 0
+                    y_o = 1
+                    z_o = 0'''
 
         key = pygame.key.get_pressed()
 
         # TRANSLACIONES
         if key[pygame.K_UP]:
-            glTranslatef(0,0,0.3)
+            #x_ship -= 0.3
             z += 0.3
         if key[pygame.K_DOWN]:
+            #x_ship += 0.3
             z -= 0.3
-            #glTranslatef(0,0,-0.3)
         if key[pygame.K_RIGHT]:
+            #z_ship += 0.3
             x -= 0.3
-            z_ship -= 0.3
-            glTranslatef(-0.3,0,0)
         if key[pygame.K_LEFT]:
+            #z_ship += 0.008
             x += 0.3
-            z_ship += 0.3
-            glTranslatef(0.3,0,0)
+
+        # ESCALADO
+        if key[pygame.K_s]:
+            scl += 0.02
 
         # ROTACIONES
         if key[pygame.K_r]:
@@ -141,7 +165,10 @@ def main():
         if key[pygame.K_q]:
             glRotatef(-0.5,0.0,1.0,0.0)
         if key[pygame.K_w]:
-            glRotate(0.5,0.0,1.0,0.0)
+            glRotatef(0.5,0.0,1.0,0.0)
+
+        if key[pygame.K_i]:
+            glTranslatef(0,0.3,0)
 
         # Limpiar pantalla
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -149,22 +176,21 @@ def main():
         # Dibujar el terreno (malla)
         glPushMatrix()
         glColor3f(1.0,1.0,1.0)
-        #glTranslatef(x, 0, z)
+        glTranslatef(x, -2.0, z)
         glDrawArrays(GL_TRIANGLES, 0, len(vertices))
         glPopMatrix()
 
-        # Dibujar el modelo cargado (sobre el grid)
+        '''# Dibujar el modelo cargado (sobre el grid)
         glPushMatrix()
-        #glTranslatef(-20.0, 0.0, 0.0)  # Ajusta la posición del modelo sobre el terreno si es necesario
-        glTranslatef(size/2, 8.0, 120.0)
-        glRotatef(-90,0,1,0)
-        glRotatef(rot,0,0,1)
+        #glTranslatef(size/2, 8.0, 120.0)
+        #glRotatef(orientation,0,1,0)
+        #glRotatef(rot,0,0,1)
         glColor3f(0.0,1.0,0.0)
         glTranslatef(x_ship, y_ship, z_ship)
         glCallList(model_list)
-        glPopMatrix()
+        glPopMatrix()'''
 
-        rot += 0.8
+        #rot += 0.8
         
 
         # Actualizar pantalla
