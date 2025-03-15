@@ -65,13 +65,13 @@ def main():
     glEnable(GL_DEPTH_TEST)  # Habilitar prueba de profundidad
 
     # Generar el terreno
-    size = 100
+    size = 300
     scale = 0.1
     vertices = generate_terrain(size, scale)
 
     x = 0.0
-    y = 0.0
-    z = -10.0
+    y = -2.0
+    z = -20.0
 
     x_ship = 0.0
     y_ship = 0.0
