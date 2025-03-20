@@ -74,7 +74,7 @@ def main():
     z = -20.0
 
     x_ship = 0.0
-    y_ship = 0.0
+    y_ship = 3.6
     z_ship = 0.0
 
     #scl = 1.0
@@ -87,17 +87,17 @@ def main():
     #rot = 0.0
 
     # Cargar el modelo .obj
-    #model_vertices, edges = load_obj()
+    model_vertices, edges = load_obj()
 
     # Crear la lista de visualización para el modelo cargado
-    '''model_list = glGenLists(1)
+    model_list = glGenLists(1)
     glNewList(model_list, GL_COMPILE)
     glBegin(GL_LINES)
     for edge in edges:
         for vertex in edge:
             glVertex3fv(model_vertices[vertex])
     glEnd()
-    glEndList()'''
+    glEndList()
 
     # Crear VBOs (Vertex Buffer Objects) para el terreno
     VBO = glGenBuffers(1)
@@ -180,15 +180,16 @@ def main():
         glDrawArrays(GL_TRIANGLES, 0, len(vertices))
         glPopMatrix()
 
-        '''# Dibujar el modelo cargado (sobre el grid)
+        # Dibujar el modelo cargado (sobre el grid)
         glPushMatrix()
         #glTranslatef(size/2, 8.0, 120.0)
         #glRotatef(orientation,0,1,0)
         #glRotatef(rot,0,0,1)
+        glRotatef(-90,0,1,0)
         glColor3f(0.0,1.0,0.0)
         glTranslatef(x_ship, y_ship, z_ship)
         glCallList(model_list)
-        glPopMatrix()'''
+        glPopMatrix()
 
         #rot += 0.8
         
