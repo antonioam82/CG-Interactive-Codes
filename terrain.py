@@ -184,10 +184,11 @@ def main():
         glPushMatrix()
         #glTranslatef(size/2, 8.0, 120.0)
         #glRotatef(orientation,0,1,0)
-        #glRotatef(rot,0,0,1)
+        
         glRotatef(-90,0,1,0)
         glColor3f(0.0,1.0,0.0)
         glTranslatef(x_ship, y_ship, z_ship)
+        #glRotatef(rot,0,0,1)
         glCallList(model_list)
         glPopMatrix()
 
