@@ -79,8 +79,8 @@ def main():
 
     #scl = 1.0
 
-    '''orientation = -90
-    x_o = 0.0
+    orientation = -90
+    '''x_o = 0.0
     y_o = 1.0
     z_o = 0.0'''
     
@@ -125,17 +125,15 @@ def main():
         for event in pygame.event.get():
             if event.type == QUIT:
                 running = False
-            '''elif event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     orientation = -90
-                    x_o = 0
-                    y_o = 1
-                    z_o = 0
                 elif event.key == pygame.K_RIGHT:
                     orientation = 90
-                    x_o = 0
-                    y_o = 1
-                    z_o = 0'''
+                elif event.key == pygame.K_UP:
+                    orientation = 180
+                elif event.key == pygame.K_DOWN:
+                    orientation = 0
 
         key = pygame.key.get_pressed()
 
@@ -185,7 +183,7 @@ def main():
         #glTranslatef(size/2, 8.0, 120.0)
         #glRotatef(orientation,0,1,0)
         
-        glRotatef(-90,0,1,0)
+        glRotatef(orientation,0,1,0)
         glColor3f(0.0,1.0,0.0)
         glTranslatef(x_ship, y_ship, z_ship)
         #glRotatef(rot,0,0,1)
