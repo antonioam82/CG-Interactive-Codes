@@ -160,6 +160,14 @@ def main():
         if key[pygame.K_LEFT]:
             #z_ship += 0.008
             x += 0.3
+        if key[pygame.K_y]:
+            y_ship += 0.03
+        if key[pygame.K_u]:
+            y_ship -= 0.03
+        if key[pygame.K_h]:
+            x_ship -= 0.03
+        if key[pygame.K_j]:
+            x_ship += 0.03
 
         # ESCALADO
         if key[pygame.K_s]:
@@ -205,7 +213,6 @@ def main():
         glPopMatrix()
 
         #rot += 0.8
-        
 
         # Actualizar pantalla
         pygame.display.flip()
@@ -215,5 +222,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 
