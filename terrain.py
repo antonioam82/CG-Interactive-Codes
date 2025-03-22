@@ -42,6 +42,7 @@ def generate_terrain(size, scale):
 def load_obj():
     vertices = []
     edges = set()
+    faces = []
     filename = 'VideoShip.obj'
     with open(filename, 'r') as file:
         for line in file:
@@ -52,9 +53,10 @@ def load_obj():
             elif line.startswith('f '):  # Cara
                 parts = line.strip().split()
                 face_indices = [int(part.split('/')[0]) - 1 for part in parts[1:]]
+                faces.append(face_indices)
                 for i in range(len(face_indices)):
                     edges.add(tuple(sorted((face_indices[i], face_indices[(i + 1) % len(face_indices)]))))
-    return vertices, edges
+    return vertices, edges, faces
 
 # Inicialización de Pygame y OpenGL
 def main():
@@ -87,16 +89,24 @@ def main():
     #rot = 0.0
 
     # Cargar el modelo .obj
-    model_vertices, edges = load_obj()
+    model_vertices, edges, faces = load_obj()
 
     # Crear la lista de visualización para el modelo cargado
     model_list = glGenLists(1)
     glNewList(model_list, GL_COMPILE)
+    glLineWidth(2.0)
     glBegin(GL_LINES)
     for edge in edges:
         for vertex in edge:
             glVertex3fv(model_vertices[vertex])
     glEnd()
+    glBegin(GL_TRIANGLES)
+    glColor3f(0.5,0.5,0.5)
+    for face in faces:
+        for vertex in face:
+            glVertex3fv(model_vertices[vertex])
+    glEnd()
+        
     glEndList()
 
     # Crear VBOs (Vertex Buffer Objects) para el terreno
@@ -111,7 +121,7 @@ def main():
     glEnableClientState(GL_VERTEX_ARRAY)
 
     # Habilitar el modo wireframe (solo dibujar la malla)
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
+    #glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
 
     # Configuración de la cámara
     gluPerspective(45, (800 / 600), 0.1, 90.0)
@@ -171,12 +181,6 @@ def main():
         # Limpiar pantalla
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        # Dibujar el terreno (malla)
-        glPushMatrix()
-        glColor3f(1.0,1.0,1.0)
-        glTranslatef(x, -2.0, z)
-        glDrawArrays(GL_TRIANGLES, 0, len(vertices))
-        glPopMatrix()
 
         # Dibujar el modelo cargado (sobre el grid)
         glPushMatrix()
@@ -185,9 +189,19 @@ def main():
         
         glRotatef(orientation,0,1,0)
         glColor3f(0.0,1.0,0.0)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
         glTranslatef(x_ship, y_ship, z_ship)
         #glRotatef(rot,0,0,1)
         glCallList(model_list)
+        glPopMatrix()
+
+        # Dibujar el terreno (malla)
+        glPushMatrix()
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
+        glColor3f(1.0,1.0,1.0)
+        glTranslatef(x, -2.0, z)
+        glLineWidth(1.0)
+        glDrawArrays(GL_TRIANGLES, 0, len(vertices))
         glPopMatrix()
 
         #rot += 0.8
@@ -201,3 +215,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
