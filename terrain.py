@@ -135,7 +135,7 @@ def main():
         for event in pygame.event.get():
             if event.type == QUIT:
                 running = False
-            elif event.type == pygame.KEYDOWN:
+            '''elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     orientation = -90
                 elif event.key == pygame.K_RIGHT:
@@ -143,30 +143,50 @@ def main():
                 elif event.key == pygame.K_UP:
                     orientation = 180
                 elif event.key == pygame.K_DOWN:
-                    orientation = 0
+                    orientation = 0'''
 
         key = pygame.key.get_pressed()
 
         # TRANSLACIONES
-        if key[pygame.K_UP]:
+        if key[pygame.K_UP] and key[pygame.K_LEFT]:
+            z += 0.3
+            x += 0.3
+            orientation = -135
+        elif key[pygame.K_UP] and key[pygame.K_RIGHT]:
+            z += 0.3
+            x -= 0.3
+            orientation = 135
+        elif key[pygame.K_DOWN] and key[pygame.K_RIGHT]:
+            z -= 0.3
+            x -= 0.3
+            orientation = 45
+        elif key[pygame.K_DOWN] and key[pygame.K_LEFT]:
+            z -= 0.3
+            x += 0.3
+            orientation = -45
+        elif key[pygame.K_UP]:
             #x_ship -= 0.3
             z += 0.3
-        if key[pygame.K_DOWN]:
+            orientation = 180
+        elif key[pygame.K_DOWN]:
             #x_ship += 0.3
             z -= 0.3
-        if key[pygame.K_RIGHT]:
+            orientation = 0
+        elif key[pygame.K_RIGHT]:
             #z_ship += 0.3
             x -= 0.3
-        if key[pygame.K_LEFT]:
+            orientation = 90
+        elif key[pygame.K_LEFT]:
             #z_ship += 0.008
             x += 0.3
-        if key[pygame.K_y]:
+            orientation = -90
+        elif key[pygame.K_y]:
             y_ship += 0.03
-        if key[pygame.K_u]:
+        elif key[pygame.K_u]:
             y_ship -= 0.03
-        if key[pygame.K_h]:
+        elif key[pygame.K_h]:
             x_ship -= 0.03
-        if key[pygame.K_j]:
+        elif key[pygame.K_j]:
             x_ship += 0.03
 
         # ESCALADO
@@ -175,13 +195,13 @@ def main():
 
         # ROTACIONES
         if key[pygame.K_r]:
-            glRotatef(0.05,1.0,0.0,0.0)
+            glRotatef(0.3,1.0,0.0,0.0)
         if key[pygame.K_t]:
-            glRotatef(-0.05,1.0,0.0,0.0)
+            glRotatef(-0.3,1.0,0.0,0.0)
         if key[pygame.K_q]:
-            glRotatef(-0.5,0.0,1.0,0.0)
+            glRotatef(-0.3,0.0,1.0,0.0)
         if key[pygame.K_w]:
-            glRotatef(0.5,0.0,1.0,0.0)
+            glRotatef(0.3,0.0,1.0,0.0)
 
         if key[pygame.K_i]:
             glTranslatef(0,0.3,0)
