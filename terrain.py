@@ -5,7 +5,9 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 import numpy as np
 import math
-#import os
+import os
+
+os.chdir(r'C:\Users\Usuario\Documents\fondo')
 
 # Función para generar el mapa de alturas (montañas)
 def generate_height_map(size, scale):
@@ -69,7 +71,7 @@ def main():
     scale = 0.1
     
     scl = 1.0
-    scl_ship = 0.4
+    scl_ship = 0.5
     
     vertices = generate_terrain(size, scale)
     glScalef(scl,scl,scl)
