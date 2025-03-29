@@ -69,7 +69,12 @@ def main():
     # Generar el terreno
     size = 300
     scale = 0.1
+    
+    scl = 1.0
+    scl_ship = 0.4
+    
     vertices = generate_terrain(size, scale)
+    glScalef(scl,scl,scl)
 
     x = 0.0
     y = -2.0
@@ -191,7 +196,11 @@ def main():
 
         # ESCALADO
         if key[pygame.K_s]:
-            scl += 0.02
+            scl += 0.002
+            scl_ship += 0.002
+        elif key[pygame.K_d]:
+            scl -= 0.002
+            scl_ship -= 0.002
 
         # ROTACIONES
         if key[pygame.K_r]:
@@ -209,6 +218,9 @@ def main():
         # Limpiar pantalla
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
+        glPushMatrix()
+        glScalef(scl,scl,scl)
+        
 
         # Dibujar el modelo cargado (sobre el grid)
         glPushMatrix()
@@ -219,6 +231,7 @@ def main():
         glColor3f(0.0,1.0,0.0)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
         glTranslatef(x_ship, y_ship, z_ship)
+        glScalef(scl_ship,scl_ship,scl_ship)############################
         #glRotatef(rot,0,0,1)
         glCallList(model_list)
         glPopMatrix()
@@ -230,6 +243,7 @@ def main():
         glTranslatef(x, -2.0, z)
         glLineWidth(1.0)
         glDrawArrays(GL_TRIANGLES, 0, len(vertices))
+        glPopMatrix()
         glPopMatrix()
 
         #rot += 0.8
