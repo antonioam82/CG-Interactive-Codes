@@ -5,6 +5,9 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 import numpy as np
 import math
+import os
+
+os.chdir(r'C:\Users\Usuario\Documents\fondo')
 
 # Función para generar el mapa de alturas (montañas)
 def generate_height_map(size, scale):
@@ -239,10 +242,17 @@ def main():
         # Dibujar el terreno (malla)
         glPushMatrix()
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
-        glColor3f(1.0,1.0,1.0)
+        glColor3f(0.4,0.4,1.0)
         glTranslatef(x, -2.0, z)
         glLineWidth(1.0)
         glDrawArrays(GL_TRIANGLES, 0, len(vertices))
+        ######################################################################
+        '''glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)#GL_LINE
+        glColor3f(1.0,1.0,1.0)
+        #glTranslatef(x, -2.0, z)
+        glLineWidth(2.0)
+        glDrawArrays(GL_TRIANGLES, 0, len(vertices))'''
+        ####################################################################
         glPopMatrix()
         glPopMatrix()
 
