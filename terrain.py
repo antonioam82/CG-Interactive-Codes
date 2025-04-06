@@ -85,6 +85,7 @@ def main():
     z_ship = 0.0
 
     #scl = 1.0
+    fill = False
 
     orientation = -90
     '''x_o = 0.0
@@ -143,6 +144,11 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
+                elif event.key == pygame.K_f:
+                    if fill:
+                        fill = False
+                    else:
+                        fill = True
             '''elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     orientation = -90
@@ -229,7 +235,6 @@ def main():
         glPushMatrix()
         #glTranslatef(size/2, 8.0, 120.0)
         #glRotatef(orientation,0,1,0)
-        
         glRotatef(orientation,0,1,0)
         glColor3f(0.0,1.0,0.0)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
@@ -241,17 +246,21 @@ def main():
 
         # Dibujar el terreno (malla)
         glPushMatrix()
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
+        if fill:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
+        else:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
         glColor3f(0.4,0.4,1.0)
         glTranslatef(x, -2.0, z)
         glLineWidth(1.0)
         glDrawArrays(GL_TRIANGLES, 0, len(vertices))
         ######################################################################
-        '''glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)#GL_LINE
-        glColor3f(1.0,1.0,1.0)
-        #glTranslatef(x, -2.0, z)
-        glLineWidth(2.0)
-        glDrawArrays(GL_TRIANGLES, 0, len(vertices))'''
+        if fill:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)#GL_LINE
+            glColor3f(1.0,1.0,1.0)
+            #glTranslatef(x, -2.0, z)
+            glLineWidth(2.0)
+            glDrawArrays(GL_TRIANGLES, 0, len(vertices))
         ####################################################################
         glPopMatrix()
         glPopMatrix()
