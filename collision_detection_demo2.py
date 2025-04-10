@@ -158,7 +158,7 @@ def calculate_aabb(vertices, position):
             aabb1[2] <= aabb2[3] and aabb1[3] >= aabb2[2] and  # Eje Y
             aabb1[4] <= aabb2[5] and aabb1[5]+0.1 >= aabb2[4])     # Eje Z'''
 
-def check_collision(aabb_moving, aabb_static, direction):
+'''def check_collision(aabb_moving, aabb_static, direction):
     # Verificamos si los rangos de las AABBs se solapan en cada eje
     col = (aabb_moving[0] <= aabb_static[1] and aabb_moving[1] >= aabb_static[0] and  # eje X
            aabb_moving[2] <= aabb_static[3] and aabb_moving[3] >= aabb_static[2] and  # eje Y
@@ -200,11 +200,85 @@ def check_collision(aabb_moving, aabb_static, direction):
     
     # Producto punto entre diff y el vector de movimiento
     dot = diff[0] * mov_vec[0] + diff[1] * mov_vec[1] + diff[2] * mov_vec[2]
+    print(dot)
     
     if dot > 0:
         return "trasera"   # La colisión ocurre por detras
     else:
-        return "frontal"   # La colisión ocurre por delante
+        return "frontal"   # La colisión ocurre por delante'''
+
+def check_collision(aabb_moving, aabb_static, direction):
+    # 1. Comprobar solapamiento AABB
+    col = (aabb_moving[0] <= aabb_static[1] and aabb_moving[1] >= aabb_static[0] and  
+           aabb_moving[2] <= aabb_static[3] and aabb_moving[3] >= aabb_static[2] and  
+           aabb_moving[4] <= aabb_static[5] and aabb_moving[5] >= aabb_static[4])
+
+    if not col:
+        return None
+
+    # 2. Calcular centros
+    center_moving = (
+        (aabb_moving[0] + aabb_moving[1]) / 2,
+        (aabb_moving[2] + aabb_moving[3]) / 2,
+        (aabb_moving[4] + aabb_moving[5]) / 2
+    )
+    center_static = (
+        (aabb_static[0] + aabb_static[1]) / 2,
+        (aabb_static[2] + aabb_static[3]) / 2,
+        (aabb_static[4] + aabb_static[5]) / 2
+    )
+
+    # 3. Definir vector de movimiento
+    if direction == 'front':
+        mov_vec = (0, 0, 1)
+    elif direction == 'back':
+        mov_vec = (0, 0, -1)
+    elif direction == 'right':
+        mov_vec = (1, 0, 0)
+    elif direction == 'left':
+        mov_vec = (-1, 0, 0)
+    else:
+        mov_vec = (0, 0, 0)
+
+    # 4. Calcular diferencia
+    diff = (
+        center_static[0] - center_moving[0],
+        center_static[1] - center_moving[1],
+        center_static[2] - center_moving[2]
+    )
+
+    # 5. Decidir tipo de colisión usando ejes principales
+    dot = diff[0] * mov_vec[0] + diff[1] * mov_vec[1] + diff[2] * mov_vec[2]
+
+    # Si se mueve en eje Z (frente/atrás)
+    if direction in ['front', 'back']:
+        if abs(diff[0]) > abs(diff[2]):
+            if diff[0] > 0:
+                return "lateral derecha"
+            else:
+                return "lateral izquierda"
+        else:
+            if dot > 0:
+                return "trasera"
+            else:
+                return "frontal"
+
+    # Si se mueve en eje X (izquierda/derecha)
+    if direction in ['left', 'right']:
+        if abs(diff[2]) > abs(diff[0]):
+            if diff[2] > 0:
+                return "frontal"
+            else:
+                return "trasera"
+        else:
+            if dot > 0:
+                return "lateral derecha"
+            else:
+                return "lateral izquierda"
+
+    # Caso raro (sin movimiento)
+    return "desconocido"
+
 
 
 # Variables globales para controlar la rotación
@@ -267,12 +341,14 @@ def main():
             collision = False'''
 
         tipo_colision = check_collision(aabb_cube, aabb_other_cube, direction)
+        
         if tipo_colision:
-            print(f"¡Colisión detectada! Tipo: {tipo_colision}")
+            print(tipo_colision)
+            '''print(f"¡Colisión detectada! Tipo: {tipo_colision}")
             #collision = True
         else:
             print("No hay colisión.")
-            #collision = False
+            #collision = False'''
             
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -329,37 +405,37 @@ def main():
         key = pygame.key.get_pressed()
 
         if key[pygame.K_UP]:
-            if direction == 'front' and z + speed <= (grid_size - 1) and tipo_colision != 'frontal':
+            if direction == 'front' and z + speed <= (grid_size - 1) and tipo_colision != 'frontal' and tipo_colision != 'lateral derecha':
                 z += speed
                 z_c -= speed_c
                 z_c += speed
-            elif direction == 'back' and z - speed >= (-grid_size + 1) and tipo_colision != 'frontal':
+            elif direction == 'back' and z - speed >= (-grid_size + 1) and tipo_colision != 'frontal' and tipo_colision != 'lateral derecha' :
                 z -= speed
                 z_c += speed_c
                 z_c -= speed
-            elif direction == 'right' and x - speed >= (-grid_size + 1) and tipo_colision != 'frontal':
+            elif direction == 'right' and x - speed >= (-grid_size + 1) and tipo_colision != 'frontal' and tipo_colision != 'lateral derecha':
                 x -= speed
                 x_c += speed_c
                 x_c -= speed##########################'''
-            elif direction == 'left' and x + speed <= (grid_size - 1) and tipo_colision != 'frontal':
+            elif direction == 'left' and x + speed <= (grid_size - 1) and tipo_colision != 'frontal' and tipo_colision != 'lateral derecha' :
                 x += speed
                 x_c -= speed_c
                 x_c += speed
             
         if key[pygame.K_DOWN]:
-            if direction == 'front' and z + speed <= (grid_size - 1) and tipo_colision != 'trasera': 
+            if direction == 'front' and z + speed <= (grid_size - 1) and tipo_colision != 'trasera' and tipo_colision != 'lateral izquierda': 
                 z -= speed
                 z_c += speed_c
                 z_c -= speed
-            elif direction == 'back' and z + speed <= (grid_size - 1) and tipo_colision != 'trasera':
+            elif direction == 'back' and z + speed <= (grid_size - 1) and tipo_colision != 'trasera' and tipo_colision != 'lateral izquierda':
                 z += speed
                 z_c -= speed_c
                 z_c += speed
-            elif direction == 'right' and x - speed >= (-grid_size + 1) and tipo_colision != 'tarsera':
+            elif direction == 'right' and x - speed >= (-grid_size + 1) and tipo_colision != 'tarsera' and tipo_colision != 'lateral izquierda': 
                 x += speed
                 x_c -= speed_c
                 x_c += speed
-            elif direction == 'left' and x + speed <= (grid_size - 1) and tipo_colision != 'trasera':
+            elif direction == 'left' and x + speed <= (grid_size - 1) and tipo_colision != 'trasera' and tipo_colision != 'lateral izquierda':
                 x -= speed
                 x_c += speed_c
                 x_c -= speed
