@@ -5,6 +5,8 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
+#SPCL_demo.py en github
+
 grid_size = 140
 grid_spacing = 1
 
@@ -45,6 +47,13 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+
+        key_button = pygame.key.get_pressed()
+
+        if key_button[pygame.K_r]:
+            glRotatef(0.4,0,1,0)
+        elif key_button[pygame.K_t]:
+            glRotatef(-0.4,0,1,0)
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
