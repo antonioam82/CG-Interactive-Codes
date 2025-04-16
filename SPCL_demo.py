@@ -6,6 +6,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 
 #SPCL_demo.py en github
+#TO DO: Color 4 grid surface
 
 grid_size = 140
 grid_spacing = 1
