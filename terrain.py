@@ -67,7 +67,7 @@ def main():
     glEnable(GL_DEPTH_TEST)  # Habilitar prueba de profundidad
 
     # Generar el terreno
-    size = 300
+    size = 200
     scale = 0.1
     
     scl = 1.0
@@ -88,6 +88,7 @@ def main():
     fill = False
 
     orientation = -90
+    v_fact = 0.0
     '''x_o = 0.0
     y_o = 1.0
     z_o = 0.0'''
@@ -194,11 +195,16 @@ def main():
             #z_ship += 0.008
             x += 0.3
             orientation = -90
-        elif keys[pygame.K_y]:
+            
+        if keys[pygame.K_y]:
             y_ship += 0.03
+            v_fact = -8.7
         elif keys[pygame.K_u]:
             y_ship -= 0.03
-        elif keys[pygame.K_h]:
+            v_fact = 8.7
+        else:
+            v_fact = 0.0
+        if keys[pygame.K_h]:
             x_ship -= 0.03
         elif keys[pygame.K_j]:
             x_ship += 0.03
@@ -233,13 +239,12 @@ def main():
 
         # Dibujar el modelo cargado (sobre el grid)
         glPushMatrix()
-        #glTranslatef(size/2, 8.0, 120.0)
-        #glRotatef(orientation,0,1,0)
         glRotatef(orientation,0,1,0)
+        glRotatef(v_fact,1,0,0)#############################################################
         glColor3f(0.0,1.0,0.0)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
         glTranslatef(x_ship, y_ship, z_ship)
-        glScalef(scl_ship,scl_ship,scl_ship)############################
+        glScalef(scl_ship,scl_ship,scl_ship)
         #glRotatef(rot,0,0,1)
         glCallList(model_list)
         glPopMatrix()
