@@ -67,7 +67,7 @@ def main():
     glEnable(GL_DEPTH_TEST)  # Habilitar prueba de profundidad
 
     # Generar el terreno
-    size = 300
+    size = 600
     scale = 0.1
     
     scl = 1.0
@@ -80,14 +80,12 @@ def main():
     y = -2.0
     z = -20.0
 
-    desp_x = 0.3
-    desp_z = 0.0
-
     x_ship = 0.0
     y_ship = 3.6
     z_ship = 0.0
 
     #scl = 1.0
+    fill = False
 
     orientation = -90
     '''x_o = 0.0
@@ -146,103 +144,86 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-                elif event.key == pygame.K_i:
-                    orientation = -135
-                    desp_z = 0.3
-                    desp_x = 0.3
-                elif event.key == pygame.K_o:
-                    orientation = 135
-                    desp_z = 0.3
-                    desp_x = -0.3
-                elif event.key == pygame.K_l:
-                    orientation = 45
-                    desp_z = -0.3
-                    desp_x = -0.3
-                elif event.key == pygame.K_k:
-                    orientation = -45
-                    desp_z = -0.3
-                    desp_x = 0.3
-                elif event.key == pygame.K_LEFT:
+                elif event.key == pygame.K_f:
+                    if fill:
+                        fill = False
+                    else:
+                        fill = True
+            '''elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
                     orientation = -90
-                    desp_x = 0.3
-                    desp_z = 0.0
                 elif event.key == pygame.K_RIGHT:
                     orientation = 90
-                    desp_x = -0.3
-                    desp_z = 0.0
                 elif event.key == pygame.K_UP:
                     orientation = 180
-                    desp_z = 0.3
-                    desp_x = 0.0
                 elif event.key == pygame.K_DOWN:
-                    orientation = 0
-                    desp_z = -0.3
-                    desp_x = 0.0
+                    orientation = 0'''
 
-        key = pygame.key.get_pressed()
+        keys = pygame.key.get_pressed()
 
         # TRANSLACIONES
-        '''if key[pygame.K_UP] and key[pygame.K_LEFT]:
+        if keys[pygame.K_UP] and keys[pygame.K_LEFT]:
             z += 0.3
             x += 0.3
             orientation = -135
-        elif key[pygame.K_UP] and key[pygame.K_RIGHT]:
+        elif keys[pygame.K_UP] and keys[pygame.K_RIGHT]:
             z += 0.3
             x -= 0.3
             orientation = 135
-        elif key[pygame.K_DOWN] and key[pygame.K_RIGHT]:
+        elif keys[pygame.K_DOWN] and keys[pygame.K_RIGHT]:
             z -= 0.3
             x -= 0.3
             orientation = 45
-        elif key[pygame.K_DOWN] and key[pygame.K_LEFT]:
+        elif keys[pygame.K_DOWN] and keys[pygame.K_LEFT]:
             z -= 0.3
             x += 0.3
             orientation = -45
-        elif key[pygame.K_UP]:
+        elif keys[pygame.K_UP]:
             #x_ship -= 0.3
             z += 0.3
             orientation = 180
-        elif key[pygame.K_DOWN]:
+        elif keys[pygame.K_DOWN]:
             #x_ship += 0.3
             z -= 0.3
             orientation = 0
-        elif key[pygame.K_RIGHT]:
+        elif keys[pygame.K_RIGHT]:
             #z_ship += 0.3
             x -= 0.3
             orientation = 90
-        elif key[pygame.K_LEFT]:
+        elif keys[pygame.K_LEFT]:
             #z_ship += 0.008
             x += 0.3
             orientation = -90
-        if key[pygame.K_y]:
+            
+        if keys[pygame.K_y]:
             y_ship += 0.03
-        elif key[pygame.K_u]:
+        elif keys[pygame.K_u]:
             y_ship -= 0.03
-        elif key[pygame.K_h]:
+        if keys[pygame.K_h]:
             x_ship -= 0.03
-        elif key[pygame.K_j]:
+        elif keys[pygame.K_j]:
             x_ship += 0.03
 
         # ESCALADO
-        if key[pygame.K_s]:
+        if keys[pygame.K_s]:
             scl += 0.002
             scl_ship += 0.002
-        elif key[pygame.K_d]:
+        elif keys[pygame.K_d]:
             scl -= 0.002
-            scl_ship -= 0.002'''
+            scl_ship -= 0.002
 
         # ROTACIONES
-        if key[pygame.K_r]:
+        if keys[pygame.K_r]:
             glRotatef(0.3,1.0,0.0,0.0)
-        if key[pygame.K_t]:
+        if keys[pygame.K_t]:
             glRotatef(-0.3,1.0,0.0,0.0)
-        if key[pygame.K_q]:
+        if keys[pygame.K_q]:
             glRotatef(-0.3,0.0,1.0,0.0)
-        if key[pygame.K_w]:
+        if keys[pygame.K_w]:
             glRotatef(0.3,0.0,1.0,0.0)
 
-        '''if key[pygame.K_i]:
-            glTranslatef(0,0.3,0)'''
+        if keys[pygame.K_i]:
+            glTranslatef(0,0.3,0)
 
         # Limpiar pantalla
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -255,8 +236,8 @@ def main():
         glPushMatrix()
         #glTranslatef(size/2, 8.0, 120.0)
         #glRotatef(orientation,0,1,0)
-        
         glRotatef(orientation,0,1,0)
+        #glRotatef(-2.0,1,0,0)
         glColor3f(0.0,1.0,0.0)
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
         glTranslatef(x_ship, y_ship, z_ship)
@@ -267,17 +248,26 @@ def main():
 
         # Dibujar el terreno (malla)
         glPushMatrix()
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
-        glColor3f(1.0,1.0,1.0)
+        if fill:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
+        else:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
+        glColor3f(0.4,0.4,1.0)
         glTranslatef(x, -2.0, z)
         glLineWidth(1.0)
         glDrawArrays(GL_TRIANGLES, 0, len(vertices))
+        ######################################################################
+        if fill:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)#GL_LINE
+            glColor3f(1.0,1.0,1.0)
+            #glTranslatef(x, -2.0, z)
+            glLineWidth(2.0)
+            glDrawArrays(GL_TRIANGLES, 0, len(vertices))
+        ####################################################################
         glPopMatrix()
         glPopMatrix()
 
         #rot += 0.8
-        x += desp_x
-        z += desp_z
 
         # Actualizar pantalla
         pygame.display.flip()
