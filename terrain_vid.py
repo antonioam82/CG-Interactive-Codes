@@ -61,7 +61,8 @@ def load_obj():
 # Inicialización de Pygame y OpenGL
 def main():
     pygame.init()
-    pygame.display.set_mode((800, 600), DOUBLEBUF | OPENGL)
+    dimensions = (800, 600)
+    pygame.display.set_mode(dimensions, DOUBLEBUF | OPENGL)#(800, 600), DOUBLEBUF | OPENGL)
 
     # Configuración de OpenGL
     glEnable(GL_DEPTH_TEST)  # Habilitar prueba de profundidad
@@ -132,7 +133,7 @@ def main():
     #glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
 
     # Configuración de la cámara
-    gluPerspective(45, (800 / 600), 0.1, 90.0)
+    gluPerspective(45, (dimensions[0] / dimensions[1]), 0.1, 90.0)
     glTranslatef(x, y, z)
 
     # Bucle principal
@@ -248,7 +249,7 @@ def main():
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         glPushMatrix()
-        glScalef(scl,scl,scl)
+        #glScalef(scl,scl,scl)
         
 
         # Dibujar el modelo cargado (sobre el grid)
