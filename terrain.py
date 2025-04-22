@@ -61,7 +61,8 @@ def load_obj():
 # Inicialización de Pygame y OpenGL
 def main():
     pygame.init()
-    pygame.display.set_mode((800, 600), DOUBLEBUF | OPENGL)
+    dimensions = (1600, 880)
+    pygame.display.set_mode(dimensions, DOUBLEBUF | OPENGL)
 
     # Configuración de OpenGL
     glEnable(GL_DEPTH_TEST)  # Habilitar prueba de profundidad
@@ -131,7 +132,7 @@ def main():
     #glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
 
     # Configuración de la cámara
-    gluPerspective(45, (800 / 600), 0.1, 90.0)
+    gluPerspective(45, (dimensions[0] / dimensions[1]), 0.1, 90.0)
     glTranslatef(x, y, z)
 
     # Bucle principal
@@ -181,19 +182,19 @@ def main():
             orientation = -45
         elif keys[pygame.K_UP]:
             #x_ship -= 0.3
-            z += 0.3
+            z += 0.424
             orientation = 180
         elif keys[pygame.K_DOWN]:
             #x_ship += 0.3
-            z -= 0.3
+            z -= 0.424
             orientation = 0
         elif keys[pygame.K_RIGHT]:
             #z_ship += 0.3
-            x -= 0.3
+            x -= 0.424
             orientation = 90
         elif keys[pygame.K_LEFT]:
             #z_ship += 0.008
-            x += 0.3
+            x += 0.424
             orientation = -90
             
         if keys[pygame.K_y]:
