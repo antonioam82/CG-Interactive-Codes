@@ -120,6 +120,21 @@ def main():
     glClearColor(0.3, 0.3, 0.3, 1.0)
 
     model_vertices, edges, faces = load_obj()
+    model_list = glGenLists(1)
+    glNewList(model_list, GL_COMPILE)
+    glBegin(GL_LINES)
+    for edge in edges:
+        for vertex in edge:
+            glVertex3fv(model_vertices[vertex])
+    glEnd()
+
+    glBegin(GL_TRIANGLES)
+    glColor3f(0.0,0.0,1.0)
+    for face in faces:
+        for vertex in face:
+            glVertex3fv(model_vertices[vertex])
+    glEnd()
+    glEndList()
 
     grid_list = draw_grid()
     platt_list = draw_plattform()
@@ -152,6 +167,9 @@ def main():
         pygame.time.wait(10)
 
     glDeleteLists(grid_list,1)
+    glDeleteLists(platt_list,1)
+    glDeleteLists(model_list,1)
+    
     pygame.quit()
 
 if __name__=="__main__":
