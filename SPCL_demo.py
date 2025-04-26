@@ -4,6 +4,9 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+import os
+
+os.chdir(r'C:\Users\Usuario\Documents\fondo')
 
 #SPCL_demo.py en github
 #TO DO: Color 4 grid surface
@@ -67,6 +70,25 @@ def draw_plattform():
     glEndList()
     return platt_list
 
+def load_obj():
+    vertices = []
+    edges = set()
+    faces = []
+    filename = 'VideoShip.obj'
+    with open(filename, 'r') as file:
+        for line in file:
+            if line.startswith('v '):
+                parts = line.strip().split()
+                vertex = [float(parts[1]), float(parts[2]),float(parts[3])]
+                vertices.append(vertex)
+            if line.startswith('f '):
+                parts = line.strip().split()
+                face_indices = [int(part.split('/')[0]) - 1 for part in parts[1:]]
+                faces.append(face_indices)
+                for i in range(len(face_indices)):
+                    edges.add(tuple(sorted((face_indices[i], face_indices[(i + 1) % len(face_indices)]))))
+    return vertices, edges, faces
+
 
 def draw_grid():
     grid_list = glGenLists(1)
@@ -97,8 +119,11 @@ def main():
     glRotatef(15,1,0,0)
     glClearColor(0.3, 0.3, 0.3, 1.0)
 
+    model_vertices, edges, faces = load_obj()
+
     grid_list = draw_grid()
     platt_list = draw_plattform()
+    
 
     running = True
 
