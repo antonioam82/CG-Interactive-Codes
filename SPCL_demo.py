@@ -162,6 +162,14 @@ def main():
 
         glCallList(grid_list)
         glCallList(platt_list)
+        
+        glPushMatrix()
+        glScalef(0.2,0.2,0.2)
+        glColor3f(1.0,0.0,0.0)
+        glTranslatef(1.0,2.0,0.0)
+        glRotatef(-90,0,1,0)
+        glCallList(model_list)
+        glPopMatrix()
 
         pygame.display.flip()
         pygame.time.wait(10)
