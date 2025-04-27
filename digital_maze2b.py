@@ -8,7 +8,7 @@ import random
 
 #JUST A 3D MAZE DEMO
 
-win_width, win_height = (900, 600)# (1600, 870)#(1598,870)#(1600, 900)
+win_width, win_height = (1100, 600)# (1600, 870)#(1598,870)#(1600, 900)
 fps = 165 # 165hz monitor btw the way
 #color = [203,232,200]
 display = pygame.display.set_mode((win_width, win_height))
@@ -74,8 +74,17 @@ def active_run_controler():
         active_run = True
 
 run = True
+counter = 0
+apply_changes = False
 while run == True:
     
+    if apply_changes:
+        counter += 1
+        if counter == 80:
+            print(counter)
+            make_change()
+            counter = 0
+        
     clock.tick(fps)
     pygame.display.update()
     pygame.display.set_caption("Raycasting - FPS: " + str(round(clock.get_fps())))
@@ -108,7 +117,10 @@ while run == True:
             if e.key == pygame.K_z:
                 active_run_controler()
             if e.key == pygame.K_g:
-                make_change()
+                if apply_changes == True:
+                    apply_changes = False
+                else:
+                    apply_changes = True
 
     x, y = (xpos, ypos)
 
