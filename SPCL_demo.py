@@ -15,13 +15,13 @@ grid_size = 140
 grid_spacing = 1
 
 vertices = (
-    (2.0, 0.0, -1.0),
+    (2.5, 0.0, -1.5),
     (2.0, 0.2, -1.0),
     (-2.0, 0.2, -1.0),
-    (-2.0, 0.0, -1.0),
-    (2.0, 0.0, 1.0),
+    (-2.5, 0.0, -1.5),
+    (2.5, 0.0, 1.5),
     (2.0, 0.2, 1.0),
-    (-2.0, 0.0, 1.0),
+    (-2.5, 0.0, 1.5),
     (-2.0, 0.2, 1.0)
 )
  
@@ -150,6 +150,11 @@ def main():
                 if event.key == pygame.K_ESCAPE:
                     running = False
 
+                elif event.key == pygame.K_i: # Top View
+                    glRotatef(75,1,0,0)
+                    glRotatef(-90,0,1,0)
+                    glTranslatef(0.0,-10.0,0.0)
+                           
         key_button = pygame.key.get_pressed()
 
         if key_button[pygame.K_r]:
@@ -160,18 +165,19 @@ def main():
             glRotatef(0.8,1,0,0)
         elif key_button[pygame.K_u]:
             glRotatef(-0.8,1,0,0)
+            
         # Tralaciones
-        elif key_button[pygame.K_c]:
+        if key_button[pygame.K_c]:
             glTranslatef(0.0,0.0,-0.05)
-        elif key_button[pygame.K_v]:
+        if key_button[pygame.K_v]:
             glTranslatef(0.0,0.0,0.05)
-        elif key_button[pygame.K_d]:
+        if key_button[pygame.K_d]:
             glTranslatef(-0.05,0.0,0.0)
-        elif key_button[pygame.K_f]:
+        if key_button[pygame.K_f]:
             glTranslatef(0.05,0.0,0.0)
-        elif key_button[pygame.K_b]:
+        if key_button[pygame.K_b]:
             glTranslatef(0.0,0.05,0.0)
-        elif key_button[pygame.K_n]:
+        if key_button[pygame.K_n]:
             glTranslatef(0.0,-0.05,0.0)
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
