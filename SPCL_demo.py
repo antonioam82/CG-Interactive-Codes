@@ -109,14 +109,22 @@ def draw_grid():
     glEndList()
     return grid_list
 
+def initial_view():
+    glMatrixMode(GL_MODELVIEW)
+    glLoadIdentity()
+    gluPerspective(45, (800 / 600), 0.1, 90.0)
+    glTranslatef(0.0, 0.0, -10)
+    glRotatef(15, 1, 0, 0)
+    
 def main():
     pygame.init()
     display = (800, 600)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
-    gluPerspective(45, (display[0] / display[1]), 0.1, 90.0)
-    glTranslatef(0.0,0.0,-10)
+    #gluPerspective(45, (display[0] / display[1]), 0.1, 90.0)
+    #glTranslatef(0.0,0.0,-10)
+    initial_view() #######################################################
     glEnable(GL_DEPTH_TEST)
-    glRotatef(15,1,0,0)
+    #glRotatef(15,1,0,0)
     glClearColor(0.3, 0.3, 0.3, 1.0)
 
     model_vertices, edges, faces = load_obj()
@@ -151,6 +159,7 @@ def main():
                     running = False
 
                 elif event.key == pygame.K_i: # Top View
+                    initial_view() #################################################
                     glRotatef(75,1,0,0)
                     glRotatef(-90,0,1,0)
                     glTranslatef(0.0,-10.0,0.0)
