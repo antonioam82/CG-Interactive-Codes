@@ -6,7 +6,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 import os
 
-os.chdir(r'C:\Users\Usuario\Documents\fondo')
+#os.chdir(r'C:\Users\Usuario\Documents\fondo')
 
 #SPCL_demo.py en github
 #TO DO: Color 4 grid surface
