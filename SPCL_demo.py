@@ -14,15 +14,26 @@ os.chdir(r'C:\Users\Usuario\Documents\fondo')
 grid_size = 140
 grid_spacing = 1
 
-vertices = (
+'''vertices = (
     (2.5, 0.0, -1.5),
-    (2.0, 0.2, -1.0),
+    (2.0, 0.3, -1.0),
     (-2.0, 0.2, -1.0),
     (-2.5, 0.0, -1.5),
-    (2.5, 0.0, 1.5),
+    (2.5, 0.2, 1.5),
     (2.0, 0.2, 1.0),
     (-2.5, 0.0, 1.5),
     (-2.0, 0.2, 1.0)
+)'''
+
+vertices = (
+    (2.5, 0.0, -1.5),
+    (2.0, 0.3, -1.0),
+    (-2.0, 0.3, -1.0),
+    (-2.5, 0.0, -1.5),
+    (2.5, 0.0, 1.5),
+    (2.0, 0.3, 1.0),
+    (-2.5, 0.0, 1.5),
+    (-2.0, 0.3, 1.0)
 )
  
 edges = (
@@ -166,6 +177,7 @@ def main():
                            
         key_button = pygame.key.get_pressed()
 
+        # Rotaciones
         if key_button[pygame.K_r]:
             glRotatef(0.8,0,1,0)
         elif key_button[pygame.K_t]:
@@ -174,6 +186,10 @@ def main():
             glRotatef(0.8,1,0,0)
         elif key_button[pygame.K_u]:
             glRotatef(-0.8,1,0,0)
+        elif key_button[pygame.K_o]:
+            glRotatef(-0.8,0,0,1)
+        elif key_button[pygame.K_p]:
+            glRotatef(0.8,0,0,1)
             
         # Tralaciones
         if key_button[pygame.K_c]:
@@ -197,7 +213,7 @@ def main():
         glPushMatrix()
         glScalef(0.2,0.2,0.2)
         glColor3f(1.0,0.0,0.0)
-        glTranslatef(1.0,2.0,0.0)
+        glTranslatef(1.0,2.6,0.0)
         glRotatef(-90,0,1,0)
         glCallList(model_list)
         glPopMatrix()
@@ -213,6 +229,5 @@ def main():
 
 if __name__=="__main__":
     main()
-
 
         
