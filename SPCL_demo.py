@@ -6,7 +6,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 import os
 
-#os.chdir(r'C:\Users\Usuario\Documents\fondo')
+os.chdir(r'C:\Users\Usuario\Documents\fondo')
 
 #SPCL_demo.py en github
 #TO DO: Color 4 grid surface
@@ -138,6 +138,8 @@ def main():
     #glRotatef(15,1,0,0)
     glClearColor(0.3, 0.3, 0.3, 1.0)
 
+    elevation = 2.6
+
     model_vertices, edges, faces = load_obj()
     model_list = glGenLists(1)
     glNewList(model_list, GL_COMPILE)
@@ -204,6 +206,13 @@ def main():
             glTranslatef(0.0,0.05,0.0)
         if key_button[pygame.K_n]:
             glTranslatef(0.0,-0.05,0.0)
+            
+        # Spaceship elevation
+        if key_button[pygame.K_j]:
+            elevation += 0.04
+        if key_button[pygame.K_k] and elevation > 2.6:
+            elevation -= 0.04
+        
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
@@ -213,7 +222,7 @@ def main():
         glPushMatrix()
         glScalef(0.2,0.2,0.2)
         glColor3f(1.0,0.0,0.0)
-        glTranslatef(1.0,2.6,0.0)
+        glTranslatef(1.0,elevation,0.0)
         glRotatef(-90,0,1,0)
         glCallList(model_list)
         glPopMatrix()
