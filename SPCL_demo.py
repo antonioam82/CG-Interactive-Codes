@@ -181,7 +181,7 @@ def draw_grid():
     glEnd()
 
     # 2. Dibujar las líneas blancas por encima
-    glLineWidth(2.0)
+    glLineWidth(2.5)
     glBegin(GL_LINES)
     glColor3f(1.0, 1.0, 1.0)  # Blanco
     for x in range(-grid_size, grid_size + 1, grid_spacing):
@@ -299,7 +299,7 @@ def main():
 
         vele += 0.2#################################################
         
-        if vele < 20.00 and top: ###################################
+        if vele < 27.00 and top: ###################################
             glTranslatef(0.0,0.08,0.0)##############################
             print(vele)#############################################
 
