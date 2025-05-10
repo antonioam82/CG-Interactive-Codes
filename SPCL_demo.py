@@ -135,6 +135,9 @@ def main():
     #glRotatef(15,1,0,0)
     glClearColor(0.3, 0.3, 0.3, 1.0)
 
+    top = False
+    view_elevation = -10.0
+    vele = 0.0 ###############
     elevation = 2.6
 
     model_vertices, edges, faces = load_obj()
@@ -173,6 +176,8 @@ def main():
                     glRotatef(75,1,0,0)
                     glRotatef(-90,0,1,0)
                     glTranslatef(0.0,-10.0,0.0)
+                    top = True #######################
+                    vele = 0.0 #######################
                            
         key_button = pygame.key.get_pressed()
 
@@ -213,6 +218,12 @@ def main():
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
+        vele += 0.2#################################################
+        
+        if vele < 20.00 and top: ###################################
+            glTranslatef(0.0,0.08,0.0)##############################
+            print(vele)#############################################
+
         glCallList(grid_list)
         glCallList(platt_list)
         
@@ -235,5 +246,6 @@ def main():
 
 if __name__=="__main__":
     main()
+
 
         
