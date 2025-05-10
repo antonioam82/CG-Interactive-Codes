@@ -4,6 +4,9 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+import os
+
+os.chdir(r'C:\Users\Usuario\Documents\fondo')
 
 #SPCL_demo.py en github
 #TO DO: Color 4 grid surface
@@ -98,7 +101,7 @@ def load_obj():
     return vertices, edges, faces
 
 
-def draw_grid():
+'''def draw_grid():
     grid_list = glGenLists(1)
     glNewList(grid_list, GL_COMPILE)
     glLineWidth(1.3)
@@ -115,7 +118,83 @@ def draw_grid():
 
     glEnd()
     glEndList()
+    return grid_list'''
+
+'''def draw_grid():
+    grid_list = glGenLists(1)
+    glNewList(grid_list, GL_COMPILE)
+    glBegin(GL_QUADS)
+    glColor3f(0.0, 0.0, 1.0)  # Azul
+
+    for x in range(-grid_size, grid_size, grid_spacing):
+        for z in range(-grid_size, grid_size, grid_spacing):
+            glVertex3f(x, 0, z)
+            glVertex3f(x + grid_spacing, 0, z)
+            glVertex3f(x + grid_spacing, 0, z + grid_spacing)
+            glVertex3f(x, 0, z + grid_spacing)
+
+    glEnd()
+    glEndList()
+    return grid_list'''
+
+'''def draw_grid():
+    grid_list = glGenLists(1)
+    glNewList(grid_list, GL_COMPILE)
+
+    # 1. cuadro
+    glBegin(GL_QUADS)
+    glColor3f(0.0, 0.0, 1.0)  # Azul
+    for x in range(-grid_size, grid_size, grid_spacing):
+        for z in range(-grid_size, grid_size, grid_spacing):
+            glVertex3f(x, 0, z)
+            glVertex3f(x + grid_spacing, 0, z)
+            glVertex3f(x + grid_spacing, 0, z + grid_spacing)
+            glVertex3f(x, 0, z + grid_spacing)
+    glEnd()
+
+    # lineas
+    glLineWidth(2.0)
+    glBegin(GL_LINES)
+    glColor3f(1.0, 1.0, 1.0)  # Blanco
+    for x in range(-grid_size, grid_size + 1, grid_spacing):
+        glVertex3f(x, 0.002, -grid_size)  # +0.001 para evitar z-fighting
+        glVertex3f(x, 0.002, grid_size)
+    for z in range(-grid_size, grid_size + 1, grid_spacing):
+        glVertex3f(-grid_size, 0.002, z)
+        glVertex3f(grid_size, 0.002, z)
+    glEnd()
+
+    glEndList()
+    return grid_list'''
+
+def draw_grid():
+    grid_list = glGenLists(1)
+    glNewList(grid_list, GL_COMPILE)
+
+    # 1. Dibujar un solo cuadrado azul para el fondo
+    glBegin(GL_QUADS)
+    glColor3f(0.0, 0.0, 1.0)  # Azul
+    glVertex3f(-grid_size, 0, -grid_size)
+    glVertex3f(grid_size, 0, -grid_size)
+    glVertex3f(grid_size, 0, grid_size)
+    glVertex3f(-grid_size, 0, grid_size)
+    glEnd()
+
+    # 2. Dibujar las líneas blancas por encima
+    glLineWidth(2.0)
+    glBegin(GL_LINES)
+    glColor3f(1.0, 1.0, 1.0)  # Blanco
+    for x in range(-grid_size, grid_size + 1, grid_spacing):
+        glVertex3f(x, 0.002, -grid_size)
+        glVertex3f(x, 0.002, grid_size)
+    for z in range(-grid_size, grid_size + 1, grid_spacing):
+        glVertex3f(-grid_size, 0.002, z)
+        glVertex3f(grid_size, 0.002, z)
+    glEnd()
+
+    glEndList()
     return grid_list
+
 
 def initial_view():
     glMatrixMode(GL_MODELVIEW)
