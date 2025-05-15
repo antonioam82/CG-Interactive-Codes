@@ -181,7 +181,7 @@ def draw_grid():
     glDisable(GL_POLYGON_OFFSET_FILL)###########
 
     # 2. Dibujar las líneas blancas por encima
-    glLineWidth(2.5)
+    glLineWidth(1.5)
     glBegin(GL_LINES)
     glColor3f(1.0, 1.0, 1.0)  # Blanco
     for x in range(-grid_size, grid_size + 1, grid_spacing):
