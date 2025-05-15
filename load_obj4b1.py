@@ -68,13 +68,14 @@ def load_obj(filename,color):
                 num_triangles += 1
                 parts = line.strip().split()
                 face_indices = [int(part.split('/')[0]) - 1 for part in parts[1:]]
+                polygon_verts = len(face_indices)
                 if color:
                     faces.append(face_indices)
                 for i in range(len(face_indices)):
                     edges.add(tuple(sorted((face_indices[i], face_indices[(i + 1) % len(face_indices)]))))
                     #edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
                     num_edges = len(edges)
-    return vertices, edges, num_verts, num_triangles, num_edges, faces
+    return vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts
 
 def drawText(f, x, y, text, c, bgc):
     textSurface = f.render(text, True, c, bgc)
@@ -233,7 +234,7 @@ def window(args):
     #path = r'C:\Users\Usuario\Documents\fondo\temple_maze.obj'
     path = args.load_object
     model_name = os.path.basename(path)
-    vertices, edges, num_verts, num_triangles, num_edges, faces = load_obj(path,args.fill_object)
+    vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts = load_obj(path,args.fill_object)
     scale = args.scale
     hide_data = False
     green_val = 255
@@ -247,7 +248,10 @@ def window(args):
     if args.fill_object:
         glEnable(GL_POLYGON_OFFSET_FILL)#############
         glPolygonOffset(1.0, 1.0)####################
-        glBegin(GL_TRIANGLES)##################
+        if polygon_verts == 3:
+            glBegin(GL_TRIANGLES)##################
+        elif polygon_verts == 4:
+            glBegin(GL_QUADS)
         glColor3f(0.0, 0.5, 0.0)
         for face in faces:
             for vertex in face:
