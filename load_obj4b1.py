@@ -200,7 +200,7 @@ def setup_view_perspective(display):
 
 def window(args):
     show_controls()
-    list_objects = get_objs()
+    #list_objects = get_objs()
     #print(list_objects)
     pygame.init()
     
@@ -233,7 +233,7 @@ def window(args):
     #path = r'C:\Users\Usuario\Documents\fondo\temple_maze.obj'
     path = args.load_object
     model_name = os.path.basename(path)
-    vertices, edges, num_verts, num_triangles, num_edges, faces = load_obj(path,args.solid)
+    vertices, edges, num_verts, num_triangles, num_edges, faces = load_obj(path,args.fill_object)
     scale = args.scale
     hide_data = False
     green_val = 255
@@ -244,13 +244,16 @@ def window(args):
     
     glLineWidth(args.line_width)
 
-    if args.solid:
+    if args.fill_object:
+        glEnable(GL_POLYGON_OFFSET_FILL)#############
+        glPolygonOffset(1.0, 1.0)####################
         glBegin(GL_TRIANGLES)##################
         glColor3f(0.0, 0.5, 0.0)
         for face in faces:
             for vertex in face:
                 glVertex3fv(vertices[vertex])
         glEnd()################################
+        glDisable(GL_POLYGON_OFFSET_FILL)
 
     if args.bg_color == 'white':
         glColor3f(0.0, 0.0, 0.0)  # Color negro
@@ -415,14 +418,14 @@ def window(args):
     pygame.quit()
 
 def main():
-    parser = argparse.ArgumentParser(prog="ModelVisor0.1", conflict_handler='resolve',
-                                     description="Show obj models")
+    parser = argparse.ArgumentParser(prog="ModelVisor0.2", conflict_handler='resolve',
+                                     description="Show obj models",allow_abbrev=False)
     parser.add_argument('-load','--load_object',required=True,type=check_source_ext,help="Obj model to load")
     parser.add_argument('-width','--window_width',type=check_width_value,default=800,help="Widow width")
     parser.add_argument('-height','--window_height',type=check_height_value,default=600,help="Window height")
     parser.add_argument('-bg','--bg_color',type=check_color,default='black',help="Background color")
     parser.add_argument('-lw','--line_width',type=check_lw,default=1.0,help="Line width")
-    parser.add_argument('-sl','--solid',action='store_true',help="Add solid color to model")
+    parser.add_argument('-fill','--fill_object',action='store_true',help="Add solid color to model")
     parser.add_argument('-scl','--scale',type=check_positive,default=1.0,help="Object scale")
 
     args = parser.parse_args()
