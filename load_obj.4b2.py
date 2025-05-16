@@ -94,8 +94,8 @@ def show_controls():
     
     print("\nRotation Controls:")
     print("  - 'R' Key: Reset the scene rotation and scaling")
-    print("  - 'M' Key: Rotate the scene clockwise around the Z-axis")
-    print("  - 'N' Key: Rotate the scene counterclockwise around the Z-axis")
+    print("  - 'M' Key: Rotate the scene counterclockwise around the Z-axis")
+    print("  - 'N' Key: Rotate the scene clockwise around the Z-axis")
     
     print("\nView Mode Toggle:")
     print("  - 'P' Key: Toggle between Orthographic and Perspective views")
@@ -253,6 +253,7 @@ def window(args):
                 glBegin(GL_TRIANGLES)##################
             elif polygon_verts == 4:
                 glBegin(GL_QUADS)
+            #glBegin(GL_POLYGON)
             glColor3f(0.0, 0.5, 0.0)
             for face in faces:
                 for vertex in face:
@@ -376,16 +377,16 @@ def window(args):
                 rotation = create_rotation_quaternion(-2, 1, 0, 0)
                 quaternion = quaternion * rotation
             if key[pygame.K_RIGHT]:
-                rotation = create_rotation_quaternion(2, 0, 1, 0)
-                quaternion = quaternion * rotation
-            if key[pygame.K_LEFT]:
                 rotation = create_rotation_quaternion(-2, 0, 1, 0)
                 quaternion = quaternion * rotation
+            if key[pygame.K_LEFT]:
+                rotation = create_rotation_quaternion(2, 0, 1, 0)
+                quaternion = quaternion * rotation
             if key[pygame.K_m]:
-                rotation = create_rotation_quaternion(-2, 0, 0, 1)
+                rotation = create_rotation_quaternion(2, 0, 0, 1)
                 quaternion = quaternion * rotation
             if key[pygame.K_n]:
-                rotation = create_rotation_quaternion(2, 0, 0, 1)
+                rotation = create_rotation_quaternion(-2, 0, 0, 1)
                 quaternion = quaternion * rotation
             if key[pygame.K_z] and scale > 0.05:
                 scale -= 0.05
@@ -424,6 +425,7 @@ def window(args):
         print(Fore.RED+Style.BRIGHT + "UNEXPECTED ERROR: " + str(e) + Fore.RESET+Style.RESET_ALL)
 
     pygame.quit()
+    print("terminated")
 
 def main():
     parser = argparse.ArgumentParser(prog="ModelVisor0.2", conflict_handler='resolve',
