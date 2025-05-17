@@ -63,7 +63,9 @@ def draw_figure():
             glVertex3fv(verticies[vertex])
     glEnd()
 
+    #glLineWidth(2.0)
     glBegin(GL_LINES)
+    glColor3f(1.0, 0.0, 0.0)
     for edge in edges:
         for vertex in edge:
             glVertex3fv(verticies[vertex])
@@ -77,16 +79,24 @@ def main():
     glTranslatef(0.0,0.0,-5)
     glRotatef(90,1,0,0)
 
+    #line_color = 0.0
+    rot = 1.2
+
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        glRotatef(rot,0,1,0)
+        draw_figure()
+        
         pygame.display.flip()
         pygame.time.wait(10)
 
-        draw_figure()
+        '''if line_color < 1.0:
+            line_color += 0.001'''
 
     pygame.quit()
 
