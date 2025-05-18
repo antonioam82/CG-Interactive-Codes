@@ -431,7 +431,7 @@ def main():
     parser = argparse.ArgumentParser(prog="ModelVisor0.2", conflict_handler='resolve',
                                      description="Show obj models",allow_abbrev=False)
     parser.add_argument('-load','--load_object',required=True,type=check_source_ext,help="Obj model to load")
-    parser.add_argument('-width','--window_width',type=check_width_value,default=800,help="Widow width")
+    parser.add_argument('-width','--window_width',type=check_width_value,default=800,help="Window width")
     parser.add_argument('-height','--window_height',type=check_height_value,default=600,help="Window height")
     parser.add_argument('-bg','--bg_color',type=check_color,default='black',help="Background color")
     parser.add_argument('-lw','--line_width',type=check_lw,default=1.0,help="Line width")
