@@ -69,6 +69,7 @@ def load_obj(filename,color):
                 parts = line.strip().split()
                 face_indices = [int(part.split('/')[0]) - 1 for part in parts[1:]]
                 polygon_verts = len(face_indices)
+                #print(polygon_verts)
                 if color:
                     faces.append(face_indices)
                 for i in range(len(face_indices)):
@@ -201,7 +202,6 @@ def setup_view_perspective(display):
 
 def window(args):
     # Cargar el modelo OBJ
-    #path = r'C:\Users\Usuario\Documents\fondo\temple_maze.obj'
     try:
         path = args.load_object
         model_name = os.path.basename(path)
@@ -252,8 +252,9 @@ def window(args):
             if polygon_verts == 3:
                 glBegin(GL_TRIANGLES)##################
             elif polygon_verts == 4:
-                glBegin(GL_QUADS)
-            #glBegin(GL_POLYGON)
+                glBegin(GL_POLYGON)
+            else:
+                glBegin(GL_POLYGON)
             glColor3f(0.0, 0.5, 0.0)
             for face in faces:
                 for vertex in face:
