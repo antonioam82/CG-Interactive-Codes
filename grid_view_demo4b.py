@@ -417,7 +417,7 @@ def main():
         if not hide_data:
             drawText(font, 20, 570, f'DIRECTION: {direction}', (0, 255, 0, 255), (0, 0, 0))
             drawText(font, 20, 550, f'CAMERA SPEED: {spd}', (0, 255, 0, 255), (0, 0, 0))
-            drawText(font, 20, 530, f'FIGngvhgURE SPEED: {spdc}', (0, 255, 0, 255), (0, 0, 0))
+            drawText(font, 20, 530, f'FIGURE SPEED: {spdc}', (0, 255, 0, 255), (0, 0, 0))
 
         glFlush()
         pygame.display.flip()
@@ -425,3 +425,4 @@ def main():
 
 main()
 pygame.quit()
+
