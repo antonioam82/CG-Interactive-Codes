@@ -202,6 +202,7 @@ def setup_view_perspective(display):
 
 def window(args):
     # Cargar el modelo OBJ
+    #path = r'C:\Users\Usuario\Documents\fondo\temple_maze.obj'
     try:
         path = args.load_object
         model_name = os.path.basename(path)
@@ -252,7 +253,7 @@ def window(args):
             if polygon_verts == 3:
                 glBegin(GL_TRIANGLES)##################
             elif polygon_verts == 4:
-                glBegin(GL_POLYGON)
+                glBegin(GL_QUADS)
             else:
                 glBegin(GL_POLYGON)
             glColor3f(0.0, 0.5, 0.0)
