@@ -230,6 +230,7 @@ def main():
     speed_c = 0.1
     running = True
     direction = 'front'
+    scale = 1.0
     
     rot = 0
     cube_translation = -20.0
@@ -330,7 +331,7 @@ def main():
                 x_c += speed_c
                 x_c -= speed
 
-        # Rotations
+        # Rotations and scalations
         if key[pygame.K_y]:
             glRotatef(1, 0, -0.1, 0)
         elif key[pygame.K_r]:
@@ -339,6 +340,11 @@ def main():
             glRotatef(1, -0.1, 0, 0)
         elif key[pygame.K_w]:
             glRotatef(1, 0.1, 0, 0)
+        elif key[pygame.K_a]:
+            scale += 0.01
+        elif key[pygame.K_s]:
+            scale -= 0.01
+            
 
         # Change speed
         elif key[pygame.K_z]:
@@ -373,6 +379,9 @@ def main():
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
+        glPushMatrix()
+        glScalef(scale,scale,scale)
+
         # Dibujar el grid
         glPushMatrix()
         glTranslatef(x, 0.00, z)
@@ -395,6 +404,7 @@ def main():
         glTranslatef(x_c, 0.0, z_c)
         glRotatef(-current_angle, 0, 1, 0)
         glCallList(cube_list)
+        glPopMatrix()
         glPopMatrix()
 
         rot += 3
