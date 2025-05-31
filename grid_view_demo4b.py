@@ -286,6 +286,7 @@ def main():
                     angle = 0
                     speed = 0.1
                     speed_c = 0.1
+                    scale = 1.0
         
                     # Restaurar las rotaciones acumuladas
                     glLoadIdentity()  # Resetea las transformaciones
