@@ -80,7 +80,7 @@ def draw_walls():
     
     glBegin(GL_LINES)
     glColor3f(1.0,1.0,0.0)
-    path = r'C:\Users\anton\OneDrive\Documentos\files_used\temple_maze.obj' 
+    path =  r'C:\Users\Usuario\Documents\fondo\temple_maze.obj'
     vertices, edges, surfaces = load_obj(path)
     for edge in edges:
         for vertex in edge:
@@ -349,7 +349,12 @@ def main():
             '''if direction == 'front' or direction == 'back':
                 glRotatef(1, -0.1, 0, 0)
             else:  #elif direction == 'right' or direction == 'left':
-                glRotatef(1, 0, 0, -0.1)'''
+                glRotatef(1, 0, 0, -0.1)
+        elif key[pygame.K_k]:
+            glTranslatef(0.0,-0.1,0.0)
+        elif key[pygame.K_j]:
+            glTranslatef(0.0,0.1,0.0)'''
+            
         elif key[pygame.K_w]:
             if direction == 'front':
                 glRotatef(1, 0.1, 0, 0)
