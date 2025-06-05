@@ -75,7 +75,9 @@ def load_obj(filename):
 
 def draw_walls():
     model_list = glGenLists(1)
-    glNewList(model_list, GL_COMPILE)
+    glNewList(model_list, GL_COMPILE)#################################
+    glEnable(GL_POLYGON_OFFSET_FILL)##################################
+    glPolygonOffset(1.0, 1.0)
     glLineWidth(1.6)  # Set line width (optional)
     
     glBegin(GL_LINES)
@@ -92,6 +94,7 @@ def draw_walls():
         for vertex in surface:
             glVertex3fv(vertices[vertex])
     glEnd()
+    glDisable(GL_POLYGON_OFFSET_FILL)################################
     glEndList()
     return model_list
 
@@ -464,6 +467,8 @@ def main():
 
 main()
 pygame.quit()
+
+
 
 
 
