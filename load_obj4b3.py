@@ -49,7 +49,7 @@ def check_source_ext(file):
         raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"FILE NOT FOUND: file or path '{file}' not found."+Fore.RESET+Style.RESET_ALL)
     return file
 
-def load_obj(filename,color):
+def load_obj(filename,color,args):
     vertices = []
     #edges = []
     edges = set()
@@ -75,11 +75,12 @@ def load_obj(filename,color):
                     edges.add(tuple(sorted((face_indices[i], face_indices[(i + 1) % len(face_indices)]))))
                     #edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
                     num_edges = len(edges)
-                    
-    min_v = np.min(vertices, axis=0)
-    max_v = np.max(vertices, axis=0)
-    center = (min_v + max_v) / 2.0
-    vertices = [list(np.array(v) - center) for v in vertices]
+
+    if not args.disable_centering:
+        min_v = np.min(vertices, axis=0)
+        max_v = np.max(vertices, axis=0)
+        center = (min_v + max_v) / 2.0
+        vertices = [list(np.array(v) - center) for v in vertices]
     
     return vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts
 
@@ -211,7 +212,7 @@ def window(args):
     try:
         path = args.load_object
         model_name = os.path.basename(path)
-        vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts = load_obj(path,args.fill_object)
+        vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts = load_obj(path,args.fill_object,args)
     
         show_controls()
         pygame.init()
@@ -443,6 +444,7 @@ def main():
     parser.add_argument('-lw','--line_width',type=check_lw,default=1.0,help="Line width")
     parser.add_argument('-fill','--fill_object',action='store_true',help="Add solid color to model")
     parser.add_argument('-scl','--scale',type=check_positive,default=1.0,help="Object scale")
+    parser.add_argument('-dc','--disable_centering',action='store_true',help="Disable automatic centering")
 
     args = parser.parse_args()
     window(args)
