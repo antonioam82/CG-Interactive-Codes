@@ -57,6 +57,7 @@ def load_obj(filename,color,args):
     num_verts = 0
     num_triangles = 0
     faces = []
+    #vs = []
     with open(filename, 'r') as file:
         for line in file:
             if line.startswith('v '):  # Vértice
@@ -64,6 +65,7 @@ def load_obj(filename,color,args):
                 parts = line.strip().split()
                 vertex = [float(parts[1]), float(parts[2]), float(parts[3])]
                 vertices.append(vertex)
+                #vs = vertices
             elif line.startswith('f '):  # Cara
                 num_triangles += 1
                 parts = line.strip().split()
@@ -76,11 +78,18 @@ def load_obj(filename,color,args):
                     #edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
                     num_edges = len(edges)
 
-    if not args.disable_centering:
+    if args.enable_centering:
         min_v = np.min(vertices, axis=0)
         max_v = np.max(vertices, axis=0)
         center = (min_v + max_v) / 2.0
         vertices = [list(np.array(v) - center) for v in vertices]
+
+        '''if vs == vertices:
+            print("perfect")
+        else:
+            print(vs)
+            print("+++++++++++++++++++++")
+            print(vertices)'''
     
     return vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts
 
@@ -444,7 +453,7 @@ def main():
     parser.add_argument('-lw','--line_width',type=check_lw,default=1.0,help="Line width")
     parser.add_argument('-fill','--fill_object',action='store_true',help="Add solid color to model")
     parser.add_argument('-scl','--scale',type=check_positive,default=1.0,help="Object scale")
-    parser.add_argument('-dc','--disable_centering',action='store_true',help="Disable automatic centering")
+    parser.add_argument('-ec','--enable_centering',action='store_true',help="Disable automatic centering")
 
     args = parser.parse_args()
     window(args)
