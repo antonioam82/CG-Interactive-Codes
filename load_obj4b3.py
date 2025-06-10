@@ -453,7 +453,7 @@ def main():
     parser.add_argument('-lw','--line_width',type=check_lw,default=1.0,help="Line width")
     parser.add_argument('-fill','--fill_object',action='store_true',help="Add solid color to model")
     parser.add_argument('-scl','--scale',type=check_positive,default=1.0,help="Object scale")
-    parser.add_argument('-ec','--enable_centering',action='store_true',help="Disable automatic centering")
+    parser.add_argument('-ec','--enable_centering',action='store_true',help="Enable automatic centering")
 
     args = parser.parse_args()
     window(args)
