@@ -238,7 +238,17 @@ def window(args):
         text_pos6 = text_pos(args.window_height,470)
   
         display = (args.window_width, args.window_height)
+
+        pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 4)
+         
         pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+
+        glEnable(GL_MULTISAMPLE)
+        glEnable(GL_LINE_SMOOTH)
+        glHint(GL_LINE_SMOOTH_HINT, GL_NICEST)
+        glEnable(GL_BLEND)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+
         pygame.display.set_caption("Model Viewer")
         font = pygame.font.SysFont('arial', 15)
 
@@ -453,10 +463,11 @@ def main():
     parser.add_argument('-lw','--line_width',type=check_lw,default=1.0,help="Line width")
     parser.add_argument('-fill','--fill_object',action='store_true',help="Add solid color to model")
     parser.add_argument('-scl','--scale',type=check_positive,default=1.0,help="Object scale")
-    parser.add_argument('-ec','--enable_centering',action='store_true',help="Enable automatic centering")
+    parser.add_argument('-ec','--enable_centering',action='store_true',help="Disable automatic centering")
 
     args = parser.parse_args()
     window(args)
     
 if __name__ =="__main__":
     main()
+
