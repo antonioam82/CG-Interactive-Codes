@@ -122,7 +122,17 @@ def drawText(f, x, y, text, c, bgc):
 def main():
     pygame.init()
     display = (800, 600)#(1600, 880)
+
+    pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 4)
+    
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+
+    glEnable(GL_MULTISAMPLE)
+    glEnable(GL_LINE_SMOOTH)
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST)
+    glEnable(GL_BLEND)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    
     gluPerspective(45, (display[0] / display[1]), 0.1, 90.0) #90
     glTranslatef(0.0, 0.0, -10)
     glEnable(GL_DEPTH_TEST)
@@ -132,9 +142,6 @@ def main():
     cube_list = Cube()
     grid_list = draw_grid()
     hide_data = False
- 
-    #glEnable(GL_BLEND)
-    #glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
     show_controls()
  
