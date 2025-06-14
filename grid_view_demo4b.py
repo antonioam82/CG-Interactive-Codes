@@ -82,7 +82,7 @@ def draw_walls():
     
     glBegin(GL_LINES)
     glColor3f(1.0,1.0,0.0)
-    path =  r'C:\Users\Usuario\Documents\fondo\temple_maze.obj'
+    path = r'C:\Users\anton\OneDrive\Documentos\files_used\temple_maze.obj' 
     vertices, edges, surfaces = load_obj(path)
     for edge in edges:
         for vertex in edge:
@@ -206,7 +206,17 @@ rotating = False
 def main():
     pygame.init()
     display = (800, 600)
+    
+    pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 4)
+    
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+    
+    glEnable(GL_MULTISAMPLE)
+    glEnable(GL_LINE_SMOOTH)
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST)
+    glEnable(GL_BLEND)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    
     gluPerspective(45, (display[0] / display[1]), 0.1, 150.0)
     glTranslatef(0.0, 0.0, -10)
     
