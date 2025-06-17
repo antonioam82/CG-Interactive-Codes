@@ -265,6 +265,7 @@ def window(args):
         scale = args.scale
         hide_data = False
         green_val = 255
+        rotating = False
     
         # Crear la lista de display para el modelo
         model_list = glGenLists(1)
@@ -381,17 +382,32 @@ def window(args):
                     if event.button == 1:
                         dragging = True
                         last_mouse_pos = pygame.mouse.get_pos()
+                    elif event.button == 3:  # botón derecho para rotación
+                        rotating = True
+                        last_mouse_pos = pygame.mouse.get_pos()
                 elif event.type == pygame.MOUSEBUTTONUP:
                     if event.button == 1:
                         dragging = False
+                    elif event.button == 3:
+                        rotating = False
                 elif event.type == pygame.MOUSEMOTION:
+                    mouse_x, mouse_y = pygame.mouse.get_pos()
+                    dx = mouse_x - last_mouse_pos[0]
+                    dy = mouse_y - last_mouse_pos[1]
                     if dragging:
-                        mouse_x, mouse_y = pygame.mouse.get_pos()
-                        dx = mouse_x - last_mouse_pos[0]
-                        dy = mouse_y - last_mouse_pos[1]
-                        translation[0] += dx * 0.01  # Ajusta la velocidad de desplazamiento
-                        translation[1] -= dy * 0.01  # Invertir el movimiento vertical
-                        last_mouse_pos = (mouse_x, mouse_y)
+                        translation[0] += dx * 0.01
+                        translation[1] -= dy * 0.01
+                    if rotating:
+                        # Convertimos desplazamiento en rotación relativa
+                        angle_x = dy * -0.3
+                        angle_y = dx * -0.3
+                        # Rotación alrededor del eje X e Y (en coordenadas del mundo)
+                        qx = create_rotation_quaternion(angle_x, 1, 0, 0)
+                        qy = create_rotation_quaternion(angle_y, 0, 1, 0)
+                        quaternion = quaternion * qx * qy
+                        
+                    last_mouse_pos = (mouse_x, mouse_y)
+
 
             key = pygame.key.get_pressed()
 
@@ -470,5 +486,6 @@ def main():
     
 if __name__ =="__main__":
     main()
+
 
 
