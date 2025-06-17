@@ -278,9 +278,8 @@ def window(args):
             glPolygonOffset(1.0, 1.0)####################
             if polygon_verts == 3:
                 glBegin(GL_TRIANGLES)##################
-            elif polygon_verts == 4:
+            elif polygon_verts >= 4:
                 glBegin(GL_QUADS)
-            #glBegin(GL_POLYGON)
             glColor3f(0.0, 0.5, 0.0)
             for face in faces:
                 for vertex in face:
@@ -486,6 +485,7 @@ def main():
     
 if __name__ =="__main__":
     main()
+
 
 
 
