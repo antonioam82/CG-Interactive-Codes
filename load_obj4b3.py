@@ -123,6 +123,7 @@ def show_controls():
 
     print("\nTranslation Controls (Drag):")
     print("  - Hold Left Mouse Button: Drag to move the scene")
+    print("  - Hold Right Mouse Button: Drag to rotate the scene")
     
     print("\nMiscellaneous:")
     print("  - 'H' Key: Toggle the visibility of on-screen information (model name, scale, view mode)")
