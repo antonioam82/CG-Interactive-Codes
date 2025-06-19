@@ -121,7 +121,7 @@ def show_controls():
     print("  - 'X' Key: Zoom out (increase scale)")
     print("  - Mouse Wheel: Zoom in/out")
 
-    print("\nTranslation Controls (Drag):")
+    print("\nTranslation and Rotation Controls (Drag):")
     print("  - Hold Left Mouse Button: Drag to move the scene")
     print("  - Hold Right Mouse Button: Drag to rotate the scene")
     
