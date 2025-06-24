@@ -1,0 +1,132 @@
+#/usr/bin/env python
+# -*- coding: utf-8 -*-
+import pygame
+from pygame.locals import *
+from OpenGL.GL import *
+from OpenGL.GLU import *
+
+grid_size = 140
+grid_spacing = 1
+
+def draw_grid():
+    grid_list = glGenLists(1)
+    glNewList(grid_list, GL_COMPILE)
+    # Rellenar Grid
+    glEnable(GL_POLYGON_OFFSET_FILL)
+    glPolygonOffset(1.0,1.0)
+    glBegin(GL_QUADS)
+    glColor3f(0.3,0.1,0.8)
+    glVertex3f(-grid_size,0,-grid_size)
+    glVertex3f(grid_size,0,-grid_size)
+    glVertex3f(grid_size, 0, grid_size)
+    glVertex3f(-grid_size, 0, grid_size)
+    glEnd()
+    #####################
+    glLineWidth(1.3)
+    glBegin(GL_LINES)
+    glColor3f(1.0,1.0,1.0)
+
+    for x in range(-grid_size, grid_size + 1, grid_spacing):
+        glVertex3f(x, 0, -grid_size)
+        glVertex3f(x, 0, grid_size)
+
+    for z in range(-grid_size, grid_size + 1, grid_spacing):
+        glVertex3f(-grid_size, 0, z)
+        glVertex3f(grid_size, 0, z)
+
+    glEnd()
+    glEndList()
+    return grid_list
+
+def main():
+    pygame.init()
+    display = (800, 600)
+    pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 6)  # 4x multisample
+
+    pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+
+    # ✅ Activar antialiasing después de crear el contexto OpenGL
+    glEnable(GL_MULTISAMPLE)
+    glEnable(GL_LINE_SMOOTH)
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST)
+    glEnable(GL_BLEND)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+
+    gluPerspective(45, (display[0] / display[1]), 0.1, 90.0)
+    glTranslatef(0.0, 0.0, -10)
+    glEnable(GL_DEPTH_TEST)
+
+    font = pygame.font.SysFont('arial', 15)
+    glRotatef(15, 1, 0, 0)
+
+    grid_list = draw_grid()
+    hide_data = False
+
+    x = z = x_c = z_c = angle = 0
+    speed = 0.1
+    speed_c = 0.1
+    running = True
+    direction = 'front'
+
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN and direction != "back":
+                    direction = "back"; angle = 180
+                elif event.key == pygame.K_UP and direction != "front":
+                    direction = "front"; angle = 0
+                elif event.key == pygame.K_RIGHT and direction != "right":
+                    direction = "right"; angle = -90
+                elif event.key == pygame.K_LEFT and direction != "left":
+                    direction = "left"; angle = 90
+                elif event.key == pygame.K_d:
+                    speed = 0.1; speed_c = 0.1
+                elif event.key == pygame.K_p:
+                    speed_c = 0.0
+                elif event.key == pygame.K_h:
+                    hide_data = not hide_data
+                elif event.key == pygame.K_ESCAPE:
+                    running = False
+                elif event.key == pygame.K_l:
+                    direction = 'front'
+                    x = z = x_c = z_c = angle = 0
+                    speed = 0.1; speed_c = 0.1
+                    glLoadIdentity()
+                    gluPerspective(45, (display[0] / display[1]), 0.1, 90.0)
+                    glTranslatef(0.0, 0.0, -10)
+                    glRotatef(15, 1, 0, 0)
+
+        key = pygame.key.get_pressed()
+
+        if key[pygame.K_UP]: z += speed; z_c -= speed_c; z_c += speed
+        if key[pygame.K_DOWN]: z -= speed; z_c += speed_c; z_c -= speed
+        if key[pygame.K_RIGHT]: x -= speed; x_c += speed_c; x_c -= speed
+        if key[pygame.K_LEFT]: x += speed; x_c -= speed_c; x_c += speed
+
+        if key[pygame.K_t]: glRotatef(1, 0, -0.1, 0)
+        elif key[pygame.K_r]: glRotatef(1, 0, 0.1, 0)
+        elif key[pygame.K_q]: glRotatef(1, -0.1, 0, 0)
+        elif key[pygame.K_w]: glRotatef(1, 0.1, 0, 0)
+
+        if key[pygame.K_z]: speed += 0.001
+        elif key[pygame.K_x]: speed -= 0.001
+        elif key[pygame.K_c]: speed_c += 0.001
+        elif key[pygame.K_v]: speed_c -= 0.001
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+
+        # Grid
+        glPushMatrix()
+        glTranslatef(x, 0.00, z)
+        glCallList(grid_list)
+        glPopMatrix()
+
+        pygame.display.flip()
+        pygame.time.wait(10)
+
+    glDeleteLists(grid_list, 1)
+    pygame.quit()
+
+main()
