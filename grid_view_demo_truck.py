@@ -8,6 +8,25 @@ from OpenGL.GLU import *
 grid_size = 140
 grid_spacing = 1
 
+def load_obj(filename):
+    vertices = []
+    edges = []
+    surfaces = []
+    with open(filename, 'r') as file:
+        for line in file:
+            if line.startswith('v '):  # Vértice
+                parts = line.strip().split()
+                vertex = [float(parts[1]), float(parts[2]), float(parts[3])]
+                vertices.append(vertex)
+            elif line.startswith('f '):  # Cara
+                parts = line.strip().split()
+                face_indices = [int(part.split('/')[0]) - 1 for part in parts[1:]]
+                surfaces.append(face_indices)
+                for i in range(len(face_indices)):
+                    edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
+    
+    return vertices, edges, surfaces 
+
 def draw_grid():
     grid_list = glGenLists(1)
     glNewList(grid_list, GL_COMPILE)
@@ -130,3 +149,4 @@ def main():
     pygame.quit()
 
 main()
+
