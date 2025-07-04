@@ -25,7 +25,36 @@ def load_obj(filename):
                 for i in range(len(face_indices)):
                     edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
     
-    return vertices, edges, surfaces 
+    return vertices, edges, surfaces
+
+def draw_truck():
+    model_list = glGenLists(1)
+    glNewList(model_list, GL_COMPILE)
+    glEnable(GL_POLYGON_OFFSET_FILL)
+    glPolygonOffset(1.0,1.0)
+    glLineWidth(1.0)
+
+    glBegin(GL_LINES)
+    glColor3f(1.0,0.0,0.0)
+    path = r'C:\Users\Usuario\Documents\fondo\truck.obj'
+    vertices, edges, surfaces, = load_obj(path)
+    for edge in edges:
+        for vertex in edge:
+            glVertex3fv(vertices[vertex])
+    glEnd()
+
+    glColor3f(0.2,0.5,0.3)
+    glBegin(GL_TRIANGLES)
+    for surface in surfaces:
+        for vertex in surface:
+            glVertex3fv(vertices[vertex])
+    glEnd()
+    glDisable(GL_POLYGON_OFFSET_FILL)
+    glEndList()
+
+    return model_list
+    
+    
 
 def draw_grid():
     grid_list = glGenLists(1)
@@ -77,7 +106,8 @@ def main():
 
     font = pygame.font.SysFont('arial', 15)
     glRotatef(15, 1, 0, 0)
-
+    
+    model_list = draw_truck()
     grid_list = draw_grid()
     hide_data = False
 
@@ -140,6 +170,12 @@ def main():
         glPushMatrix()
         glTranslatef(x, 0.00, z)
         glCallList(grid_list)
+        glPopMatrix()
+
+        # Truck
+        glPushMatrix()
+        glRotatef(-90,0,1,0)
+        glCallList(model_list)
         glPopMatrix()
 
         pygame.display.flip()
