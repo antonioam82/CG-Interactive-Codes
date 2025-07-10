@@ -57,6 +57,7 @@ def load_obj(filename,color,args):
     num_verts = 0
     num_triangles = 0
     faces = []
+    #polygon_verts = 0
     #vs = []
     with open(filename, 'r') as file:
         for line in file:
@@ -84,13 +85,7 @@ def load_obj(filename,color,args):
         center = (min_v + max_v) / 2.0
         vertices = [list(np.array(v) - center) for v in vertices]
 
-        '''if vs == vertices:
-            print("perfect")
-        else:
-            print(vs)
-            print("+++++++++++++++++++++")
-            print(vertices)'''
-    
+    #print(polygon_verts)
     return vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts
 
 def drawText(f, x, y, text, c, bgc):
@@ -216,9 +211,25 @@ def setup_view_perspective(display):
     glLoadIdentity()
     glTranslatef(0.0, 0.0, -10.0)
 
+def fill_object(polygon_verts,faces,vertices):
+    glEnable(GL_POLYGON_OFFSET_FILL)#############
+    glPolygonOffset(1.0, 1.0)####################
+    if polygon_verts == 3:
+        glBegin(GL_TRIANGLES)##################
+    elif polygon_verts == 4:
+        glBegin(GL_QUADS)
+    elif polygon_verts > 4:
+        glBegin(GL_POLYGON)
+    glColor3f(0.0, 0.5, 0.0)
+    for face in faces:
+        for vertex in face:
+            glVertex3fv(vertices[vertex])
+    glEnd()################################
+    glDisable(GL_POLYGON_OFFSET_FILL)
+    
+
 def window(args):
     # Cargar el modelo OBJ
-    #path = r'C:\Users\Usuario\Documents\fondo\temple_maze.obj'
     try:
         path = args.load_object
         model_name = os.path.basename(path)
@@ -275,21 +286,8 @@ def window(args):
         glLineWidth(args.line_width)
 
         if args.fill_object:
-            glEnable(GL_POLYGON_OFFSET_FILL)#############
-            glPolygonOffset(1.0, 1.0)####################
-            if polygon_verts == 3:
-                glBegin(GL_TRIANGLES)##################
-            elif polygon_verts == 4:
-                glBegin(GL_QUADS)
-            elif polygon_verts > 4:
-                glBegin(GL_POLYGON)
-            glColor3f(0.0, 0.5, 0.0)
-            for face in faces:
-                for vertex in face:
-                    glVertex3fv(vertices[vertex])
-            glEnd()################################
-            glDisable(GL_POLYGON_OFFSET_FILL)
-
+            fill_object(polygon_verts,faces,vertices)
+            
         if args.bg_color == 'white':
             glColor3f(0.0, 0.0, 0.0)  # Color negro
             green_val = 100
