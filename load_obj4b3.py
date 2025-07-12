@@ -35,11 +35,6 @@ def check_height_value(height):
         raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"Height value must be less than 901 and greater than 599."+Fore.RESET+Style.RESET_ALL)
     return val
 
-def get_objs():
-    extension = '.obj'
-    directory = os.getcwd()
-    return [file.name for file in Path(directory).glob(f'*{extension}')]
-
 def check_source_ext(file):
     if os.path.exists(file):
         name, ex = os.path.splitext(file)
