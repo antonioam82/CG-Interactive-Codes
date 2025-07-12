@@ -54,6 +54,33 @@ def draw_truck():
 
     return model_list
 
+def draw_back_fares():
+    modelfb_list = glGenLists(1)
+    glNewList(modelfb_list, GL_COMPILE)
+    glEnable(GL_POLYGON_OFFSET_FILL)
+    glPolygonOffset(1.0,1.0)
+    glLineWidth(1.0)
+
+    glBegin(GL_LINES)
+    glColor3f(1.0,0.0,0.0)
+    path = r'C:\Users\Usuario\Documents\fondo\faros_traseros.obj'
+    vertices, edges, surfaces, = load_obj(path)
+    for edge in edges:
+        for vertex in edge:
+            glVertex3fv(vertices[vertex])
+    glEnd()
+
+    glColor3f(1.0,0.0,0.0)
+    glBegin(GL_QUADS)
+    for surface in surfaces:
+        for vertex in surface:
+            glVertex3fv(vertices[vertex])
+    glEnd()
+    glDisable(GL_POLYGON_OFFSET_FILL)
+    glEndList()
+
+    return modelfb_list
+
 def draw_fares():
     fmodel_list = glGenLists(1)
     glNewList(fmodel_list, GL_COMPILE)
@@ -136,6 +163,7 @@ def main():
     model_list = draw_truck()
     grid_list = draw_grid()
     fmodel_list = draw_fares()
+    modelfb_list = draw_back_fares()
     hide_data = False
 
     x = z = x_c = z_c = angle = 0
@@ -211,6 +239,12 @@ def main():
         glCallList(fmodel_list)
         glPopMatrix()
 
+        # Truck back fares
+        glPushMatrix()
+        glRotatef(-90,0,1,0)
+        glCallList(modelfb_list)
+        glPopMatrix()
+
         pygame.display.flip()
         pygame.time.wait(10)
 
@@ -218,3 +252,4 @@ def main():
     pygame.quit()
 
 main()
+
