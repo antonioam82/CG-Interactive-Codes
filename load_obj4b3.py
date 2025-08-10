@@ -91,35 +91,50 @@ def drawText(f, x, y, text, c, bgc):
  
 def show_controls():
     print("\n--------------------- Controls ---------------------")
- 
+
     print("\nKeyboard Controls (Movement):")
     print("  - Up Arrow: Move the scene forward (rotate upwards)")
     print("  - Down Arrow: Move the scene backward (rotate downwards)")
     print("  - Left Arrow: Move the scene left (rotate left)")
     print("  - Right Arrow: Move the scene right (rotate right)")
- 
+
+    print("\nTranslation Controls:")
+    print("  - 'A' Key: Translate scene left")
+    print("  - 'S' Key: Translate scene right")
+    print("  - 'D' Key: Translate scene up")
+    print("  - 'F' Key: Translate scene down")
+
     print("\nRotation Controls:")
     print("  - 'R' Key: Reset the scene rotation and scaling")
     print("  - 'M' Key: Rotate the scene counterclockwise around the Z-axis")
     print("  - 'N' Key: Rotate the scene clockwise around the Z-axis")
- 
+
+    print("\nView Controls:")
+    print("  - 'T' Key: Set top (zenith) view")
+    print("  - 'B' Key: Set bottom view")
+    print("  - 'J' Key: Set right view")
+    print("  - 'L' Key: Set left view")
+    print("  - 'G' Key: Set front view")
+    print("  - 'K' Key: Set back view")
+
     print("\nView Mode Toggle:")
     print("  - 'P' Key: Toggle between Orthographic and Perspective views")
- 
+
     print("\nZoom Controls:")
     print("  - 'Z' Key: Zoom in (decrease scale)")
     print("  - 'X' Key: Zoom out (increase scale)")
     print("  - Mouse Wheel: Zoom in/out")
- 
+
     print("\nTranslation & Rotation Controls (Drag):")
     print("  - Hold Left Mouse Button: Drag to move the scene")
     print("  - Hold Right Mouse Button: Drag to rotate the scene")
- 
+
     print("\nMiscellaneous:")
     print("  - 'H' Key: Toggle the visibility of on-screen information (model name, scale, view mode)")
     print("  - ESC Key: Exit the program")
- 
+
     print("\n----------------------------------------------------")
+
  
  
 # Clase para manejar cuaterniones
@@ -359,7 +374,7 @@ def window(args):
                         quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
                         rotation = create_rotation_quaternion(-90, 0, 1, 0)
                         quaternion = quaternion * rotation
-                    elif event.key == pygame.K_f:
+                    elif event.key == pygame.K_g:
                         quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
                         rotation = create_rotation_quaternion(0, 0, 1, 0)
                         quaternion = quaternion * rotation
@@ -432,13 +447,13 @@ def window(args):
                 scale += 0.05
             # TRANSLATIONS
             if key[pygame.K_a]:
-                glTranslatef(-0.5, 0, 0)
+                glTranslatef(-0.05, 0, 0)
             if key[pygame.K_s]:
-                glTranslatef(0.5, 0, 0)
+                glTranslatef(0.05, 0, 0)
             if key[pygame.K_d]:
-                glTranslatef(0, 0.5, 0)
+                glTranslatef(0, 0.05, 0)
             if key[pygame.K_f]:
-                glTranslatef(0, -0.5, 0)
+                glTranslatef(0, -0.05, 0)
  
             # Limpiar la pantalla y cargar la nueva matriz de rotación
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
