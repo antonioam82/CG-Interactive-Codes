@@ -447,13 +447,17 @@ def window(args):
                 scale += 0.05
             # TRANSLATIONS
             if key[pygame.K_a]:
-                glTranslatef(-0.05, 0, 0)
+                #glTranslatef(-0.05, 0, 0)
+                translation[0] -= 0.05
             if key[pygame.K_s]:
-                glTranslatef(0.05, 0, 0)
+                #glTranslatef(0.05, 0, 0)
+                translation[0] += 0.05
             if key[pygame.K_d]:
-                glTranslatef(0, 0.05, 0)
+                #glTranslatef(0, 0.05, 0)
+                translation[1] += 0.05
             if key[pygame.K_f]:
-                glTranslatef(0, -0.05, 0)
+                #glTranslatef(0, -0.05, 0)
+                translation[1] -= 0.05
  
             # Limpiar la pantalla y cargar la nueva matriz de rotación
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -490,7 +494,7 @@ def window(args):
     print("terminated")
  
 def main():
-    parser = argparse.ArgumentParser(prog="ModelVisor0.2", conflict_handler='resolve',
+    parser = argparse.ArgumentParser(prog="ModelVisor0.3", conflict_handler='resolve',
                                      description="Show obj models",allow_abbrev=False)
     parser.add_argument('-load','--load_object',required=True,type=check_source_ext,help="Obj model to load")
     parser.add_argument('-width','--window_width',type=check_width_value,default=800,help="Window width")
