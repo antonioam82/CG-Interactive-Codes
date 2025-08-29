@@ -132,7 +132,7 @@ def main():
         glTranslatef(x, 0.00, z)
         glCallList(grid_list)
         glPushMatrix()
-        glScalef(0.02,0.012,0.02)######################
+        glScalef(0.3,0.02,0.3)######################
         glRotatef(90, 1, 0, 0)
         glTranslatef(0.0, 0.0, -17.5)
         glTranslatef(0.0, 1.9, 0.0)
