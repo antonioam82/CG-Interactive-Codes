@@ -4,6 +4,7 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+import numpy as np
 
 grid_size = 140
 grid_spacing = 1
@@ -24,6 +25,11 @@ def load_obj(filename):
                 surfaces.append(face_indices)
                 for i in range(len(face_indices)):
                     edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
+
+    min_v = np.min(vertices, axis=0)
+    max_v = np.max(vertices, axis=0)
+    center = (min_v + max_v) / 2.0
+    vertices = [list(np.array(v) - center) for v in vertices]
     
     return vertices, edges, surfaces
 
