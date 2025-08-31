@@ -153,7 +153,7 @@ def main():
         glRotatef(90, 1, 0, 0)
         glTranslatef(0.0, 0.0, -17.5)
         glTranslatef(0.0, 1.9, 0.0)
-        glScalef(10.0,10.0,10.0)
+        glScalef(20.0,20.0,20.0)
         glCallList(model_list)
         glPopMatrix()
         glPopMatrix()
