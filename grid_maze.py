@@ -113,6 +113,8 @@ def main():
     model_list = draw_walls()
     #hide_data = False
 
+    rotating = False
+
     scale = 1.0
     x = 0
     z = 0
@@ -123,6 +125,21 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+
+        key = pygame.key.get_pressed()
+
+        #TRANSLACIONES
+        if key[pygame.K_UP]:
+            glTranslatef(0.0,.0,0.2)
+        elif key[pygame.K_DOWN]:
+            glTranslatef(0.0,.0,-0.2)
+        elif key[pygame.K_LEFT]:
+            glTranslatef(0.2,.0,0.0)
+        elif key[pygame.K_RIGHT]:
+            glTranslatef(-0.2,.0,0.0)
+            
+
+                
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glPushMatrix()
