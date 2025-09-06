@@ -125,6 +125,9 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.KEYDOWN:   # Detectar teclas presionadas
+                if event.key == pygame.K_ESCAPE: # Si es ESC, salir
+                    running = False
 
         key = pygame.key.get_pressed()
 
@@ -165,3 +168,4 @@ def main():
 
 main()
 pygame.quit()
+
