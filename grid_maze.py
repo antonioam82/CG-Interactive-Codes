@@ -41,7 +41,7 @@ def draw_walls():
     glLineWidth(1.6)  # Set line width (optional)
     glBegin(GL_LINES)
     glColor3f(1.0,1.0,0.0)
-    path = r'C:\Users\Usuario\Documents\fondo\maze_large_with_plazes.obj'
+    path = r'C:\Users\anton\Downloads\maze_large_with_plazes.obj'
     vertices, edges, surfaces = load_obj(path)
     for edge in edges:
         for vertex in edge:
@@ -152,7 +152,7 @@ def main():
         glTranslatef(x, 0.00, z)
         glCallList(grid_list)
         glPushMatrix()
-        glScalef(0.3,0.02,0.3)######################
+        glScalef(0.3,0.09,0.3)######################
         glRotatef(90, 1, 0, 0)
         glTranslatef(0.0, 0.0, -17.5)
         glTranslatef(0.0, 1.9, 0.0)
