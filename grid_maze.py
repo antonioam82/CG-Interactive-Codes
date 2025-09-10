@@ -63,11 +63,13 @@ def draw_grid():
     glEnable(GL_POLYGON_OFFSET_FILL)
     glPolygonOffset(1.0,1.0)
     glBegin(GL_QUADS)
+    
     glColor3f(0.3,0.2,0.4)
     glVertex3f(-grid_size,0,-grid_size)
     glVertex3f(grid_size,0,-grid_size)
     glVertex3f(grid_size, 0, grid_size)
     glVertex3f(-grid_size, 0, grid_size)
+    
     glEnd()
     glDisable(GL_POLYGON_OFFSET_FILL)########### 
     glLineWidth(1.3)
@@ -81,7 +83,7 @@ def draw_grid():
     for z in range(-grid_size, grid_size + 1, grid_spacing):
         glVertex3f(-grid_size, 0, z)
         glVertex3f(grid_size, 0, z)
-
+        
     glEnd()
     glEndList()
     return grid_list
@@ -140,9 +142,7 @@ def main():
             glTranslatef(0.2,.0,0.0)
         elif key[pygame.K_RIGHT]:
             glTranslatef(-0.2,.0,0.0)
-            
-
-                
+                  
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glPushMatrix()
@@ -154,9 +154,9 @@ def main():
         glPushMatrix()
         glScalef(0.3,0.09,0.3)######################
         glRotatef(90, 1, 0, 0)
-        glTranslatef(0.0, 0.0, -17.5)
+        glTranslatef(0.0, 0.0, -26.2)
         glTranslatef(0.0, 1.9, 0.0)
-        glScalef(20.0,20.0,20.0)
+        glScalef(35.0,35.0,35.0)
         glCallList(model_list)
         glPopMatrix()
         glPopMatrix()
