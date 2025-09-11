@@ -115,11 +115,19 @@ def main():
     model_list = draw_walls()
     #hide_data = False
 
+    #############################################3
     rotating = False
+    rotation_speed = 2.0
+    target_angle = 0
+    current_angle = 0
+    index = 0
+    ###############################################
 
     scale = 1.0
     x = 0
     z = 0
+
+    directions = ['front','right','back','left']
 
     running = True
 
@@ -130,6 +138,25 @@ def main():
             elif event.type == pygame.KEYDOWN:   # Detectar teclas presionadas
                 if event.key == pygame.K_ESCAPE: # Si es ESC, salir
                     running = False
+
+                elif event.key == pygame.K_RIGHT and not rotating:
+                    index += 1
+                    if index > 3:
+                        index = 0
+                    direction = directions[index]
+                    target_angle += 90
+                    rotating = True
+                    print(direction)
+                elif event.key == pygame.K_LEFT and not rotating:
+                    index -= 1
+                    if index < 0:
+                        index = 3
+                    direction = directions[index]
+                    target_angle -= 90
+                    rotating = True
+                    print(direction)
+                    
+                
 
         key = pygame.key.get_pressed()
 
