@@ -41,7 +41,7 @@ def draw_walls():
     glLineWidth(1.6)  # Set line width (optional)
     glBegin(GL_LINES)
     glColor3f(1.0,1.0,0.0)
-    path = r'C:\Users\anton\Downloads\maze_large_with_plazes.obj'
+    path = r'C:\Users\anton\Downloads\maze_large_with_plazesss.obj'
     vertices, edges, surfaces = load_obj(path)
     for edge in edges:
         for vertex in edge:
@@ -154,9 +154,7 @@ def main():
                     direction = directions[index]
                     target_angle -= 90
                     rotating = True
-                    print(direction)
-                    
-                
+                    print(direction)        
 
         key = pygame.key.get_pressed()
 
@@ -174,6 +172,11 @@ def main():
             glRotatef(1,1,0,0)
         elif key[pygame.K_n]:
             glRotatef(-1,1,0,0)
+            
+        '''elif key[pygame.K_z]:
+            scale += 1.0
+        elif key[pygame.K_x]:
+            scale -= 1.0'''
                   
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -200,4 +203,5 @@ def main():
 
 main()
 pygame.quit()
+
 
