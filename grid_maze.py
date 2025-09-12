@@ -6,7 +6,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 import numpy as np
 
-grid_size = 140
+grid_size = 170
 grid_spacing = 1
 
 def load_obj(filename):
@@ -169,6 +169,11 @@ def main():
             glTranslatef(0.2,.0,0.0)
         elif key[pygame.K_RIGHT]:
             glTranslatef(-0.2,.0,0.0)
+
+        elif key[pygame.K_m]:
+            glRotatef(1,1,0,0)
+        elif key[pygame.K_n]:
+            glRotatef(-1,1,0,0)
                   
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
