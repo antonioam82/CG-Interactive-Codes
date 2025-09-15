@@ -4,6 +4,7 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+import random
 
 grid_size = 140
 grid_spacing = 1
@@ -177,8 +178,8 @@ def Cube():
     return cube_list
 
 def other_cube():
-    other_cube_list = glGenLists(1)
-    glNewList(other_cube_list, GL_COMPILE)
+    #other_cube_list = glGenLists(1)
+    #glNewList(other_cube_list, GL_COMPILE)
     glLineWidth(3.0)
     glBegin(GL_LINES)
     glColor3f(1.0,0.0,0.0)
@@ -189,14 +190,17 @@ def other_cube():
     glEnd()
 
     glBegin(GL_QUADS)
-    glColor3f(0.3,0.5,0.7)
+    r = random.uniform(0.0,1.0)
+    g = random.uniform(0.0,1.0)
+    b = random.uniform(0.0,1.0)
+    glColor3f(r,g,b)
     for surface in surfaces:
         for vertex in surface:
             glVertex3fv(another_cube[vertex])
     glEnd()
 
-    glEndList()
-    return other_cube_list
+    #glEndList()
+    #return other_cube_list
 
 def drawText(f, x, y, text, c, bgc):
     textSurface = f.render(text, True, c, bgc)
@@ -233,7 +237,7 @@ def main():
 
     cube_list = Cube()
     grid_list = draw_grid()
-    other_list = other_cube()
+    #other_list = other_cube()
     model_list = draw_walls()
     hide_data = False
 
@@ -443,7 +447,8 @@ def main():
         glPushMatrix()################################3
         glTranslatef(cube_translation, 0.0, -80.5)
         glRotatef(rot, 0.0, 1.0, 0.0)
-        glCallList(other_list)
+        #glCallList(other_list)
+        other_cube()
         glPopMatrix()####################################
         glPopMatrix()
 
