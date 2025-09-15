@@ -321,15 +321,15 @@ def main():
         key = pygame.key.get_pressed()
 
         if key[pygame.K_UP]:
-            if direction == 'front' and z + speed <= (grid_size - 1):
+            if direction == 'front':# and z + speed <= (grid_size - 1):
                 z += speed
                 z_c -= speed_c
                 z_c += speed
-            elif direction == 'back' and z - speed >= (-grid_size + 1):
+            elif direction == 'back':# and z - speed >= (-grid_size + 1):
                 z -= speed
                 z_c += speed_c
                 z_c -= speed
-            elif direction == 'right' and x - speed >= (-grid_size + 1):
+            elif direction == 'right':# and x - speed >= (-grid_size + 1):
                 x -= speed
                 x_c += speed_c
                 x_c -= speed##########################'''
