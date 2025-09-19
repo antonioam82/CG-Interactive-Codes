@@ -324,24 +324,31 @@ def main():
 
         if key[pygame.K_UP]:
             if direction == 'front':# and z + speed <= (grid_size - 1):
-                '''if z + speed <= (grid_size - 1):
-
-                    fall_speed = 0.3'''
                 if z + speed > (grid_size - 1):
                     fall_speed = 0.05
+                    
                 z += speed
                 z_c -= speed_c
                 z_c += speed
                 
             elif direction == 'back':# and z - speed >= (-grid_size + 1):
+                '''if z - speed >= (-grid_size + 1):
+                    fall_speed = 0.05'''
+                    
                 z -= speed
                 z_c += speed_c
                 z_c -= speed
             elif direction == 'right':# and x - speed >= (-grid_size + 1):
+                '''if x - speed >= (-grid_size + 1):
+                    fall_speed = 0.05'''
+                    
                 x -= speed
                 x_c += speed_c
                 x_c -= speed##########################'''
             elif direction == 'left' and x + speed <= (grid_size - 1):
+                '''if x + speed <= (grid_size - 1):
+                    fall_speed = 0.05'''
+                    
                 x += speed
                 x_c -= speed_c
                 x_c += speed
