@@ -259,6 +259,8 @@ def main():
     rot = 0
     cube_translation = -20.0
     sentido = "LEFT"
+    fall_speed = 0.0
+    y_ = 0.001
     
     scene = 0
     index = 0
@@ -322,9 +324,15 @@ def main():
 
         if key[pygame.K_UP]:
             if direction == 'front':# and z + speed <= (grid_size - 1):
+                '''if z + speed <= (grid_size - 1):
+
+                    fall_speed = 0.3'''
+                if z + speed > (grid_size - 1):
+                    fall_speed = 0.05
                 z += speed
                 z_c -= speed_c
                 z_c += speed
+                
             elif direction == 'back':# and z - speed >= (-grid_size + 1):
                 z -= speed
                 z_c += speed_c
@@ -455,6 +463,7 @@ def main():
         # Dibujar el cubo
         glPushMatrix()
         glTranslatef(x_c, 0.0, z_c)
+        glTranslatef(0.0,y_,0.0)
         glRotatef(-current_angle, 0, 1, 0)
         glCallList(cube_list)
         glPopMatrix()
@@ -482,6 +491,8 @@ def main():
             drawText(font, 20, 550, f'CAMERA SPEED: {spd}', (0, 255, 0, 255), (0, 0, 0))
             drawText(font, 20, 530, f'FIGURE SPEED: {spdc}', (0, 255, 0, 255), (0, 0, 0))
             drawText(font, 20, 510, f'SCALE: {scale:.2f}', (0, 255, 0, 255), (0, 0, 0))
+
+        y_ -= fall_speed
 
         glFlush()
         pygame.display.flip()
