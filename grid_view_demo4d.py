@@ -324,8 +324,8 @@ def main():
 
         if key[pygame.K_UP]:
             if direction == 'front':# and z + speed <= (grid_size - 1):
-                if z + speed > (grid_size - 1):
-                    fall_speed = 0.05
+                if z + speed > (grid_size + 0.5):
+                    fall_speed = spd#0.05
                     
                 z += speed
                 z_c -= speed_c
@@ -507,3 +507,4 @@ def main():
 
 main()
 pygame.quit()
+
