@@ -216,7 +216,7 @@ rotating = False
 
 def main():
     pygame.init()
-    display = (800, 600)
+    display = (1600, 900)
     
     pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 4)
     
@@ -240,7 +240,7 @@ def main():
     grid_list = draw_grid()
     #other_list = other_cube()
     model_list = draw_walls()
-    hide_data = False
+    hide_data = True
 
     show_controls()
 
