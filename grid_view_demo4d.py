@@ -233,7 +233,8 @@ def main():
     
     glEnable(GL_DEPTH_TEST)
     font = pygame.font.SysFont('arial', 15)
-    glRotatef(15, 1, 0, 0)
+    #glRotatef(15, 1, 0, 0)
+    glRotatef(55, 1, 0, 0)
 
     cube_list = Cube()
     grid_list = draw_grid()
@@ -254,7 +255,7 @@ def main():
     speed_c = 0.1
     running = True
     direction = 'front'
-    scale = 1.0
+    scale = 0.55#1.0
     
     rot = 0
     cube_translation = -20.0
@@ -451,6 +452,7 @@ def main():
 
         # Dibujar el grid
         glPushMatrix()
+        #glRotatef(1, 90, 0, 0)
         glTranslatef(x, 0.00, z)
         glCallList(grid_list)
         glPushMatrix()
