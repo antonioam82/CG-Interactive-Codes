@@ -102,7 +102,7 @@ def main():
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
-    gluPerspective(45, (display[0] / display[1]), 0.1, 150.0)
+    gluPerspective(45, (display[0] / display[1]), 0.1, 200.0)
     glTranslatef(0.0, 0.0, -10)
     
     glEnable(GL_DEPTH_TEST)
@@ -159,7 +159,7 @@ def main():
         key = pygame.key.get_pressed()
 
         #TRANSLACIONES
-        if key[pygame.K_UP]:
+        '''if key[pygame.K_UP]:
             glTranslatef(0.0,.0,0.2)
         elif key[pygame.K_DOWN]:
             glTranslatef(0.0,.0,-0.2)
@@ -169,9 +169,23 @@ def main():
             glTranslatef(-0.2,.0,0.0)
 
         elif key[pygame.K_m]:
-            glRotatef(1,1,0,0)
+             glRotatef(1,1,0,0)
         elif key[pygame.K_n]:
-            glRotatef(-1,1,0,0)
+             glRotatef(-1,1,0,0)'''
+
+        if rotating:
+            angle_difference = target_angle - current_angle
+            if abs(angle_difference) > rotation_speed:
+                if angle_difference > 0:
+                    current_angle += rotation_speed
+                    glRotatef(rotation_speed, 0, 1, 0)
+                else:
+                    current_angle -= rotation_speed
+                    glRotatef(-rotation_speed, 0, 1, 0)
+            else:
+                glRotatef(angle_difference, 0, 1, 0)
+                current_angle = target_angle
+                rotating = False
             
         '''elif key[pygame.K_z]:
             scale += 1.0
@@ -186,7 +200,9 @@ def main():
         glPushMatrix()
         glTranslatef(x, 0.00, z)
         glCallList(grid_list)
+        
         glPushMatrix()
+        
         glScalef(0.3,0.09,0.3)######################
         glRotatef(90, 1, 0, 0)
         glTranslatef(0.0, 0.0, -26.2)
