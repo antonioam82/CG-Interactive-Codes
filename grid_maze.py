@@ -160,7 +160,10 @@ def main():
 
         #TRANSLACIONES
         '''if key[pygame.K_UP]:
-            glTranslatef(0.0,.0,0.2)
+            print(speed)
+            if directions == 'front':
+                print('frooont')
+                glTranslatef(0.0,0.0,0.2)
         elif key[pygame.K_DOWN]:
             glTranslatef(0.0,.0,-0.2)
         elif key[pygame.K_LEFT]:
@@ -198,7 +201,7 @@ def main():
         glScalef(scale,scale,scale)
 
         glPushMatrix()
-        glTranslatef(x, 0.00, z)
+        #glTranslatef(x, 0.00, z)
         glCallList(grid_list)
         
         glPushMatrix()
