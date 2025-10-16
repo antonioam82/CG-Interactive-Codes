@@ -6,7 +6,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 import numpy as np
 
-grid_size = 140
+grid_size = 250
 grid_spacing = 1
 
 another_cube = (
@@ -435,9 +435,9 @@ def main():
         glPushMatrix()
         glScalef(0.3,0.09,0.3)######################
         glRotatef(90, 1, 0, 0)
-        glTranslatef(0.0, 0.0, -26.2)
+        glTranslatef(0.0, 0.0, -41.2)
         glTranslatef(0.0, 1.9, 0.0)
-        glScalef(35.0,35.0,35.0)
+        glScalef(55.0,55.0,55.0)
         glCallList(model_list)
         glPopMatrix()
         glPushMatrix()################################3
