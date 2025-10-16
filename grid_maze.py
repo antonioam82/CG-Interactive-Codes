@@ -127,6 +127,8 @@ def main():
     x = 0
     z = 0
 
+    speed = 0.1
+
     directions = ['front','right','back','left']
 
     running = True
@@ -159,16 +161,28 @@ def main():
         key = pygame.key.get_pressed()
 
         #TRANSLACIONES
-        '''if key[pygame.K_UP]:
-            print(speed)
-            if directions == 'front':
-                print('frooont')
-                glTranslatef(0.0,0.0,0.2)
-        elif key[pygame.K_DOWN]:
-            glTranslatef(0.0,.0,-0.2)
-        elif key[pygame.K_LEFT]:
+        if key[pygame.K_UP] and not rotating:
+            if direction == 'front':
+                z += speed
+            elif direction == 'back':
+                z -= speed
+            elif direction == 'right':
+                x -= speed
+            elif direction == 'left':
+                x += speed
+            
+        elif key[pygame.K_DOWN] and not rotating:
+            if direction == 'front':
+                z -= speed
+            elif direction == 'back':
+                z += speed
+            elif direction == 'right':
+                x += speed
+            elif direction == 'left':
+                x -= speed
+        '''elif key[pygame.K_LEFT] and not rotating:
             glTranslatef(0.2,.0,0.0)
-        elif key[pygame.K_RIGHT]:
+        elif key[pygame.K_RIGHT] and not rotating:
             glTranslatef(-0.2,.0,0.0)
 
         elif key[pygame.K_m]:
@@ -201,7 +215,7 @@ def main():
         glScalef(scale,scale,scale)
 
         glPushMatrix()
-        #glTranslatef(x, 0.00, z)
+        glTranslatef(x, 0.00, z)
         glCallList(grid_list)
         
         glPushMatrix()
