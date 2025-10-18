@@ -496,7 +496,7 @@ def window(args):
  
 def main():
     parser = argparse.ArgumentParser(prog="ModelVisor1.0", conflict_handler='resolve',
-                                     description="Show obj models",allow_abbrev=False)
+                                     description="Show '.obj' and '.txt' models",allow_abbrev=False)
     parser.add_argument('-load','--load_object',required=True,type=check_source_ext,help="Obj model to load")
     parser.add_argument('-width','--window_width',type=check_width_value,default=800,help="Window width")
     parser.add_argument('-height','--window_height',type=check_height_value,default=600,help="Window height")
