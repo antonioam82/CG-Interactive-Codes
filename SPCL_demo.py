@@ -4,6 +4,9 @@ import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+import os
+
+os.chdir(r'C:\Users\anton\OneDrive\Documentos\files_used')
 
 #SPCL_demo.py en github
 #TO DO: Color 4 grid surface
@@ -181,7 +184,7 @@ def draw_grid():
     glDisable(GL_POLYGON_OFFSET_FILL)###########
 
     # 2. Dibujar las líneas blancas por encima
-    glLineWidth(1.5)
+    glLineWidth(1.0)
     glBegin(GL_LINES)
     glColor3f(1.0, 1.0, 1.0)  # Blanco
     for x in range(-grid_size, grid_size + 1, grid_spacing):
@@ -213,6 +216,13 @@ def main():
     glEnable(GL_DEPTH_TEST)
     #glRotatef(15,1,0,0)
     glClearColor(0.3, 0.3, 0.3, 1.0)
+
+    '''# antialiasing
+    glEnable(GL_MULTISAMPLE)
+    glEnable(GL_LINE_SMOOTH)
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST)
+    glEnable(GL_BLEND)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)'''
 
     top = False
     view_elevation = -10.0
@@ -311,6 +321,7 @@ def main():
         glColor3f(1.0,0.0,0.0)
         glTranslatef(1.0,elevation,0.0)
         glRotatef(-90,0,1,0)
+        glLineWidth(1.0)
         glCallList(model_list)
         glPopMatrix()
 
