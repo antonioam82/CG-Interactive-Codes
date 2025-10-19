@@ -175,7 +175,7 @@ def draw_grid():
     glEnable(GL_POLYGON_OFFSET_FILL)#############
     glPolygonOffset(1.0, 1.0)####################
     glBegin(GL_QUADS)
-    glColor3f(0.0, 0.0, 1.0)  # Azul
+    glColor3f(0.0, 0.0, 0.0)  # Azul
     glVertex3f(-grid_size, 0, -grid_size)
     glVertex3f(grid_size, 0, -grid_size)
     glVertex3f(grid_size, 0, grid_size)
