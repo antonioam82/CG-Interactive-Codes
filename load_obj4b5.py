@@ -53,36 +53,41 @@ def load_obj(filename,color,args):
     num_verts = 0
     num_triangles = 0
     faces = []
-    #polygon_verts = 0
+    polygon_verts = 0
+    errorr = False
     #vs = []
-    with open(filename, 'r') as file:
-        for line in file:
-            if line.startswith('v '):  # Vértice
-                num_verts += 1
-                parts = line.strip().split()
-                vertex = [float(parts[1]), float(parts[2]), float(parts[3])]
-                vertices.append(vertex)
-                #vs = vertices
-            elif line.startswith('f '):  # Cara
-                num_triangles += 1
-                parts = line.strip().split()
-                face_indices = [int(part.split('/')[0]) - 1 for part in parts[1:]]
-                polygon_verts = len(face_indices)
-                if color:
-                    faces.append(face_indices)
-                for i in range(len(face_indices)):
-                    edges.add(tuple(sorted((face_indices[i], face_indices[(i + 1) % len(face_indices)]))))
-                    #edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
-                    num_edges = len(edges)
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                if line.startswith('v '):  # Vértice
+                    num_verts += 1
+                    parts = line.strip().split()
+                    vertex = [float(parts[1]), float(parts[2]), float(parts[3])]
+                    vertices.append(vertex)
+                    #vs = vertices
+                elif line.startswith('f '):  # Cara
+                    num_triangles += 1
+                    parts = line.strip().split()
+                    face_indices = [int(part.split('/')[0]) - 1 for part in parts[1:]]
+                    polygon_verts = len(face_indices)
+                    if color:
+                        faces.append(face_indices)
+                    for i in range(len(face_indices)):
+                        edges.add(tuple(sorted((face_indices[i], face_indices[(i + 1) % len(face_indices)]))))
+                        #edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
+                        num_edges = len(edges)
  
-    if args.enable_centering:
-        min_v = np.min(vertices, axis=0)
-        max_v = np.max(vertices, axis=0)
-        center = (min_v + max_v) / 2.0
-        vertices = [list(np.array(v) - center) for v in vertices]
+        if args.enable_centering:
+            min_v = np.min(vertices, axis=0)
+            max_v = np.max(vertices, axis=0)
+            center = (min_v + max_v) / 2.0
+            vertices = [list(np.array(v) - center) for v in vertices]
+
+    except:
+        errorr = True
  
     #print(polygon_verts)
-    return vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts
+    return vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts, errorr
  
 def drawText(f, x, y, text, c, bgc):
     textSurface = f.render(text, True, c, bgc)
@@ -245,248 +250,252 @@ def window(args):
     try:
         path = args.load_object
         model_name = os.path.basename(path)
-        vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts = load_obj(path,args.fill_object,args)
+        vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts, errorr = load_obj(path,args.fill_object,args)
+
+        if not errorr:
+            show_controls()
+            pygame.init()
  
-        show_controls()
-        pygame.init()
+            text_bgR = rgb_t[args.bg_color][0]
+            text_bgG = rgb_t[args.bg_color][1]
+            text_bgB = rgb_t[args.bg_color][2]
  
-        text_bgR = rgb_t[args.bg_color][0]
-        text_bgG = rgb_t[args.bg_color][1]
-        text_bgB = rgb_t[args.bg_color][2]
+            text_pos1 = text_pos(args.window_height,570)
+            text_pos2 = text_pos(args.window_height,550)
+            text_pos3 = text_pos(args.window_height,530)
+            text_pos4 = text_pos(args.window_height,510)
+            text_pos5 = text_pos(args.window_height,490)
+            text_pos6 = text_pos(args.window_height,470)
  
-        text_pos1 = text_pos(args.window_height,570)
-        text_pos2 = text_pos(args.window_height,550)
-        text_pos3 = text_pos(args.window_height,530)
-        text_pos4 = text_pos(args.window_height,510)
-        text_pos5 = text_pos(args.window_height,490)
-        text_pos6 = text_pos(args.window_height,470)
+            display = (args.window_width, args.window_height)
  
-        display = (args.window_width, args.window_height)
+            pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 4)
  
-        pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 4)
+            pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
  
-        pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+            glEnable(GL_MULTISAMPLE)
+            glEnable(GL_LINE_SMOOTH)
+            glHint(GL_LINE_SMOOTH_HINT, GL_NICEST)
+            glEnable(GL_BLEND)
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
  
-        glEnable(GL_MULTISAMPLE)
-        glEnable(GL_LINE_SMOOTH)
-        glHint(GL_LINE_SMOOTH_HINT, GL_NICEST)
-        glEnable(GL_BLEND)
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+            pygame.display.set_caption("Model Viewer")
+            font = pygame.font.SysFont('arial', 15)
  
-        pygame.display.set_caption("Model Viewer")
-        font = pygame.font.SysFont('arial', 15)
+            glEnable(GL_DEPTH_TEST)#######################################################
  
-        glEnable(GL_DEPTH_TEST)#######################################################
+            #glClearColor(0.0, 0.0, 1.0, 1.0)
  
-        #glClearColor(0.0, 0.0, 1.0, 1.0)
+            glClearColor(rgb_colors[args.bg_color][0],
+                         rgb_colors[args.bg_color][1],
+                         rgb_colors[args.bg_color][2],
+                         rgb_colors[args.bg_color][3])
  
-        glClearColor(rgb_colors[args.bg_color][0],
-                     rgb_colors[args.bg_color][1],
-                     rgb_colors[args.bg_color][2],
-                     rgb_colors[args.bg_color][3])
+            ##
+            scale = args.scale
+            hide_data = False
+            green_val = 255
+            rotating = False
  
-        ##
-        scale = args.scale
-        hide_data = False
-        green_val = 255
-        rotating = False
+            # Crear la lista de display para el modelo
+            model_list = glGenLists(1)
+            glNewList(model_list, GL_COMPILE)
  
-        # Crear la lista de display para el modelo
-        model_list = glGenLists(1)
-        glNewList(model_list, GL_COMPILE)
+            glLineWidth(args.line_width)
  
-        glLineWidth(args.line_width)
+            if args.fill_object:
+                fill_object(polygon_verts,faces,vertices)
  
-        if args.fill_object:
-            fill_object(polygon_verts,faces,vertices)
+            if args.bg_color == 'white':
+                glColor3f(0.0, 0.0, 0.0)  # Color negro
+                green_val = 100
+            else:
+                glColor3f(1.0, 1.0, 1.0)  # Color blanco
  
-        if args.bg_color == 'white':
-            glColor3f(0.0, 0.0, 0.0)  # Color negro
-            green_val = 100
-        else:
-            glColor3f(1.0, 1.0, 1.0)  # Color blanco
+            glBegin(GL_LINES)
+            for edge in edges:
+                for vertex in edge:
+                    glVertex3fv(vertices[vertex])
+            glEnd()
+            glEndList()
  
-        glBegin(GL_LINES)
-        for edge in edges:
-            for vertex in edge:
-                glVertex3fv(vertices[vertex])
-        glEnd()
-        glEndList()
+            # Inicializar la vista en perspectiva por defecto
+            is_ortho = False
+            setup_view_perspective(display)
  
-        # Inicializar la vista en perspectiva por defecto
-        is_ortho = False
-        setup_view_perspective(display)
+            # Inicializar el cuaternión de rotación (sin rotación inicial)
+            quaternion = Quaternion(1, 0, 0, 0)#########################################
  
-        # Inicializar el cuaternión de rotación (sin rotación inicial)
-        quaternion = Quaternion(1, 0, 0, 0)#########################################
+            dragging = False
+            last_mouse_pos = (0, 0)
+            translation = [0.0, 0.0]
  
-        dragging = False
-        last_mouse_pos = (0, 0)
-        translation = [0.0, 0.0]
- 
-        running = True
-        while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                elif event.type == pygame.KEYDOWN:
-                    '''if event.key == pygame.K_z:
-                        scale += 0.05
-                    elif event.key == pygame.K_x:
-                        scale -= 0.05'''
-                    if event.key == pygame.K_ESCAPE:
+            running = True
+            while running:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
                         running = False
-                    elif event.key == pygame.K_h:
-                        hide_data = not hide_data
-                    elif event.key == pygame.K_r:
-                        quaternion = Quaternion(1, 0, 0, 0)
-                        scale = args.scale
-                        dragging = False
-                        last_mouse_pos = (0, 0)
-                        translation = [0.0, 0.0]
-                        is_ortho = False
-                        setup_view_perspective(display) # Restablece vista en perspectiva
-                        args.solid = False
+                    elif event.type == pygame.KEYDOWN:
+                        '''if event.key == pygame.K_z:
+                           scale += 0.05
+                        elif event.key == pygame.K_x:
+                            scale -= 0.05'''
+                        if event.key == pygame.K_ESCAPE:
+                            running = False
+                        elif event.key == pygame.K_h:
+                            hide_data = not hide_data
+                        elif event.key == pygame.K_r:
+                            quaternion = Quaternion(1, 0, 0, 0)
+                            scale = args.scale
+                            dragging = False
+                            last_mouse_pos = (0, 0)
+                            translation = [0.0, 0.0]
+                            is_ortho = False
+                            setup_view_perspective(display) # Restablece vista en perspectiva
+                            args.solid = False
  
-                    elif event.key == pygame.K_p:  # Cambiar entre ortogonal y perspectiva
-                        is_ortho = not is_ortho
-                        if is_ortho:
-                            setup_view_ortho(display)
-                        else:
-                            setup_view_perspective(display)
+                        elif event.key == pygame.K_p:  # Cambiar entre ortogonal y perspectiva
+                            is_ortho = not is_ortho
+                            if is_ortho:
+                                setup_view_ortho(display)
+                            else:
+                                setup_view_perspective(display)
  
-                    elif event.key == pygame.K_t:  # Vista cenital (tecla 't')
-                        # Aplicar rotación para la vista cenital
-                        quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
-                        #translation = [0.0, 0.0]  # Restablece la traslación
-                        #scale = 1  # Restablece el zoom
-                        # Rotar la cámara 90 grados sobre el eje X para vista cenital
-                        rotation = create_rotation_quaternion(-90, 1, 0, 0)
-                        quaternion = quaternion * rotation
-                    elif event.key == pygame.K_b:
-                        quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
-                        rotation = create_rotation_quaternion(90, 1, 0, 0)
-                        quaternion = quaternion * rotation
-                    elif event.key == pygame.K_j:
-                        quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
-                        rotation = create_rotation_quaternion(90, 0, 1, 0)
-                        quaternion = quaternion * rotation
-                    elif event.key == pygame.K_l:
-                        quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
-                        rotation = create_rotation_quaternion(-90, 0, 1, 0)
-                        quaternion = quaternion * rotation
-                    elif event.key == pygame.K_g:
-                        quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
-                        rotation = create_rotation_quaternion(0, 0, 1, 0)
-                        quaternion = quaternion * rotation
-                    elif event.key == pygame.K_k:
-                        quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
-                        rotation = create_rotation_quaternion(180, 0, 1, 0)
-                        quaternion = quaternion * rotation
- 
- 
-                elif event.type == pygame.MOUSEWHEEL:  # Rueda ratón
-                    if event.y > 0:
-                        scale += 0.05
-                    elif event.y < 0:
-                        scale -= 0.05
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if event.button == 1:
-                        dragging = True
-                        last_mouse_pos = pygame.mouse.get_pos()
-                    elif event.button == 3:  # botón derecho para rotación
-                        rotating = True
-                        last_mouse_pos = pygame.mouse.get_pos()
-                elif event.type == pygame.MOUSEBUTTONUP:
-                    if event.button == 1:
-                        dragging = False
-                    elif event.button == 3:
-                        rotating = False
-                elif event.type == pygame.MOUSEMOTION:
-                    mouse_x, mouse_y = pygame.mouse.get_pos()
-                    dx = mouse_x - last_mouse_pos[0]
-                    dy = mouse_y - last_mouse_pos[1]
-                    if dragging:
-                        translation[0] += dx * 0.01
-                        translation[1] -= dy * 0.01
-                    if rotating:
-                        # Convertimos desplazamiento en rotación relativa
-                        angle_x = dy * -0.3
-                        angle_y = dx * -0.3
-                        # Rotación alrededor del eje X e Y (en coordenadas del mundo)
-                        qx = create_rotation_quaternion(angle_x, 1, 0, 0)
-                        qy = create_rotation_quaternion(angle_y, 0, 1, 0)
-                        quaternion = quaternion * qx * qy
- 
-                    last_mouse_pos = (mouse_x, mouse_y)
+                        elif event.key == pygame.K_t:  # Vista cenital (tecla 't')
+                            # Aplicar rotación para la vista cenital
+                            quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                            #translation = [0.0, 0.0]  # Restablece la traslación
+                            #scale = 1  # Restablece el zoom
+                            # Rotar la cámara 90 grados sobre el eje X para vista cenital
+                            rotation = create_rotation_quaternion(-90, 1, 0, 0)
+                            quaternion = quaternion * rotation
+                        elif event.key == pygame.K_b:
+                            quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                            rotation = create_rotation_quaternion(90, 1, 0, 0)
+                            quaternion = quaternion * rotation
+                        elif event.key == pygame.K_j:
+                            quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                            rotation = create_rotation_quaternion(90, 0, 1, 0)
+                            quaternion = quaternion * rotation
+                        elif event.key == pygame.K_l:
+                            quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                            rotation = create_rotation_quaternion(-90, 0, 1, 0)
+                            quaternion = quaternion * rotation
+                        elif event.key == pygame.K_g:
+                            quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                            rotation = create_rotation_quaternion(0, 0, 1, 0)
+                            quaternion = quaternion * rotation
+                        elif event.key == pygame.K_k:
+                            quaternion = Quaternion(1, 0, 0, 0)  # Restablece rotación
+                            rotation = create_rotation_quaternion(180, 0, 1, 0)
+                            quaternion = quaternion * rotation
  
  
-            key = pygame.key.get_pressed()
+                    elif event.type == pygame.MOUSEWHEEL:  # Rueda ratón
+                        if event.y > 0:
+                            scale += 0.05
+                        elif event.y < 0:
+                            scale -= 0.05
+                    elif event.type == pygame.MOUSEBUTTONDOWN:
+                        if event.button == 1:
+                            dragging = True
+                            last_mouse_pos = pygame.mouse.get_pos()
+                        elif event.button == 3:  # botón derecho para rotación
+                            rotating = True
+                            last_mouse_pos = pygame.mouse.get_pos()
+                    elif event.type == pygame.MOUSEBUTTONUP:
+                        if event.button == 1:
+                            dragging = False
+                        elif event.button == 3:
+                            rotating = False
+                    elif event.type == pygame.MOUSEMOTION:
+                        mouse_x, mouse_y = pygame.mouse.get_pos()
+                        dx = mouse_x - last_mouse_pos[0]
+                        dy = mouse_y - last_mouse_pos[1]
+                        if dragging:
+                            translation[0] += dx * 0.01
+                            translation[1] -= dy * 0.01
+                        if rotating:
+                            # Convertimos desplazamiento en rotación relativa
+                            angle_x = dy * -0.3
+                            angle_y = dx * -0.3
+                            # Rotación alrededor del eje X e Y (en coordenadas del mundo)
+                            qx = create_rotation_quaternion(angle_x, 1, 0, 0)
+                            qy = create_rotation_quaternion(angle_y, 0, 1, 0)
+                            quaternion = quaternion * qx * qy
  
-            # Rotación con cuaterniones (si se presionan las teclas de dirección)
-            if key[pygame.K_UP]:
-                rotation = create_rotation_quaternion(2, 1, 0, 0)
-                quaternion = quaternion * rotation
-            if key[pygame.K_DOWN]:
-                rotation = create_rotation_quaternion(-2, 1, 0, 0)
-                quaternion = quaternion * rotation
-            if key[pygame.K_RIGHT]:
-                rotation = create_rotation_quaternion(-2, 0, 1, 0)
-                quaternion = quaternion * rotation
-            if key[pygame.K_LEFT]:
-                rotation = create_rotation_quaternion(2, 0, 1, 0)
-                quaternion = quaternion * rotation
-            if key[pygame.K_m]:
-                rotation = create_rotation_quaternion(2, 0, 0, 1)
-                quaternion = quaternion * rotation
-            if key[pygame.K_n]:
-                rotation = create_rotation_quaternion(-2, 0, 0, 1)
-                quaternion = quaternion * rotation
-            if key[pygame.K_z] and scale > 0.05:
-                scale -= 0.05
-            if key[pygame.K_x]:
-                scale += 0.05
-            # TRANSLATIONS
-            if key[pygame.K_a]:
-                #glTranslatef(-0.05, 0, 0)
-                translation[0] -= 0.05
-            if key[pygame.K_s]:
-                #glTranslatef(0.05, 0, 0)
-                translation[0] += 0.05
-            if key[pygame.K_d]:
-                #glTranslatef(0, 0.05, 0)
-                translation[1] += 0.05
-            if key[pygame.K_f]:
-                #glTranslatef(0, -0.05, 0)
-                translation[1] -= 0.05
+                        last_mouse_pos = (mouse_x, mouse_y)
  
-            # Limpiar la pantalla y cargar la nueva matriz de rotación
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-            glPushMatrix()
  
-            glTranslatef(translation[0], translation[1], 0)
+                key = pygame.key.get_pressed()
  
-            # Convertir el cuaternión a matriz de rotación
-            rotation_matrix = quaternion.to_matrix()
-            glMultMatrixf(rotation_matrix)
+                # Rotación con cuaterniones (si se presionan las teclas de dirección)
+                if key[pygame.K_UP]:
+                    rotation = create_rotation_quaternion(2, 1, 0, 0)
+                    quaternion = quaternion * rotation
+                if key[pygame.K_DOWN]:
+                    rotation = create_rotation_quaternion(-2, 1, 0, 0)
+                    quaternion = quaternion * rotation
+                if key[pygame.K_RIGHT]:
+                    rotation = create_rotation_quaternion(-2, 0, 1, 0)
+                    quaternion = quaternion * rotation
+                if key[pygame.K_LEFT]:
+                    rotation = create_rotation_quaternion(2, 0, 1, 0)
+                    quaternion = quaternion * rotation
+                if key[pygame.K_m]:
+                    rotation = create_rotation_quaternion(2, 0, 0, 1)
+                    quaternion = quaternion * rotation
+                if key[pygame.K_n]:
+                    rotation = create_rotation_quaternion(-2, 0, 0, 1)
+                    quaternion = quaternion * rotation
+                if key[pygame.K_z] and scale > 0.05:
+                    scale -= 0.05
+                if key[pygame.K_x]:
+                    scale += 0.05
+                # TRANSLATIONS
+                if key[pygame.K_a]:
+                    #glTranslatef(-0.05, 0, 0)
+                    translation[0] -= 0.05
+                if key[pygame.K_s]:
+                    #glTranslatef(0.05, 0, 0)
+                    translation[0] += 0.05
+                if key[pygame.K_d]:
+                    #glTranslatef(0, 0.05, 0)
+                    translation[1] += 0.05
+                if key[pygame.K_f]:
+                    #glTranslatef(0, -0.05, 0)
+                    translation[1] -= 0.05
  
-            # Dibujar el modelo
-            glScalef(scale, scale, scale)
-            glCallList(model_list)
+                # Limpiar la pantalla y cargar la nueva matriz de rotación
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+                glPushMatrix()
  
-            glPopMatrix()
+                glTranslatef(translation[0], translation[1], 0)
  
-            if not hide_data:
-                drawText(font, 20, text_pos1, f'Model: {model_name}', (0, green_val, 0, 255), (text_bgR, text_bgG, text_bgB))
-                drawText(font, 20, text_pos2, f'Scale: {round(scale, 2)}', (0, green_val, 0, 255), (text_bgR, text_bgG, text_bgB))
-                view_mode = "Orthographic" if is_ortho else "Perspective"
-                drawText(font, 20, text_pos3, f'View: {view_mode}', (0, green_val, 0, 255),(text_bgR, text_bgG, text_bgB))
-                drawText(font, 20, text_pos4, f'Nun Verts: {num_verts}',(0, green_val, 0, 255),(text_bgR, text_bgG, text_bgB))
-                drawText(font, 20, text_pos5, f'Nun Faces: {num_triangles}',(0, green_val, 0, 255),(text_bgR, text_bgG, text_bgB))
-                drawText(font, 20, text_pos6, f'Num Edges: {num_edges}',(0, green_val, 0, 255),(text_bgR, text_bgG, text_bgB))
+                # Convertir el cuaternión a matriz de rotación
+                rotation_matrix = quaternion.to_matrix()
+                glMultMatrixf(rotation_matrix)
  
-            pygame.display.flip()
-            pygame.time.wait(10)
+                # Dibujar el modelo
+                glScalef(scale, scale, scale)
+                glCallList(model_list)
+ 
+                glPopMatrix()
+ 
+                if not hide_data:
+                    drawText(font, 20, text_pos1, f'Model: {model_name}', (0, green_val, 0, 255), (text_bgR, text_bgG, text_bgB))
+                    drawText(font, 20, text_pos2, f'Scale: {round(scale, 2)}', (0, green_val, 0, 255), (text_bgR, text_bgG, text_bgB))
+                    view_mode = "Orthographic" if is_ortho else "Perspective"
+                    drawText(font, 20, text_pos3, f'View: {view_mode}', (0, green_val, 0, 255),(text_bgR, text_bgG, text_bgB))
+                    drawText(font, 20, text_pos4, f'Nun Verts: {num_verts}',(0, green_val, 0, 255),(text_bgR, text_bgG, text_bgB))
+                    drawText(font, 20, text_pos5, f'Nun Faces: {num_triangles}',(0, green_val, 0, 255),(text_bgR, text_bgG, text_bgB))
+                    drawText(font, 20, text_pos6, f'Num Edges: {num_edges}',(0, green_val, 0, 255),(text_bgR, text_bgG, text_bgB))
+ 
+                pygame.display.flip()
+                pygame.time.wait(10)
+
+        else:
+            print(Fore.RED+Style.BRIGHT+"FILE ERROR."+Fore.RESET+Style.RESET_ALL)
  
     except Exception as e:
         print(Fore.RED+Style.BRIGHT + "UNEXPECTED ERROR: " + str(e) + Fore.RESET+Style.RESET_ALL)
@@ -495,6 +504,7 @@ def window(args):
     print("terminated")
  
 def main():
+    global error
     parser = argparse.ArgumentParser(prog="ModelVisor1.0", conflict_handler='resolve',
                                      description="Show '.obj' and '.txt' models",allow_abbrev=False)
     parser.add_argument('-load','--load_object',required=True,type=check_source_ext,help="Obj model to load")
