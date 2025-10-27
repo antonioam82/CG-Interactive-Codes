@@ -85,6 +85,8 @@ def load_obj(filename,color,args):
 
     except:
         errorr = True
+
+    print(errorr)
  
     #print(polygon_verts)
     return vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts, errorr
@@ -449,9 +451,11 @@ def window(args):
                     rotation = create_rotation_quaternion(-2, 0, 0, 1)
                     quaternion = quaternion * rotation
                 if key[pygame.K_z] and scale > 0.05:
-                    scale -= 0.05
+                    #scale -= 0.05
+                    glTranslatef(0.0,0.0,0.02)
                 if key[pygame.K_x]:
-                    scale += 0.05
+                    #scale += 0.05
+                    glTranslatef(0.0,0.0,-0.02)
                 # TRANSLATIONS
                 if key[pygame.K_a]:
                     #glTranslatef(-0.05, 0, 0)
