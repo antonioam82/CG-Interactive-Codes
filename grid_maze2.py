@@ -87,7 +87,7 @@ def draw_walls():
     
     glBegin(GL_LINES)
     glColor3f(1.0,1.0,0.0)
-    path = r'C:\Users\anton\Downloads\maze_large_with_plazesss.obj'
+    path = r'C:\Users\anton\OneDrive\Documentos\modelos\maze_large_with_plazesss.obj'
     vertices, edges, surfaces = load_obj(path)
     for edge in edges:
         for vertex in edge:
