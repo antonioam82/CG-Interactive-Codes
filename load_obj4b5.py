@@ -270,8 +270,20 @@ def window(args):
             text_pos6 = text_pos(args.window_height,470)
  
             display = (args.window_width, args.window_height)
+
+            #####################################################################################
+
+            pygame.display.gl_set_attribute(pygame.GL_MULTISAMPLEBUFFERS, 1)
+            pygame.display.gl_set_attribute(pygame.GL_MULTISAMPLESAMPLES, 4)
+            pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+
+            glEnable(GL_MULTISAMPLE)
+            glEnable(GL_BLEND)
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+            #####################################################################################
+
  
-            pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 4)
+            '''pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 4)
  
             pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
  
@@ -279,7 +291,7 @@ def window(args):
             glEnable(GL_LINE_SMOOTH)
             glHint(GL_LINE_SMOOTH_HINT, GL_NICEST)
             glEnable(GL_BLEND)
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)'''
  
             pygame.display.set_caption("Model Viewer")
             font = pygame.font.SysFont('arial', 15)
@@ -450,7 +462,7 @@ def window(args):
                 if key[pygame.K_n]:
                     rotation = create_rotation_quaternion(-2, 0, 0, 1)
                     quaternion = quaternion * rotation
-                if key[pygame.K_z] and scale > 0.05:
+                if key[pygame.K_z]:# and scale > 0.05:
                     #scale -= 0.05
                     glTranslatef(0.0,0.0,0.02)
                 if key[pygame.K_x]:
