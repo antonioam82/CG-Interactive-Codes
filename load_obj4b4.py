@@ -263,7 +263,7 @@ def window(args):
         display = (args.window_width, args.window_height)
         
         pygame.display.gl_set_attribute(pygame.GL_MULTISAMPLEBUFFERS, 1)##
-        pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 4)
+        pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 6)
  
         pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
  
