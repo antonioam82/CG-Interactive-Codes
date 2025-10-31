@@ -261,7 +261,8 @@ def window(args):
         text_pos6 = text_pos(args.window_height,470)
  
         display = (args.window_width, args.window_height)
- 
+        
+        pygame.display.gl_set_attribute(pygame.GL_MULTISAMPLEBUFFERS, 1)##
         pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 4)
  
         pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
@@ -269,8 +270,8 @@ def window(args):
         glEnable(GL_MULTISAMPLE)
         glEnable(GL_LINE_SMOOTH)
         glHint(GL_LINE_SMOOTH_HINT, GL_NICEST)
-        glEnable(GL_BLEND)
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+        #glEnable(GL_BLEND)
+        #glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
  
         pygame.display.set_caption("Model Viewer")
         font = pygame.font.SysFont('arial', 15)
@@ -447,17 +448,13 @@ def window(args):
                 scale += 0.05
             # TRANSLATIONS
             if key[pygame.K_a]:
-                #glTranslatef(-0.05, 0, 0)
-                translation[0] -= 0.05
+                glTranslatef(-0.05, 0, 0)
             if key[pygame.K_s]:
-                #glTranslatef(0.05, 0, 0)
-                translation[0] += 0.05
+                glTranslatef(0.05, 0, 0)
             if key[pygame.K_d]:
-                #glTranslatef(0, 0.05, 0)
-                translation[1] += 0.05
+                glTranslatef(0, 0.05, 0)
             if key[pygame.K_f]:
-                #glTranslatef(0, -0.05, 0)
-                translation[1] -= 0.05
+                glTranslatef(0, -0.05, 0)
  
             # Limpiar la pantalla y cargar la nueva matriz de rotación
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -494,7 +491,7 @@ def window(args):
     print("terminated")
  
 def main():
-    parser = argparse.ArgumentParser(prog="ModelVisor0.3", conflict_handler='resolve',
+    parser = argparse.ArgumentParser(prog="ModelVisor0.2", conflict_handler='resolve',
                                      description="Show obj models",allow_abbrev=False)
     parser.add_argument('-load','--load_object',required=True,type=check_source_ext,help="Obj model to load")
     parser.add_argument('-width','--window_width',type=check_width_value,default=800,help="Window width")
@@ -510,3 +507,7 @@ def main():
  
 if __name__ =="__main__":
     main()
+
+
+ 
+
