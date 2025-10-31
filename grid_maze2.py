@@ -211,7 +211,8 @@ rotating = False
 def main():
     pygame.init()
     display = (800, 600)
-    
+
+    pygame.display.gl_set_attribute(pygame.GL_MULTISAMPLEBUFFERS, 1)
     pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 4)
     
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
@@ -219,8 +220,8 @@ def main():
     glEnable(GL_MULTISAMPLE)
     glEnable(GL_LINE_SMOOTH)
     glHint(GL_LINE_SMOOTH_HINT, GL_NICEST)
-    glEnable(GL_BLEND)
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    #glEnable(GL_BLEND)
+    #glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     
     gluPerspective(45, (display[0] / display[1]), 0.1, 150.0)
     glTranslatef(0.0, 0.0, -10)
