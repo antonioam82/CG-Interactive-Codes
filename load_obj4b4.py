@@ -202,8 +202,8 @@ def check_color(color):
  
 def check_lw(w):
     width = float(w)
-    if width < 1.0:
-        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+"Line width must be equal or greater than 1.0."+Fore.RESET+Style.RESET_ALL)
+    if width < 1.0 or width > 10.0:
+        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+"Line width must be in range 1.0 - 10.0."+Fore.RESET+Style.RESET_ALL)
     return width
  
 def check_positive(v):
