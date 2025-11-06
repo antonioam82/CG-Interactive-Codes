@@ -310,6 +310,7 @@ def window(args):
             hide_data = False
             green_val = 255
             rotating = False
+            alpha = 0.0
  
             # Crear la lista de display para el modelo
             model_list = glGenLists(1)
@@ -325,13 +326,30 @@ def window(args):
                 green_val = 100
             else:
                 glColor3f(1.0, 1.0, 1.0)  # Color blanco
+
+
+            #---------------------------------------------------------------------------------------
+
+            if args.alpha != 0.0:
+                glDisable(GL_DEPTH_TEST)
+                glBegin(GL_LINES)
+                back_line_alpha = max(0.0, 1.0 - alpha)
+                glColor4f(1, 1, 1, back_line_alpha)
+                for edge in edges:
+                    for vertex in edge:
+                        glVertex3fv(vertices[vertex])
+                glEnd()
+            
  
             glBegin(GL_LINES)
+            glColor4f(1, 1, 1, 0.0)
             for edge in edges:
                 for vertex in edge:
                     glVertex3fv(vertices[vertex])
             glEnd()
             glEndList()
+
+            #----------------------------------------------------------------------------------------
  
             # Inicializar la vista en perspectiva por defecto
             is_ortho = False
@@ -531,6 +549,7 @@ def main():
     parser.add_argument('-fill','--fill_object',action='store_true',help="Add solid color to model")
     parser.add_argument('-scl','--scale',type=check_positive,default=1.0,help="Object scale")
     parser.add_argument('-ec','--enable_centering',action='store_true',help="Enable automatic centering")
+    parser.add_argument('-alp','--alpha',type=float,default=0.0,help="Transparency value")
  
     args = parser.parse_args()
     window(args)
