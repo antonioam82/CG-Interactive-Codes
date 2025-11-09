@@ -46,14 +46,15 @@ def check_source_ext(file):
  
 def load_obj(filename,color,args):
     vertices = []
-    #edges = []
+    face_indices = []
     edges = set()
     num_edges = 0
     num_verts = 0
     num_triangles = 0
     faces = []
-    #polygon_verts = 0
+    polygon_verts = 0
     #vs = []
+    
     with open(filename, 'r') as file:
         for line in file:
             if line.startswith('v '):  # Vértice
@@ -73,6 +74,9 @@ def load_obj(filename,color,args):
                     edges.add(tuple(sorted((face_indices[i], face_indices[(i + 1) % len(face_indices)]))))
                     #edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
                     num_edges = len(edges)
+
+    '''print(f'NV: {num_verts}')
+    print(f'NF: {max(face_indices)}')'''
  
     if args.enable_centering:
         min_v = np.min(vertices, axis=0)
@@ -507,6 +511,7 @@ def main():
  
 if __name__ =="__main__":
     main()
+
 
 
  
