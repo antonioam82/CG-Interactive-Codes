@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import pygame
 from pygame.locals import *
@@ -81,8 +81,8 @@ def load_obj(filename,color,args):
             print(f'NV: {num_verts}')
             print(f'NF: {max(face_indices)}')
 
-            #if num_verts <= max(face_indices) + 1:
-                #load_error = True
+            if num_verts <= max(face_indices):
+                load_error = True
         
  
             if args.enable_centering:
@@ -91,7 +91,8 @@ def load_obj(filename,color,args):
                 center = (min_v + max_v) / 2.0
                 vertices = [list(np.array(v) - center) for v in vertices]
 
-        except:
+        except Exception as e:
+            #print(str(e))
             load_error = True
 
         #print(f'NV: {num_verts}')
