@@ -69,7 +69,7 @@ def load_obj(filename,color,args):
                 elif line.startswith('f '):  # Cara
                     num_triangles += 1
                     parts = line.strip().split()
-                    face_indices = [int(part.split(' ')[0]) - 1 for part in parts[1:]]
+                    face_indices = [int(part) - 1 for part in parts[1:]]##########################################################<<<<<<<<
                     polygon_verts = len(face_indices)
                     if color:
                         faces.append(face_indices)
@@ -81,8 +81,8 @@ def load_obj(filename,color,args):
             print(f'NV: {num_verts}')
             print(f'NF: {max(face_indices)}')
 
-            if num_verts <= max(face_indices):
-                load_error = True
+            #if num_verts <= max(face_indices):
+                #load_error = True
         
  
             if args.enable_centering:
@@ -324,13 +324,24 @@ def window(args):
                 green_val = 100
             else:
                 glColor3f(1.0, 1.0, 1.0)  # Color blanco
- 
+
+            # Convertir el conjunto a una lista ordenada
+            ordered_edges = sorted(list(edges))
+
             glBegin(GL_LINES)
-            for edge in edges:
+            for edge in ordered_edges:
                 for vertex in edge:
                     glVertex3fv(vertices[vertex])
             glEnd()
             glEndList()
+
+ 
+            '''glBegin(GL_LINES)
+            for edge in edges:
+                for vertex in edge:
+                    glVertex3fv(vertices[vertex])
+            glEnd()
+            glEndList()'''
  
             # Inicializar la vista en perspectiva por defecto
             is_ortho = False
@@ -512,7 +523,8 @@ def window(args):
     except Exception as e:
         print(Fore.RED+Style.BRIGHT + "UNEXPECTED ERROR: " + str(e) + Fore.RESET+Style.RESET_ALL)
  
-         
+        
+ 
 def main():
     parser = argparse.ArgumentParser(prog="ModelVisor0.2", conflict_handler='resolve',
                                      description="Show obj models",allow_abbrev=False)
