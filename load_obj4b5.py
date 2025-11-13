@@ -79,10 +79,10 @@ def load_obj(filename,color,args):
                         num_edges = len(edges)
 
             print(f'NV: {num_verts}')
-            print(f'NF: {len(face_indices)}')
+            print(f'NF: {max(face_indices)}')
 
-            if num_verts < max(face_indices) + 1:
-                load_error = True
+            #if num_verts <= max(face_indices) + 1:
+                #load_error = True
         
  
             if args.enable_centering:
