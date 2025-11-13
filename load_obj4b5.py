@@ -69,7 +69,7 @@ def load_obj(filename,color,args):
                 elif line.startswith('f '):  # Cara
                     num_triangles += 1
                     parts = line.strip().split()
-                    face_indices = [int(part.split('/')[0]) - 1 for part in parts[1:]]
+                    face_indices = [int(part.split(' ')[0]) - 1 for part in parts[1:]]
                     polygon_verts = len(face_indices)
                     if color:
                         faces.append(face_indices)
@@ -512,8 +512,7 @@ def window(args):
     except Exception as e:
         print(Fore.RED+Style.BRIGHT + "UNEXPECTED ERROR: " + str(e) + Fore.RESET+Style.RESET_ALL)
  
-        
- 
+         
 def main():
     parser = argparse.ArgumentParser(prog="ModelVisor0.2", conflict_handler='resolve',
                                      description="Show obj models",allow_abbrev=False)
