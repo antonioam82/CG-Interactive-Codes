@@ -81,8 +81,8 @@ def load_obj(filename,color,args):
             print(f'NV: {num_verts}')
             print(f'NF: {max(face_indices)}')
 
-            #if num_verts <= max(face_indices):
-                #load_error = True
+            if num_verts <= max(face_indices):
+                load_error = True
         
  
             if args.enable_centering:
@@ -517,7 +517,7 @@ def window(args):
 
             pygame.quit()
         else:
-            print("FILE ERROR")
+            print(Fore.RED+Style.BRIGHT + "FILE ERROR" + Fore.RESET+Style.RESET_ALL)
             print("terminated")
  
     except Exception as e:
