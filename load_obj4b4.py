@@ -125,8 +125,8 @@ def show_controls():
     print("  - 'P' Key: Toggle between Orthographic and Perspective views")
 
     print("\nZoom Controls:")
-    print("  - 'Z' Key: Zoom in (decrease scale)")
-    print("  - 'X' Key: Zoom out (increase scale)")
+    print("  - 'Z' Key: Zoom out (decrease scale)")
+    print("  - 'X' Key: Zoom in (increase scale)")
     print("  - Mouse Wheel: Zoom in/out")
 
     print("\nTranslation & Rotation Controls (Drag):")
