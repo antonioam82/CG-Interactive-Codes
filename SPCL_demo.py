@@ -6,10 +6,8 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 import os
 
-os.chdir(r'C:\Users\anton\OneDrive\Documentos\files_used')
-
-#SPCL_demo.py en github
-#TO DO: Color 4 grid surface
+os.chdir(r'C:\Users\Usuario\Documents\fondo')
+# files_used
 
 grid_size = 140
 grid_spacing = 1
@@ -238,6 +236,8 @@ def main():
     view_elevation = -10.0
     vele = 0.0 ###############
     elevation = 2.6
+    z_pos = 0.0
+    fly_speed = 0.0
 
     model_vertices, edges, faces = load_obj()
     model_list = glGenLists(1)
@@ -277,6 +277,12 @@ def main():
                     glTranslatef(0.0,-10.0,0.0)
                     top = True #######################
                     vele = 0.0 #######################
+                elif event.key == pygame.K_l:
+                    fly_speed = 2.0
+                elif event.key == pygame.K_m:
+                    fly_speed = 0.0
+                    elevation = 2.6
+                    z_pos = 0.0
                            
         key_button = pygame.key.get_pressed()
 
@@ -332,8 +338,13 @@ def main():
         glTranslatef(1.0,elevation,0.0)
         glRotatef(-90,0,1,0)
         glLineWidth(1.0)
+        glPushMatrix()
+        glTranslatef(0.0,0.0,z_pos)
         glCallList(model_list)
         glPopMatrix()
+        glPopMatrix()
+
+        z_pos += fly_speed
 
         pygame.display.flip()
         pygame.time.wait(10)
