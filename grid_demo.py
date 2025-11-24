@@ -126,14 +126,15 @@ def main():
     #------------------------------------ANTIALIASING------------------------------------#
     pygame.display.gl_set_attribute(pygame.GL_MULTISAMPLEBUFFERS, 1)##
     pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 6)
+
+    pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     
     glEnable(GL_MULTISAMPLE)
     glEnable(GL_LINE_SMOOTH)
     glHint(GL_LINE_SMOOTH_HINT, GL_NICEST)
     #------------------------------------------------------------------------------------#
 
-    pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
-    
+
     gluPerspective(45, (display[0] / display[1]), 0.1, 90.0) #90
     glTranslatef(0.0, 0.0, -10)
     glEnable(GL_DEPTH_TEST)
@@ -278,3 +279,4 @@ def main():
     pygame.quit()
     
 main()
+
