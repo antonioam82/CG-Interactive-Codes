@@ -60,15 +60,15 @@ def load_obj(filename,color,args):
     with open(filename, 'r') as file:
         try:
             for line in file:
+                parts = line.strip().split()
                 if line.startswith('v '):  # Vértice
                     num_verts += 1
-                    parts = line.strip().split()
+                    ##
                     vertex = [float(parts[1]), float(parts[2]), float(parts[3])]
                     vertices.append(vertex)
-                    #vs = vertices
                 elif line.startswith('f '):  # Cara
                     num_triangles += 1
-                    parts = line.strip().split()
+                    ##
                     face_indices = [int(part) - 1 for part in parts[1:]]##########################################################<<<<<<<<
                     polygon_verts = len(face_indices)
                     if color:
@@ -521,7 +521,7 @@ def window(args):
             print("terminated")
  
     except Exception as e:
-        print(Fore.RED+Style.BRIGHT + "UNEXPECTED ERROR: " + str(e) + Fore.RESET+Style.RESET_ALL)
+        print(Fore.RED+Style.BRIGHT + "UNEXPECTED ERROR: " + e.__str__() + Fore.RESET+Style.RESET_ALL)
  
         
  
