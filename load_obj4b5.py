@@ -204,7 +204,7 @@ def setup_view_ortho(display):
  
  
     glMatrixMode(GL_MODELVIEW)
-    glLoadIdentity()
+    #glLoadIdentity()
     #glTranslatef(0.0,0.0,-3.0)
  
 def text_pos(h,p):
@@ -543,5 +543,6 @@ def main():
  
 if __name__ =="__main__":
     main()
+
 
 
