@@ -60,15 +60,15 @@ def load_obj(filename,color,args):
     with open(filename, 'r') as file:
         try:
             for line in file:
+                parts = line.strip().split()
                 if line.startswith('v '):  # Vértice
                     num_verts += 1
-                    parts = line.strip().split()
+                    ##
                     vertex = [float(parts[1]), float(parts[2]), float(parts[3])]
                     vertices.append(vertex)
-                    #vs = vertices
                 elif line.startswith('f '):  # Cara
                     num_triangles += 1
-                    parts = line.strip().split()
+                    ##
                     face_indices = [int(part) - 1 for part in parts[1:]]##########################################################<<<<<<<<
                     polygon_verts = len(face_indices)
                     if color:
@@ -472,10 +472,10 @@ def window(args):
                 if key[pygame.K_n]:
                     rotation = create_rotation_quaternion(-2, 0, 0, 1)
                     quaternion = quaternion * rotation
-                if key[pygame.K_z] and scale > 0.01:
-                    scale -= 0.005
+                if key[pygame.K_z] and scale > 0.05:
+                    scale -= args.zoom_rate
                 if key[pygame.K_x]:
-                    scale += 0.005
+                    scale += args.zoom_rate
                 # TRANSLATIONS
                 if key[pygame.K_a]:
                     glTranslatef(-0.05, 0, 0)
@@ -521,7 +521,7 @@ def window(args):
             print("terminated")
  
     except Exception as e:
-        print(Fore.RED+Style.BRIGHT + "UNEXPECTED ERROR: " + str(e) + Fore.RESET+Style.RESET_ALL)
+        print(Fore.RED+Style.BRIGHT + "UNEXPECTED ERROR: " + e.__str__() + Fore.RESET+Style.RESET_ALL)
  
         
  
@@ -535,6 +535,7 @@ def main():
     parser.add_argument('-lw','--line_width',type=check_lw,default=1.0,help="Line width")
     parser.add_argument('-fill','--fill_object',action='store_true',help="Add solid color to model")
     parser.add_argument('-scl','--scale',type=check_positive,default=1.0,help="Object scale")
+    parser.add_argument('-zr','--zoom_rate',type=check_positive,default=0.05,help="Zoom Rate")
     parser.add_argument('-ec','--enable_centering',action='store_true',help="Enable automatic centering")
  
     args = parser.parse_args()
@@ -542,4 +543,5 @@ def main():
  
 if __name__ =="__main__":
     main()
+
 
