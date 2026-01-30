@@ -44,6 +44,14 @@ def check_source_ext(file):
     else:
         raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"FILE NOT FOUND: file or path '{file}' not found."+Fore.RESET+Style.RESET_ALL)
     return file
+
+def check_range(tr):
+    tr = float(tr)
+    print(tr)
+    if tr < 0.0 or tr > 1.0:
+        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"Transperency value must be in range 0.0 - 1.0."+Fore.RESET+Style.RESET_ALL)
+    else:
+        return tr
  
 def load_obj(filename,color,args):
     vertices = []
@@ -239,7 +247,11 @@ def setup_view_perspective(display):
     glLoadIdentity()
     glTranslatef(0.0, 0.0, -10.0)
  
-def fill_object(polygon_verts,faces,vertices):
+def fill_object(polygon_verts,faces,vertices,tr):
+    # Activar transparencia
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
     glEnable(GL_POLYGON_OFFSET_FILL)#############
     glPolygonOffset(1.0, 1.0)####################
     
@@ -249,7 +261,7 @@ def fill_object(polygon_verts,faces,vertices):
         glBegin(GL_QUADS)
     elif polygon_verts > 4:
         glBegin(GL_POLYGON)
-    glColor3f(0.0, 0.5, 0.0)
+    glColor4f(0.0, 0.5, 0.0, tr)#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     for face in faces:
         for vertex in face:
             glVertex3fv(vertices[vertex])
@@ -317,7 +329,7 @@ def window(args):
             glLineWidth(args.line_width)
  
             if args.fill_object:
-                fill_object(polygon_verts,faces,vertices)
+                fill_object(polygon_verts,faces,vertices,args.transparency)
  
             if args.bg_color == 'white':
                 glColor3f(0.0, 0.0, 0.0)  # Color negro
@@ -537,12 +549,14 @@ def main():
     parser.add_argument('-scl','--scale',type=check_positive,default=1.0,help="Object scale")
     parser.add_argument('-zr','--zoom_rate',type=check_positive,default=0.05,help="Zoom Rate")
     parser.add_argument('-ec','--enable_centering',action='store_true',help="Enable automatic centering")
+    parser.add_argument('-trp','--transparency',type=check_range,default=1.0,help="Transparency")
  
     args = parser.parse_args()
     window(args)
  
 if __name__ =="__main__":
     main()
+
 
 
 
