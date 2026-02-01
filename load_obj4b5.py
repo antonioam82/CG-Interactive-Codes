@@ -49,7 +49,7 @@ def check_range(tr):
     tr = float(tr)
     print(tr)
     if tr < 0.0 or tr > 1.0:
-        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"Transperency value must be in range 0.0 - 1.0."+Fore.RESET+Style.RESET_ALL)
+        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"Opacity value must be in range 0.0 - 1.0."+Fore.RESET+Style.RESET_ALL)
     else:
         return tr
  
@@ -329,7 +329,7 @@ def window(args):
             glLineWidth(args.line_width)
  
             if args.fill_object:
-                fill_object(polygon_verts,faces,vertices,args.transparency)
+                fill_object(polygon_verts,faces,vertices,args.opacity)
  
             if args.bg_color == 'white':
                 glColor3f(0.0, 0.0, 0.0)  # Color negro
@@ -549,7 +549,7 @@ def main():
     parser.add_argument('-scl','--scale',type=check_positive,default=1.0,help="Object scale")
     parser.add_argument('-zr','--zoom_rate',type=check_positive,default=0.05,help="Zoom Rate")
     parser.add_argument('-ec','--enable_centering',action='store_true',help="Enable automatic centering")
-    parser.add_argument('-trp','--transparency',type=check_range,default=1.0,help="Transparency")
+    parser.add_argument('-op','--opacity',type=check_range,default=1.0,help="Opacity")
  
     args = parser.parse_args()
     window(args)
