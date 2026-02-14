@@ -133,6 +133,7 @@ def main():
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
 
     glEnable(GL_MULTISAMPLE)
+    
 
 
     '''glEnable(GL_MULTISAMPLE)
@@ -146,6 +147,7 @@ def main():
     glEnable(GL_DEPTH_TEST)
     font = pygame.font.SysFont('arial', 15)
     glRotatef(15, 1, 0, 0)
+    scale = 1.0
  
     cube_list = Cube()
     grid_list = draw_grid()
@@ -232,6 +234,11 @@ def main():
             x += speed
             x_c -= speed_c
             x_c += speed
+
+        if key[pygame.K_a]:
+            scale += 0.3
+        elif key[pygame.K_s]:
+            scale -= 0.3
  
         if key[pygame.K_t]:
             glRotatef(1, 0, -0.1, 0)
@@ -252,7 +259,9 @@ def main():
             speed_c -= 0.001
  
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
- 
+        
+        glPushMatrix()
+        glScalef(scale,scale,scale)
         # Grid
         glPushMatrix()
         glTranslatef(x, 0.00, z)
@@ -264,6 +273,7 @@ def main():
         glTranslatef(x_c, 0.0, z_c)
         glRotatef(angle, 0, 1, 0)
         glCallList(cube_list)
+        glPopMatrix()
         glPopMatrix()
  
         spd = round(speed, 3)
@@ -282,4 +292,3 @@ def main():
     pygame.quit()
  
 main()
-
