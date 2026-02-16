@@ -156,7 +156,7 @@ def main():
     show_controls()
     rot_x = 15.0   # inclinación inicial
     rot_y = 0.0
-    ROT_SPEED = 1.0
+    ROT_SPEED = 0.5
 
  
     x = 0
@@ -202,21 +202,25 @@ def main():
                     running = False
                 elif event.key == pygame.K_l:
                     # Restaurar la vista original
+                    # RESET LOGICO (NO OPENGL DIRECTO)
                     direction = 'front'
                     x = 0
                     z = 0
                     x_c = 0
                     z_c = 0
+
                     angle = 0
+                    scale = 1.0
+
                     speed = 0.1
                     speed_c = 0.1
-        
-                    # Restaurar las rotaciones acumuladas
-                    glLoadIdentity()  # Resetea las transformaciones
-                    gluPerspective(45, (display[0] / display[1]), 0.1, 90.0)  # Reestablece la perspectiva
-                    glTranslatef(0.0, 0.0, -10)  # Reestablece la cámara alejada
-                    glRotatef(15, 1, 0, 0) 
 
+                    rot_x = 15.0
+                    rot_y = 0.0
+                    
+                    
+ 
+ 
         key = pygame.key.get_pressed()
  
         if key[pygame.K_UP]: #and z + speed <= (grid_size - 1):
