@@ -142,7 +142,7 @@ def main():
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)'''
     
-    gluPerspective(45, (display[0] / display[1]), 0.1, 90.0) #90
+    #gluPerspective(45, (display[0] / display[1]), 0.1, 90.0) #90
     glTranslatef(0.0, 0.0, -10)
     glEnable(GL_DEPTH_TEST)
     font = pygame.font.SysFont('arial', 15)
@@ -154,6 +154,10 @@ def main():
     hide_data = False
 
     show_controls()
+    rot_x = 15.0   # inclinación inicial
+    rot_y = 0.0
+    ROT_SPEED = 1.0
+
  
     x = 0
     z = 0
@@ -212,10 +216,7 @@ def main():
                     gluPerspective(45, (display[0] / display[1]), 0.1, 90.0)  # Reestablece la perspectiva
                     glTranslatef(0.0, 0.0, -10)  # Reestablece la cámara alejada
                     glRotatef(15, 1, 0, 0) 
-                    
-                    
- 
- 
+
         key = pygame.key.get_pressed()
  
         if key[pygame.K_UP]: #and z + speed <= (grid_size - 1):
@@ -241,13 +242,15 @@ def main():
             scale -= 0.3
  
         if key[pygame.K_t]:
-            glRotatef(1, 0, -0.1, 0)
+            rot_y -= ROT_SPEED
         elif key[pygame.K_r]:
-            glRotatef(1, 0, 0.1, 0)
-        elif key[pygame.K_q]:
-            glRotatef(1, -0.1, 0, 0)
+            rot_y += ROT_SPEED
+
+        if key[pygame.K_q]:
+            rot_x -= ROT_SPEED
         elif key[pygame.K_w]:
-            glRotatef(1, 0.1, 0, 0)
+            rot_x += ROT_SPEED
+
  
         if key[pygame.K_z]:
             speed += 0.001
@@ -259,9 +262,17 @@ def main():
             speed_c -= 0.001
  
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        
-        glPushMatrix()
-        glScalef(scale,scale,scale)
+
+        glLoadIdentity()
+        gluPerspective(45, (display[0] / display[1]), 0.1, 90.0)
+        glTranslatef(0.0, 0.0, -10)
+
+        # === ROTACIONES INDEPENDIENTES ===
+        glRotatef(rot_x, 1, 0, 0)  # SIEMPRE eje X del mundo
+        glRotatef(rot_y, 0, 1, 0)  # SIEMPRE eje Y del mundo
+
+        glScalef(scale, scale, scale)
+
         # Grid
         glPushMatrix()
         glTranslatef(x, 0.00, z)
@@ -273,7 +284,6 @@ def main():
         glTranslatef(x_c, 0.0, z_c)
         glRotatef(angle, 0, 1, 0)
         glCallList(cube_list)
-        glPopMatrix()
         glPopMatrix()
  
         spd = round(speed, 3)
