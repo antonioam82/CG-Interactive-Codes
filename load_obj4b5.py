@@ -44,14 +44,6 @@ def check_source_ext(file):
     else:
         raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"FILE NOT FOUND: file or path '{file}' not found."+Fore.RESET+Style.RESET_ALL)
     return file
-
-def check_range(tr):
-    tr = float(tr)
-    print(tr)
-    if tr < 0.0 or tr > 1.0:
-        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"Opacity value must be in range 0.0 - 1.0."+Fore.RESET+Style.RESET_ALL)
-    else:
-        return tr
  
 def load_obj(filename,color,args):
     vertices = []
@@ -64,7 +56,7 @@ def load_obj(filename,color,args):
     polygon_verts = 0
     #vs = []
     load_error = False
-    
+ 
     with open(filename, 'r') as file:
         try:
             for line in file:
@@ -85,24 +77,24 @@ def load_obj(filename,color,args):
                         edges.add(tuple(sorted((face_indices[i], face_indices[(i + 1) % len(face_indices)]))))
                         #edges.append((face_indices[i], face_indices[(i + 1) % len(face_indices)]))
                         num_edges = len(edges)
-
+ 
             print(f'NV: {num_verts}')
             print(f'NF: {max(face_indices)}')
-
+ 
             if num_verts <= max(face_indices):
                 load_error = True
-        
+ 
  
             if args.enable_centering:
                 min_v = np.min(vertices, axis=0)
                 max_v = np.max(vertices, axis=0)
                 center = (min_v + max_v) / 2.0
                 vertices = [list(np.array(v) - center) for v in vertices]
-
+ 
         except Exception as e:
             #print(str(e))
             load_error = True
-
+ 
         #print(f'NV: {num_verts}')
         #print(f'NF: {max(face_indices)}')
  
@@ -117,24 +109,24 @@ def drawText(f, x, y, text, c, bgc):
  
 def show_controls():
     print("\n--------------------- Controls ---------------------")
-
+ 
     print("\nKeyboard Controls (Movement):")
     print("  - Up Arrow: Move the scene forward (rotate upwards)")
     print("  - Down Arrow: Move the scene backward (rotate downwards)")
     print("  - Left Arrow: Move the scene left (rotate left)")
     print("  - Right Arrow: Move the scene right (rotate right)")
-
+ 
     print("\nTranslation Controls:")
     print("  - 'A' Key: Translate scene left")
     print("  - 'S' Key: Translate scene right")
     print("  - 'D' Key: Translate scene up")
     print("  - 'F' Key: Translate scene down")
-
+ 
     print("\nRotation Controls:")
     print("  - 'R' Key: Reset the scene rotation and scaling")
     print("  - 'M' Key: Rotate the scene counterclockwise around the Z-axis")
     print("  - 'N' Key: Rotate the scene clockwise around the Z-axis")
-
+ 
     print("\nView Controls:")
     print("  - 'T' Key: Set top (zenith) view")
     print("  - 'B' Key: Set bottom view")
@@ -142,25 +134,25 @@ def show_controls():
     print("  - 'L' Key: Set left view")
     print("  - 'G' Key: Set front view")
     print("  - 'K' Key: Set back view")
-
+ 
     print("\nView Mode Toggle:")
     print("  - 'P' Key: Toggle between Orthographic and Perspective views")
-
+ 
     print("\nZoom Controls:")
     print("  - 'Z' Key: Zoom out (decrease scale)")
     print("  - 'X' Key: Zoom in (increase scale)")
     print("  - Mouse Wheel: Zoom in/out")
-
+ 
     print("\nTranslation & Rotation Controls (Drag):")
     print("  - Hold Left Mouse Button: Drag to move the scene")
     print("  - Hold Right Mouse Button: Drag to rotate the scene")
-
+ 
     print("\nMiscellaneous:")
     print("  - 'H' Key: Toggle the visibility of on-screen information (model name, scale, view mode)")
     print("  - ESC Key: Exit the program")
-
+ 
     print("\n----------------------------------------------------")
-
+ 
  
  
 # Clase para manejar cuaterniones
@@ -247,21 +239,17 @@ def setup_view_perspective(display):
     glLoadIdentity()
     glTranslatef(0.0, 0.0, -10.0)
  
-def fill_object(polygon_verts,faces,vertices,tr):
-    # Activar transparencia
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
+def fill_object(polygon_verts,faces,vertices):
     glEnable(GL_POLYGON_OFFSET_FILL)#############
     glPolygonOffset(1.0, 1.0)####################
-    
+ 
     if polygon_verts == 3:
         glBegin(GL_TRIANGLES)##################
     elif polygon_verts == 4:
         glBegin(GL_QUADS)
     elif polygon_verts > 4:
         glBegin(GL_POLYGON)
-    glColor4f(0.0, 0.5, 0.0, tr)#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    glColor3f(0.0, 0.5, 0.0)
     for face in faces:
         for vertex in face:
             glVertex3fv(vertices[vertex])
@@ -275,7 +263,7 @@ def window(args):
         path = args.load_object
         model_name = os.path.basename(path)
         vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts, load_error = load_obj(path,args.fill_object,args)
-
+ 
         if not load_error:
             show_controls()
             pygame.init()
@@ -292,7 +280,7 @@ def window(args):
             text_pos6 = text_pos(args.window_height,470)
  
             display = (args.window_width, args.window_height)
-        
+ 
             pygame.display.gl_set_attribute(pygame.GL_MULTISAMPLEBUFFERS, 1)##
             pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 6)
  
@@ -329,24 +317,24 @@ def window(args):
             glLineWidth(args.line_width)
  
             if args.fill_object:
-                fill_object(polygon_verts,faces,vertices,args.opacity)
+                fill_object(polygon_verts,faces,vertices)
  
             if args.bg_color == 'white':
                 glColor3f(0.0, 0.0, 0.0)  # Color negro
                 green_val = 100
             else:
                 glColor3f(1.0, 1.0, 1.0)  # Color blanco
-
+ 
             # Convertir el conjunto a una lista ordenada
             ordered_edges = sorted(list(edges))
-
+ 
             glBegin(GL_LINES)
             for edge in ordered_edges:
                 for vertex in edge:
                     glVertex3fv(vertices[vertex])
             glEnd()
             glEndList()
-
+ 
  
             '''glBegin(GL_LINES)
             for edge in edges:
@@ -525,8 +513,8 @@ def window(args):
  
                 pygame.display.flip()
                 pygame.time.wait(10)
-
-
+ 
+ 
             pygame.quit()
         else:
             print(Fore.RED+Style.BRIGHT + "FILE ERROR" + Fore.RESET+Style.RESET_ALL)
@@ -535,7 +523,7 @@ def window(args):
     except Exception as e:
         print(Fore.RED+Style.BRIGHT + "UNEXPECTED ERROR: " + e.__str__() + Fore.RESET+Style.RESET_ALL)
  
-        
+ 
  
 def main():
     parser = argparse.ArgumentParser(prog="ModelVisor0.2", conflict_handler='resolve',
@@ -549,7 +537,6 @@ def main():
     parser.add_argument('-scl','--scale',type=check_positive,default=1.0,help="Object scale")
     parser.add_argument('-zr','--zoom_rate',type=check_positive,default=0.05,help="Zoom Rate")
     parser.add_argument('-ec','--enable_centering',action='store_true',help="Enable automatic centering")
-    parser.add_argument('-op','--opacity',type=check_range,default=1.0,help="Opacity")
  
     args = parser.parse_args()
     window(args)
