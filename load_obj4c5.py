@@ -6,7 +6,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from pathlib import Path
 import os
-import re
+#import re
 import math
 import numpy as np
 import argparse
