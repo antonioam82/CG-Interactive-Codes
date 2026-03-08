@@ -47,16 +47,14 @@ def check_source_ext(file):
     return file
  
 def load_obj(filename,color,args):
-    
+
     vertices: list[list[float]] = []
     faces: list[list[int]] = []
     edges: set[tuple[int, int]] = set()
-
     num_verts: int = 0
     num_triangles: int = 0
     num_edges: int = 0
     polygon_verts: int = 0
-
     load_error: bool = False
 
     try:
@@ -556,8 +554,7 @@ def window(args):
             print("terminated")
  
     except Exception as e:
-        print(Fore.RED+Style.BRIGHT + "UNEXPECTED ERROR: " + e.__str__() + Fore.RESET+Style.RESET_ALL)
- 
+        print(Fore.RED+Style.BRIGHT + "UNEXPECTED ERROR: " + e.__str__() + Fore.RESET+Style.RESET_ALL) 
  
 def main():
     parser = argparse.ArgumentParser(prog="ModelVisor0.2", conflict_handler='resolve',
