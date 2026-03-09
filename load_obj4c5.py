@@ -6,7 +6,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from pathlib import Path
 import os
-#import re
+import re
 import math
 import numpy as np
 import argparse
@@ -66,6 +66,7 @@ def load_obj(filename,color,args):
                     continue
 
                 parts = line.split()
+                print(parts)
                 
                 # VERTICES
                 if parts[0] == 'v':
@@ -79,6 +80,7 @@ def load_obj(filename,color,args):
                     ]
                     vertices.append(vertex)
                     num_verts += 1
+
 
                 # FACES
                 elif parts[0] == 'f':
@@ -315,7 +317,7 @@ def window(args):
             display = (args.window_width, args.window_height)
  
             pygame.display.gl_set_attribute(pygame.GL_MULTISAMPLEBUFFERS, 1)##
-            pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 6)
+            pygame.display.gl_set_attribute(GL_MULTISAMPLESAMPLES, 6) ##########################
  
             pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
  
@@ -574,3 +576,4 @@ def main():
  
 if __name__ =="__main__":
     main()
+
