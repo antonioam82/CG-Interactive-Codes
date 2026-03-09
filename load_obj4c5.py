@@ -370,14 +370,6 @@ def window(args):
             glEnd()
             glEndList()
  
- 
-            '''glBegin(GL_LINES)
-            for edge in edges:
-                for vertex in edge:
-                    glVertex3fv(vertices[vertex])
-            glEnd()
-            glEndList()'''
- 
             # Inicializar la vista en perspectiva por defecto
             is_ortho = False
             setup_view_perspective(display)
