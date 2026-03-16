@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*- argparse
+# -*- coding: utf-8 -*-
 from load_obj4c5 import load_obj
 import argparse
+import os
 
 
 def check_item(item):
@@ -10,14 +11,18 @@ def check_item(item):
         raise argparse.ArgumentTypeError("Item must be 'faces', 'edges' or 'vertices'.")
     return item
 
+def check_file(file):
+    if not os.path.exists(file):
+        raise argparse.ArgumentTypeError(f"ERROR: File '{file}' not found")
+    return file
 
 def main():
     parser = argparse.ArgumentParser(prog="script_prueba", conflict_handler='resolve',
                                      description="Check obj reading",allow_abbrev=False)
-    parser.add_argument('-load','--load_object',required=True,type=str,help="Obj model to load")
+    parser.add_argument('-load','--load_object',required=True,type=check_file,help="Obj model to load")
     parser.add_argument('-item','--show_item',required=True,type=check_item,help="Info to show")
     parser.add_argument('-clr','--color',action='store_true',help='Use color')
-    parser.add_argument('--enable_centering', action='store_true', help='Center model')
+    parser.add_argument('-ec','--enable_centering', action='store_true', help='Center model')
 
     args = parser.parse_args()
     try:
