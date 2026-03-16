@@ -6,7 +6,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from pathlib import Path
 import os
-import re
+#import re
 import math
 import numpy as np
 import argparse
@@ -56,17 +56,18 @@ def load_obj(filename,color,args):
     num_edges: int = 0
     polygon_verts: int = 0
     load_error: bool = False
+    line_counter: int = 0
+    #message_error: str
 
     try:
         with open(filename, 'r') as file:
 
             for line in file:
-                line = line.strip()
+                line = line.strip(); line_counter += 1
                 if not line or line.startswith('#'):
                     continue
 
                 parts = line.split()
-                print(parts)
                 
                 # VERTICES
                 if parts[0] == 'v':
@@ -80,7 +81,6 @@ def load_obj(filename,color,args):
                     ]
                     vertices.append(vertex)
                     num_verts += 1
-
 
                 # FACES
                 elif parts[0] == 'f':
@@ -128,13 +128,16 @@ def load_obj(filename,color,args):
 
             vertices = [list(np.array(v) - center) for v in vertices]
 
-    except Exception:
+    except Exception as e:
+        print(f"FILE ERROR ON LINE {line_counter}: {str(e)}")
         load_error = True
 
     #print(f'NV: {num_verts}')
     #print(f'NF: {num_triangles}')
 
     return vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts, load_error
+ 
+
  
 def drawText(f, x, y, text, c, bgc):
     textSurface = f.render(text, True, c, bgc)
@@ -568,4 +571,5 @@ def main():
  
 if __name__ =="__main__":
     main()
+
 
