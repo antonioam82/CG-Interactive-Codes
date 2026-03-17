@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from load_obj4c5 import load_obj
-import argparse
 import os
+import argparse
 
 
 def check_item(item):
@@ -39,14 +39,11 @@ def main():
         print(f"LDL ERROR: {le}")
         print('-'*30)
         if item_ == 'vertices':
-            print('VERTICES:')
-            print(v)
+            print(f'VERTICES:\n{v}')
         elif item_ == 'edges':
-            print('EDGES:')
-            print(e)
+            print(f'EDGES:\n{e}')
         elif item_ == 'faces':
-            print('FACES:')
-            print(f)
+            print(f'FACES:\n{f}')
     except Exception as e:
         print(f"ERROR: {str(e)}.")
 
