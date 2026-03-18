@@ -25,6 +25,8 @@ def main():
     parser.add_argument('-ec','--enable_centering', action='store_true', help='Center model')
 
     args = parser.parse_args()
+    if args.show_item == "faces":
+        args.color = True
     try:
         filename = args.load_object
         color = args.color
@@ -49,3 +51,4 @@ def main():
 
 if __name__ =="__main__":
     main()
+
