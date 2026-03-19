@@ -502,7 +502,7 @@ def window(args):
                 if key[pygame.K_n]:
                     rotation = create_rotation_quaternion(-2, 0, 0, 1)
                     quaternion = quaternion * rotation
-                if key[pygame.K_z] and scale > 0.05:
+                if key[pygame.K_z]: #and scale > 0.05:
                     scale -= args.zoom_rate
                 if key[pygame.K_x]:
                     scale += args.zoom_rate
@@ -571,5 +571,4 @@ def main():
  
 if __name__ =="__main__":
     main()
-
 
