@@ -11,6 +11,8 @@ import math
 import numpy as np
 import argparse
 from colorama import init, Fore, Style
+
+# load_obj4c5.py -load 10477_Satellite_v1_L3.obj -ec -scl 0.001 -zr 0.0001 -width 1500 -height 770 -lw 0.3
  
 init()
  
@@ -258,8 +260,8 @@ def check_color(color):
  
 def check_lw(w):
     width = float(w)
-    if width < 1.0 or width > 10.0:
-        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+"Line width must be in range 1.0 - 10.0."+Fore.RESET+Style.RESET_ALL)
+    if width < 0.1 or width > 10.0:
+        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+"Line width must be in range 0.1 - 10.0."+Fore.RESET+Style.RESET_ALL)
     return width
  
 def check_positive(v):
