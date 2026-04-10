@@ -140,12 +140,16 @@ def load_obj(filename,color,args):
     return vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts, load_error
  
 
- 
+_text_cache: dict = {}
+
 def drawText(f, x, y, text, c, bgc):
-    textSurface = f.render(text, True, c, bgc)
-    textData = pygame.image.tostring(textSurface, "RGBA", True)
+    if text not in _text_cache:
+        textSurface = f.render(text, True, c, bgc)
+        textData = pygame.image.tostring(textSurface, "RGBA", True)
+        _text_cache[text] = (textSurface.get_width(), textSurface.get_height(), textData)
+    w, h, data = _text_cache[text]
     glWindowPos2d(x, y)
-    glDrawPixels(textSurface.get_width(), textSurface.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, textData)
+    glDrawPixels(w, h, GL_RGBA, GL_UNSIGNED_BYTE, data)
  
 def show_controls():
     print("\n--------------------- Controls ---------------------")
@@ -223,7 +227,13 @@ class Quaternion:
             w1 * x2 + x1 * w2 + y1 * z2 - z1 * y2,
             w1 * y2 - x1 * z2 + y1 * w2 + z1 * x2,
             w1 * z2 + x1 * y2 - y1 * x2 + z1 * w2
-        )
+        ).normalize()
+
+    def normalize(self):
+        mag = math.sqrt(self.w**2 + self.x**2 + self.y**2 + self.z**2)
+        if mag == 0:
+            return Quaternion(1, 0, 0, 0)
+        return Quaternion(self.w / mag, self.x / mag, self.y / mag, self.z / mag)
  
 # Función para crear un cuaternión de rotación
 def create_rotation_quaternion(angle, x, y, z):
@@ -386,8 +396,13 @@ def window(args):
             last_mouse_pos = (0, 0)
             translation = [0.0, 0.0]
  
+            clock = pygame.time.Clock()
             running = True
             while running:
+                dt = clock.tick(60) / 1000.0  # Delta time en segundos, límite 60 FPS
+                rot_speed = 90.0 * dt          # Grados por segundo (ajustable)
+                trans_speed = 2.0 * dt         # Unidades por segundo (ajustable)
+
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         running = False
@@ -448,10 +463,8 @@ def window(args):
  
  
                     elif event.type == pygame.MOUSEWHEEL:  # Rueda ratón
-                        if event.y > 0:
-                            scale += 0.05
-                        elif event.y < 0:
-                            scale -= 0.05
+                        zoom_factor = 1.08 if event.y > 0 else (1/1.08 if event.y < 0 else 1.0)
+                        scale *= zoom_factor
                     elif event.type == pygame.MOUSEBUTTONDOWN:
                         if event.button == 1:
                             dragging = True
@@ -472,9 +485,10 @@ def window(args):
                             translation[0] += dx * 0.01
                             translation[1] -= dy * 0.01
                         if rotating:
-                            # Convertimos desplazamiento en rotación relativa
-                            angle_x = dy * -0.3
-                            angle_y = dx * -0.3
+                            # Sensibilidad proporcional al tiempo entre frames
+                            mouse_rot_speed = 120.0 * dt
+                            angle_x = dy * -mouse_rot_speed * 0.1
+                            angle_y = dx * -mouse_rot_speed * 0.1
                             # Rotación alrededor del eje X e Y (en coordenadas del mundo)
                             qx = create_rotation_quaternion(angle_x, 1, 0, 0)
                             qy = create_rotation_quaternion(angle_y, 0, 1, 0)
@@ -487,36 +501,36 @@ def window(args):
  
                 # Rotación con cuaterniones (si se presionan las teclas de dirección)
                 if key[pygame.K_UP]:
-                    rotation = create_rotation_quaternion(2, 1, 0, 0)
+                    rotation = create_rotation_quaternion(rot_speed, 1, 0, 0)
                     quaternion = quaternion * rotation
                 if key[pygame.K_DOWN]:
-                    rotation = create_rotation_quaternion(-2, 1, 0, 0)
+                    rotation = create_rotation_quaternion(-rot_speed, 1, 0, 0)
                     quaternion = quaternion * rotation
                 if key[pygame.K_RIGHT]:
-                    rotation = create_rotation_quaternion(-2, 0, 1, 0)
+                    rotation = create_rotation_quaternion(-rot_speed, 0, 1, 0)
                     quaternion = quaternion * rotation
                 if key[pygame.K_LEFT]:
-                    rotation = create_rotation_quaternion(2, 0, 1, 0)
+                    rotation = create_rotation_quaternion(rot_speed, 0, 1, 0)
                     quaternion = quaternion * rotation
                 if key[pygame.K_m]:
-                    rotation = create_rotation_quaternion(2, 0, 0, 1)
+                    rotation = create_rotation_quaternion(rot_speed, 0, 0, 1)
                     quaternion = quaternion * rotation
                 if key[pygame.K_n]:
-                    rotation = create_rotation_quaternion(-2, 0, 0, 1)
+                    rotation = create_rotation_quaternion(-rot_speed, 0, 0, 1)
                     quaternion = quaternion * rotation
-                if key[pygame.K_z]: #and scale > 0.05:
-                    scale -= args.zoom_rate
+                if key[pygame.K_z]:
+                    scale -= args.zoom_rate * (dt / (1/60))
                 if key[pygame.K_x]:
-                    scale += args.zoom_rate
+                    scale += args.zoom_rate * (dt / (1/60))
                 # TRANSLATIONS
                 if key[pygame.K_a]:
-                    glTranslatef(-0.05, 0, 0)
+                    translation[0] -= trans_speed
                 if key[pygame.K_s]:
-                    glTranslatef(0.05, 0, 0)
+                    translation[0] += trans_speed
                 if key[pygame.K_d]:
-                    glTranslatef(0, 0.05, 0)
+                    translation[1] += trans_speed
                 if key[pygame.K_f]:
-                    glTranslatef(0, -0.05, 0)
+                    translation[1] -= trans_speed
  
                 # Limpiar la pantalla y cargar la nueva matriz de rotación
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -544,9 +558,8 @@ def window(args):
                     drawText(font, 20, text_pos6, f'Num Edges: {num_edges}',(0, green_val, 0, 255),(text_bgR, text_bgG, text_bgB))
  
                 pygame.display.flip()
-                pygame.time.wait(10)
- 
- 
+
+
             pygame.quit()
         else:
             print(Fore.RED+Style.BRIGHT + "FILE ERROR" + Fore.RESET+Style.RESET_ALL)
@@ -556,16 +569,16 @@ def window(args):
         print(Fore.RED+Style.BRIGHT + "UNEXPECTED ERROR: " + e.__str__() + Fore.RESET+Style.RESET_ALL) 
  
 def main():
-    parser = argparse.ArgumentParser(prog="ModelVisor0.2", conflict_handler='resolve',
+    parser = argparse.ArgumentParser(prog="ModelVisor1.0", conflict_handler='resolve',
                                      description="Show obj models",allow_abbrev=False)
     parser.add_argument('-load','--load_object',required=True,type=check_source_ext,help="Obj model to load")
-    parser.add_argument('-width','--window_width',type=check_width_value,default=800,help="Window width")
-    parser.add_argument('-height','--window_height',type=check_height_value,default=600,help="Window height")
-    parser.add_argument('-bg','--bg_color',type=check_color,default='black',help="Background color")
-    parser.add_argument('-lw','--line_width',type=check_lw,default=1.0,help="Line width")
+    parser.add_argument('-width','--window_width',type=check_width_value,default=800,help="Window width (default is 800)")
+    parser.add_argument('-height','--window_height',type=check_height_value,default=600,help="Window height (default is 600)")
+    parser.add_argument('-bg','--bg_color',type=check_color,default='black',help="Background color (default is 'black')")
+    parser.add_argument('-lw','--line_width',type=check_lw,default=1.0,help="Line width (default is 1.0)")
     parser.add_argument('-fill','--fill_object',action='store_true',help="Add solid color to model")
-    parser.add_argument('-scl','--scale',type=check_positive,default=1.0,help="Object scale")
-    parser.add_argument('-zr','--zoom_rate',type=check_positive,default=0.05,help="Zoom Rate")
+    parser.add_argument('-scl','--scale',type=check_positive,default=1.0,help="Object scale (default is 1.0)")
+    parser.add_argument('-zr','--zoom_rate',type=check_positive,default=0.05,help="Zoom Rate (default is 0.05)")
     parser.add_argument('-ec','--enable_centering',action='store_true',help="Enable automatic centering")
  
     args = parser.parse_args()
@@ -573,4 +586,5 @@ def main():
  
 if __name__ =="__main__":
     main()
+
 
