@@ -277,7 +277,7 @@ def check_lw(w):
 def check_positive(v):
     ivalue = float(v)
     if ivalue <= 0:
-        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"Object scale must be positive ('{v}' is not valid)."+Fore.RESET+Style.RESET_ALL)
+        raise argparse.ArgumentTypeError(Fore.RED+Style.BRIGHT+f"This value must be positive ('{v}' is not valid)."+Fore.RESET+Style.RESET_ALL)
     return ivalue
  
 # Función para inicializar la proyección en perspectiva
@@ -399,9 +399,9 @@ def window(args):
             clock = pygame.time.Clock()
             running = True
             while running:
-                dt = clock.tick(60) / 1000.0  # Delta time en segundos, límite 60 FPS
-                rot_speed = 90.0 * dt          # Grados por segundo (ajustable)
-                trans_speed = 2.0 * dt         # Unidades por segundo (ajustable)
+                dt = clock.tick(60) / 1000.0   # Delta time en segundos, límite 60 FPS
+                rot_speed = args.rotation_speed * dt        # Grados por segundo (ajustable)
+                trans_speed = args.translation_speed * dt   # Unidades por segundo (ajustable)
 
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -579,6 +579,8 @@ def main():
     parser.add_argument('-scl','--scale',type=check_positive,default=1.0,help="Object scale (default is 1.0)")
     parser.add_argument('-zr','--zoom_rate',type=check_positive,default=0.05,help="Zoom Rate (default is 0.05)")
     parser.add_argument('-ec','--enable_centering',action='store_true',help="Enable automatic centering")
+    parser.add_argument('-rspd','--rotation_speed',type=check_positive,default=90.0,help="Rotation speed (default is 90.0)")
+    parser.add_argument('-tspd','--translation_speed',type=check_positive,default=2.0,help="Translation speed (default is 2.0)")
  
     args = parser.parse_args()
     window(args)
