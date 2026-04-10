@@ -496,7 +496,6 @@ def window(args):
  
                         last_mouse_pos = (mouse_x, mouse_y)
  
- 
                 key = pygame.key.get_pressed()
  
                 # Rotación con cuaterniones (si se presionan las teclas de dirección)
@@ -559,7 +558,7 @@ def window(args):
  
                 pygame.display.flip()
 
-
+            glDeleteLists(model_list, 1)
             pygame.quit()
         else:
             print(Fore.RED+Style.BRIGHT + "FILE ERROR" + Fore.RESET+Style.RESET_ALL)
