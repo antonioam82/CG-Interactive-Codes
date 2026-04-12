@@ -11,6 +11,7 @@ import math
 import numpy as np
 import argparse
 from colorama import init, Fore, Style
+import time
 
 # load_obj4c5.py -load 10477_Satellite_v1_L3.obj -ec -scl 0.001 -zr 0.0001 -width 1500 -height 770 -lw 0.3
  
@@ -397,9 +398,13 @@ def window(args):
             translation = [0.0, 0.0]
  
             clock = pygame.time.Clock()
+            last_time = time.perf_counter() ###
             running = True
             while running:
-                dt = clock.tick(60) / 1000.0   # Delta time en segundos, límite 60 FPS
+                now = time.perf_counter()
+                #dt = clock.tick(60) / 1000.0   # Delta time en segundos, límite 60 FPS
+                dt = min(now - last_time, 0.05)
+                last_time = now
                 rot_speed = args.rotation_speed * dt        # Grados por segundo (ajustable)
                 trans_speed = args.translation_speed * dt   # Unidades por segundo (ajustable)
 
@@ -557,6 +562,7 @@ def window(args):
                     drawText(font, 20, text_pos6, f'Num Edges: {num_edges}',(0, green_val, 0, 255),(text_bgR, text_bgG, text_bgB))
  
                 pygame.display.flip()
+                clock.tick(120)###########
 
             glDeleteLists(model_list, 1)
             pygame.quit()
