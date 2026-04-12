@@ -53,6 +53,8 @@ def load_obj(filename,color,args):
 
     vertices: list[list[float]] = []
     faces: list[list[int]] = []
+    #polygon_verts_vals: list[int] = []
+    polygon_verts_vals: set[int] = set()
     edges: set[tuple[int, int]] = set()
     num_verts: int = 0
     num_triangles: int = 0
@@ -108,6 +110,8 @@ def load_obj(filename,color,args):
                         continue
 
                     polygon_verts = len(face_indices)
+                    polygon_verts_vals.add(polygon_verts)
+                    #polygon_verts_vals.append(polygon_verts)
 
                     if color:
                         faces.append(face_indices)
@@ -137,8 +141,12 @@ def load_obj(filename,color,args):
 
     #print(f'NV: {num_verts}')
     #print(f'NF: {num_triangles}')
+    print(polygon_verts_vals)
+    max_pol_verts = max(polygon_verts_vals)
+    print("MAX VAL:", max_pol_verts)
 
-    return vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts, load_error
+    #return vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts, load_error
+    return vertices, edges, num_verts, num_triangles, num_edges, faces, max_pol_verts, load_error
  
 
 _text_cache: dict = {}
