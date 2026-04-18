@@ -142,11 +142,11 @@ def load_obj(filename,color,args):
     #print(f'NV: {num_verts}')
     #print(f'NF: {num_triangles}')
     print(polygon_verts_vals)
-    max_pol_verts = max(polygon_verts_vals)
+    max_pol_verts = min(polygon_verts_vals)
     print("MAX VAL:", max_pol_verts)
 
-    #return vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts, load_error
-    return vertices, edges, num_verts, num_triangles, num_edges, faces, max_pol_verts, load_error
+    return vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts, load_error
+    #return vertices, edges, num_verts, num_triangles, num_edges, faces, max_pol_verts, load_error
  
 
 _text_cache: dict = {}
