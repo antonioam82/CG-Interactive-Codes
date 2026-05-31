@@ -5,7 +5,6 @@ from itertools import islice
 import argparse
 import os
 
-
 def check_item(item):
     items = ['faces','edges','vertices','none']
     if item not in items:
@@ -25,22 +24,32 @@ def main():
     parser.add_argument('-clr','--color',action='store_true',help='Use color')
     parser.add_argument('-ec','--enable_centering',action='store_true', help='Center model')
     parser.add_argument('-of','--only_first',type=int,default=None,help='item index start')
+    parser.add_argument('-nvl','--num_verts_list',action='store_true',help='Show polygon verts list')
 
     args = parser.parse_args()
-    if args.show_item == 'faces':
+    if args.show_item == 'faces' or args.num_verts_list:
         args.color = True
     try:
         filename = args.load_object
         color = args.color
         v, e, nv, nt, ne, f, pv, le = load_obj(filename,color,args)
+
+        if args.num_verts_list:
+            npv = set()
+            for face in f:
+                npv.add(len(face))
+            print(f"\nPOLYGON VERTS LIST: {npv}")
+
         item_ = args.show_item
         long = abs(30-(len(filename)))
+        
         print(f"\n{filename}{'-'*long}")
         print(f"NUM VERTS: {nv}")
         print(f"NUM FACES: {nt}")
         print(f"NUM EDGES: {ne}")
         print(f"POL VERTS: {pv}")
         print(f"LDL ERROR: {le}")
+        
         print('-'*30)
         if item_ != 'none':
             if item_ == 'vertices':
@@ -58,9 +67,11 @@ def main():
                     print(f'FACES:\n{f[:args.only_first]}','...')
                 else:
                     print(f'FACES:\n{f}')
+
     except Exception as e:
         print(f"UNEXPECTED ERROR: {str(e)}.")
 
 if __name__ =="__main__":
     main()
+
 
