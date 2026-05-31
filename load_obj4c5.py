@@ -12,7 +12,7 @@ import numpy as np
 import argparse
 from colorama import init, Fore, Style
 import time
-
+ 
 # load_obj4c5.py -load 10477_Satellite_v1_L3.obj -ec -scl 0.001 -zr 0.0001 -width 1500 -height 770 -lw 0.3
  
 init()
@@ -50,11 +50,9 @@ def check_source_ext(file):
     return file
  
 def load_obj(filename,color,args):
-
+ 
     vertices: list[list[float]] = []
     faces: list[list[int]] = []
-    #polygon_verts_vals: list[int] = []
-    polygon_verts_vals: set[int] = set()
     edges: set[tuple[int, int]] = set()
     num_verts: int = 0
     num_triangles: int = 0
@@ -62,23 +60,24 @@ def load_obj(filename,color,args):
     polygon_verts: int = 0
     load_error: bool = False
     line_counter: int = 0
+    #nv_list = set()
     #message_error: str
-
+ 
     try:
         with open(filename, 'r') as file:
-
+ 
             for line in file:
                 line = line.strip(); line_counter += 1
                 if not line or line.startswith('#'):
                     continue
-
+ 
                 parts = line.split()
-                
+ 
                 # VERTICES
                 if parts[0] == 'v':
                     if len(parts) < 4:
                         continue
-
+ 
                     vertex = [
                         float(parts[1]),
                         float(parts[2]),
@@ -86,71 +85,67 @@ def load_obj(filename,color,args):
                     ]
                     vertices.append(vertex)
                     num_verts += 1
-
+ 
                 # FACES
                 elif parts[0] == 'f':
-
+ 
                     face_indices: list[int] = []
                     for part in parts[1:]:
-
+ 
                         # soporta v, v/vt, v//vn, v/vt/vn
                         vals = part.split('/')
                         if vals[0] == '':
                             continue
                         idx = int(vals[0])
-
+ 
                         # soporte índices negativos OBJ
                         if idx < 0:
                             idx = len(vertices) + idx
                         else:
                             idx -= 1
                         face_indices.append(idx)
-
+ 
                     if len(face_indices) < 3:
                         continue
-
+ 
                     polygon_verts = len(face_indices)
-                    polygon_verts_vals.add(polygon_verts)
-                    #polygon_verts_vals.append(polygon_verts)
-
+                    #nv_list.add(polygon_verts)
+ 
                     if color:
                         faces.append(face_indices)
-
+ 
                     num_triangles += 1
-
+ 
                     # generar edges
                     for i in range(len(face_indices)):
                         v1 = face_indices[i]
                         v2 = face_indices[(i + 1) % len(face_indices)]
                         edges.add(tuple(sorted((v1, v2))))
-
+ 
         num_edges = len(edges)
-
+        #print(f"\nPOLYGON VERTS LIST: {nv_list}")
+ 
         # CENTERING
         if args.enable_centering and vertices:
             verts_np = np.array(vertices)
             min_v = np.min(verts_np, axis=0)
             max_v = np.max(verts_np, axis=0)
             center = (min_v + max_v) / 2.0
-
+ 
             vertices = [list(np.array(v) - center) for v in vertices]
-
+ 
     except Exception as e:
         print(f"FILE ERROR ON LINE {line_counter}: {str(e)}")
         load_error = True
-
+ 
     #print(f'NV: {num_verts}')
     #print(f'NF: {num_triangles}')
-    print(polygon_verts_vals)
-    max_pol_verts = min(polygon_verts_vals)
-    print("MAX VAL:", max_pol_verts)
-
-    return vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts, load_error
-    #return vertices, edges, num_verts, num_triangles, num_edges, faces, max_pol_verts, load_error
  
-
+    return vertices, edges, num_verts, num_triangles, num_edges, faces, polygon_verts, load_error
+ 
+ 
 _text_cache: dict = {}
-
+ 
 def drawText(f, x, y, text, c, bgc):
     if text not in _text_cache:
         textSurface = f.render(text, True, c, bgc)
@@ -237,7 +232,7 @@ class Quaternion:
             w1 * y2 - x1 * z2 + y1 * w2 + z1 * x2,
             w1 * z2 + x1 * y2 - y1 * x2 + z1 * w2
         ).normalize()
-
+ 
     def normalize(self):
         mag = math.sqrt(self.w**2 + self.x**2 + self.y**2 + self.z**2)
         if mag == 0:
@@ -415,7 +410,7 @@ def window(args):
                 last_time = now
                 rot_speed = args.rotation_speed * dt        # Grados por segundo (ajustable)
                 trans_speed = args.translation_speed * dt   # Unidades por segundo (ajustable)
-
+ 
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         running = False
@@ -571,7 +566,7 @@ def window(args):
  
                 pygame.display.flip()
                 clock.tick(120)###########
-
+ 
             glDeleteLists(model_list, 1)
             pygame.quit()
         else:
@@ -579,7 +574,7 @@ def window(args):
             print("terminated")
  
     except Exception as e:
-        print(Fore.RED+Style.BRIGHT + "UNEXPECTED ERROR: " + e.__str__() + Fore.RESET+Style.RESET_ALL) 
+        print(Fore.RED+Style.BRIGHT + "UNEXPECTED ERROR: " + e.__str__() + Fore.RESET+Style.RESET_ALL)
  
 def main():
     parser = argparse.ArgumentParser(prog="ModelVisor1.0", conflict_handler='resolve',
